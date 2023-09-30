@@ -6,8 +6,9 @@ import AuthPage from './pages/AuthPage/AuthPage'
 
 import './App.scss'
 
-const App = () => {
-  const [auth, isAuth] = useState<boolean>(true)
+const App = props => {
+  const [auth, isAuth] = useState(true)
+  const a = 1
   return (
     <div className="App">
       {/* <Header/> */}

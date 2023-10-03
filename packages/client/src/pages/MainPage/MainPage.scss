@@ -1,0 +1,11 @@
+@import '../../index.scss';
+
+.main_container {
+  padding-top: 75px;
+  margin: 0 100px;
+    
+  .wrapper {
+    margin-top: 80px;
+    background-color: $MAIN_BACKGROUND_COLOR;
+  }
+}

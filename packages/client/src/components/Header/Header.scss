@@ -1,0 +1,48 @@
+@import '../../index.scss';
+
+.header_container {
+  position: fixed;
+  width: 100%;
+  background-color: $MAIN_LIGHTCREAM_COLOR;
+
+  .header_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 15px 100px;
+    max-width: 1920px;
+
+    .header_logo_name {
+      display: flex;
+      gap: 15px;
+
+      .header_logo {
+        width: 45px;
+        height: 45px;
+      }
+
+      .header_name {
+        font-size: 24px;
+        span {
+          font-size: 28px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .header_log_out_link {
+      text-decoration: none;
+      background-color: rgba(218, 192, 163, 0.7);
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: $MAIN_BLUE_COLOR;
+      transition: 0.3s linear;
+
+      &:hover {
+        background-color: rgba(218, 192, 163, 1);
+      }
+    }
+  }
+}

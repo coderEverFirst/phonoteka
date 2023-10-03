@@ -1,10 +1,11 @@
-import './MainPage.scss'
-
 import React from 'react'
+import './MainPage.scss'
 
 const MainPage = () => {
   return (
-    <div>MainPage</div>
+    <div className="main_container">
+      <div className="wrapper"></div>
+    </div>
   )
 }
 

@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router'
 
 import MainPage from './pages/MainPage/MainPage'
-import AuthPage from './pages/AuthPage/AuthPage'
+// import AuthPage from './pages/AuthPage/AuthPage'
+
+import Header from './components/Header/Header'
 
 import './App.scss'
 
-const App = props => {
-  const [auth, isAuth] = useState(true)
-  const a = 1
+const App = () => {
   return (
     <div className="App">
-      {/* <Header/> */}
+      <Header />
       <Routes>
         {/* {auth && <AuthPage path="/auth" />} */}
 

@@ -7,14 +7,16 @@
 
   .header_wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin: 0 auto;
     padding: 15px 100px;
     max-width: 1920px;
 
-    .header_logo_name {
+    .header_logo_content {
       display: flex;
+      flex: 1 1 70%;
+
       gap: 15px;
 
       .header_logo {
@@ -30,18 +32,28 @@
         }
       }
     }
+    .header_function_content {
+      display: flex;
+      flex: 1 1 30%;
+      gap: 20px;
+      align-items: center;
+      justify-content: end;
 
-    .header_log_out_link {
-      text-decoration: none;
-      background-color: rgba(218, 192, 163, 0.7);
-      padding: 8px 20px;
-      border-radius: 10px;
-      font-size: 18px;
-      color: $MAIN_BLUE_COLOR;
-      transition: 0.3s linear;
 
-      &:hover {
-        background-color: rgba(218, 192, 163, 1);
+      .header_log_out_link {
+        text-decoration: none;
+        white-space: nowrap;
+        background-color: $MAIN_DARKCREAM_COLOR;
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #000;
+        transition: 0.3s linear;
+
+        &:hover {
+          background-color: $MAIN_DARKCREAM_HOVER_COLOR;
+          color: $MAIN_BLUE_COLOR;
+        }
       }
     }
   }

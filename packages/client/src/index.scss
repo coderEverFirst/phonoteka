@@ -3,7 +3,9 @@
 $MAIN_BACKGROUND_COLOR: #f8f0e5;
 $MAIN_LIGHTCREAM_COLOR: #eadbc8;
 $MAIN_DARKCREAM_COLOR: #dac0a3;
+$MAIN_DARKCREAM_HOVER_COLOR: #d9ba98;
 $MAIN_BLUE_COLOR: #102c57;
+$color: #5b5a5a;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -122,5 +124,4 @@ body {
 
 body {
   background-color: $MAIN_BACKGROUND_COLOR;
-
 }

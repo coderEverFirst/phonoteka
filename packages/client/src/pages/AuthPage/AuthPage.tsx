@@ -1,9 +1,15 @@
-import React, { useCallback, useMemo } from 'react'
-import './AuthPage.scss'
-import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
-import logoImage from '../../assets/logo.svg'
-import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { InputAdornment } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+
+import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
+import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
+
+import logoImage from '../../assets/logo.svg'
+
+import './AuthPage.scss'
 
 const RENDER_AUTH_LOGIN_DATA = {
   title: 'LOGIN',
@@ -70,6 +76,7 @@ const RENDER_AUTH_SIGNUP_DATA = {
 }
 
 const AuthPage = () => {
+  const [showPassword, isShowPassword] = useState<boolean>(false)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -82,6 +89,19 @@ const AuthPage = () => {
     navigate(path)
   }, [])
 
+  const handleVisibilityPassword = useCallback(() => {
+    isShowPassword(!showPassword)
+  }, [showPassword])
+
+  const changeVisibilityPassword = (type: string, action: boolean) => {
+    if (type !== 'password') return
+    if (type === 'password' && action) {
+      return 'text'
+    } else {
+      return 'password'
+    }
+  }
+
   return (
     <div className="auth_wrapper">
       <div className="auth_container">
@@ -91,7 +111,22 @@ const AuthPage = () => {
           <AuthTextField
             id={item.name}
             key={item.name}
-            type={item.type}
+            type={changeVisibilityPassword(item.type, showPassword)}
+            InputProps={
+              item.type === 'password' && {
+                endAdornment: (
+                  <InputAdornment
+                    position="start"
+                    className="auth_visibility"
+                    onClick={() => {
+                      handleVisibilityPassword()
+                    }}
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </InputAdornment>
+                ),
+              }
+            }
             className="auth_input"
             variant="standard"
             label={item.label}

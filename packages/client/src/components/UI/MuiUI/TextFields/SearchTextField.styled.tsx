@@ -10,28 +10,21 @@ export const SearchTextField = styled(TextField)({
   '&.MuiTextField-root': {
     width: '100%',
     height: '100%',
-    maxWidth: '180px',
+    maxWidth: '300px',
   },
 
   '& .MuiFormLabel-root': {
     transition: '0.15s ease-out',
-    top: '-8px',
     fontSize: '18px',
     width: '100%',
     color: MAIN_GRAY_COLOR,
   },
 
-  '$ .MuiInputLabel-animated': {
-    top: '10px',
-  },
-
   '& label.Mui-focused': {
-    top: '-8px',
     color: MAIN_BLUE_COLOR,
   },
 
   '& .MuiInputBase-input': {
-    padding: '8px 20px',
     color: MAIN_BLUE_COLOR,
   },
 
@@ -40,17 +33,13 @@ export const SearchTextField = styled(TextField)({
     height: '100%',
     borderRadius: '10px',
 
-    '& legend': {
-      width: '45%',
-    },
-
     '& fieldset': {
       transition: '0.2s linear',
-      border: `solid 1px ${MAIN_DARKCREAM_COLOR}`,
+      border: `1px solid  ${MAIN_DARKCREAM_COLOR}`,
     },
 
     '&.Mui-focused fieldset': {
-      border: `solid 1px ${MAIN_BLUE_COLOR}`,
+      border: `1px solid  ${MAIN_BLUE_COLOR}`,
     },
   },
 

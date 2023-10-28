@@ -5,7 +5,7 @@
   width: 100%;
   background-color: $MAIN_LIGHTCREAM_COLOR;
 
-  .header_container{
+  .header_container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -39,6 +39,22 @@
       align-items: center;
       justify-content: end;
 
+      .header_input_block {
+        display: flex;
+        gap: 5px;
+        color: $MAIN_GRAY_COLOR;
+
+        .header_input_search {
+          cursor: pointer;
+          transition: 0.2s ease-out;
+        }
+
+        &:hover {
+          .header_input_search {
+            color: $MAIN_BLUE_COLOR;
+          }
+        }
+      }
 
       .header_log_out_link {
         text-decoration: none;

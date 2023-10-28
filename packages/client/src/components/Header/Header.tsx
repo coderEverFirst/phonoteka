@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-import './Header.scss'
+import { InputAdornment } from '@mui/material'
 
 import logoImage from '../../assets/logo.svg'
+import SearchIcon from '@mui/icons-material/Search'
 
 import { SearchTextField } from '../UI/MuiUI/TextFields/SearchTextField.styled'
+
+import './Header.scss'
 
 const Header = () => {
   return (
@@ -18,7 +20,20 @@ const Header = () => {
           </div>
         </div>
         <div className="header_function_content">
-          <SearchTextField id="header_search" label="Search..." variant="outlined" />
+          <SearchTextField
+            id="header_search"
+            label="Search..."
+            variant="outlined"
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" className="header_input_block">
+                  <div className="header_input_hotkey">Ctrl+K</div>
+                  <SearchIcon className="header_input_search" />
+                </InputAdornment>
+              ),
+            }}
+          />
 
           <Link to="/login" className="header_log_out_link">
             Log out

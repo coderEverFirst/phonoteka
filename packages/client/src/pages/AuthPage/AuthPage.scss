@@ -58,6 +58,10 @@
       justify-content: space-evenly;
       margin-top: 50px;
 
+      .auth_btn{
+        font-weight: 600;
+      }
+
       .auth_registration_btn {
         background-color: $MAIN_LIGHTCREAM_COLOR;
         color: #5b5a5a;

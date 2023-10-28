@@ -10,6 +10,7 @@ import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
 import logoImage from '../../assets/logo.svg'
 
 import './AuthPage.scss'
+import { EAuthType } from '../../variables/eNums'
 
 const RENDER_AUTH_LOGIN_DATA = {
   title: 'LOGIN',
@@ -94,11 +95,11 @@ const AuthPage = () => {
   }, [showPassword])
 
   const changeVisibilityPassword = (type: string, action: boolean) => {
-    if (type !== 'password') return
-    if (type === 'password' && action) {
-      return 'text'
+    if (type !== EAuthType.password) return
+    if (type === EAuthType.password && action) {
+      return EAuthType.text
     } else {
-      return 'password'
+      return EAuthType.password
     }
   }
 
@@ -113,7 +114,7 @@ const AuthPage = () => {
             key={item.name}
             type={changeVisibilityPassword(item.type, showPassword)}
             InputProps={
-              item.type === 'password' && {
+              item.type === EAuthType.password && {
                 endAdornment: (
                   <InputAdornment
                     position="start"

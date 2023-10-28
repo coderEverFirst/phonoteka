@@ -1,11 +1,11 @@
 @import '../../index.scss';
 
-.header_container {
+.header_wrapper {
   position: fixed;
   width: 100%;
   background-color: $MAIN_LIGHTCREAM_COLOR;
 
-  .header_wrapper {
+  .header_container{
     display: flex;
     align-items: center;
     justify-content: space-between;

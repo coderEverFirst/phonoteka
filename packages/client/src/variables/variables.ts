@@ -1,0 +1,6 @@
+export const MAIN_BACKGROUND_COLOR = '#f8f0e5'
+export const MAIN_LIGHTCREAM_COLOR = '#eadbc8'
+export const MAIN_DARKCREAM_COLOR = '#dac0a3'
+export const MAIN_DARKCREAM_HOVER_COLOR = '#d9ba98'
+export const MAIN_BLUE_COLOR = '#102c57'
+export const MAIN_GRAY_COLOR = '#5b5a5a'

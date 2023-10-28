@@ -1,5 +1,10 @@
 import styled from '@emotion/styled'
 import { TextField } from '@mui/material'
+import {
+  MAIN_BLUE_COLOR,
+  MAIN_DARKCREAM_COLOR,
+  MAIN_GRAY_COLOR,
+} from '../../../../variables/variables'
 
 export const SearchTextField = styled(TextField)({
   '&.MuiTextField-root': {
@@ -13,7 +18,7 @@ export const SearchTextField = styled(TextField)({
     top: '-8px',
     fontSize: '18px',
     width: '100%',
-    color: '#5b5a5a',
+    color: MAIN_GRAY_COLOR,
   },
 
   '$ .MuiInputLabel-animated': {
@@ -22,12 +27,12 @@ export const SearchTextField = styled(TextField)({
 
   '& label.Mui-focused': {
     top: '-8px',
-    color: '#102c57',
+    color: MAIN_BLUE_COLOR,
   },
 
   '& .MuiInputBase-input': {
     padding: '8px 20px',
-    color: '#102c57', 
+    color: MAIN_BLUE_COLOR,
   },
 
   '& .MuiInputBase-root': {
@@ -41,23 +46,23 @@ export const SearchTextField = styled(TextField)({
 
     '& fieldset': {
       transition: '0.2s linear',
-      border: 'solid 1px #dac0a3',
+      border: `solid 1px ${MAIN_DARKCREAM_COLOR}`,
     },
 
     '&.Mui-focused fieldset': {
-      border: 'solid 1px #102c57',
+      border: `solid 1px ${MAIN_BLUE_COLOR}`,
     },
   },
 
   '&:hover': {
     '& .MuiFormLabel-root': {
-      color: '#102c57',
+      color: MAIN_BLUE_COLOR,
     },
 
     '& .MuiInputBase-root': {
       '& fieldset': {
-        color: '#102c57',
-        borderColor: '#102c57',
+        color: MAIN_BLUE_COLOR,
+        borderColor: MAIN_BLUE_COLOR,
       },
     },
   },

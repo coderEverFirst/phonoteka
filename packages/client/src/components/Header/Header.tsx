@@ -5,12 +5,12 @@ import './Header.scss'
 
 import logoImage from '../../assets/logo.svg'
 
-import { SearchTextField } from '../UI/MuiUI/SearchTextField.styled'
+import { SearchTextField } from '../UI/MuiUI/TextFields/SearchTextField.styled'
 
 const Header = () => {
   return (
-    <div className="header_container">
-      <div className="header_wrapper">
+    <div className="header_wrapper">
+      <div className="header_container">
         <div className="header_logo_content">
           <img className="header_logo" src={logoImage} alt="logo" />
           <div className="header_name">
@@ -20,7 +20,7 @@ const Header = () => {
         <div className="header_function_content">
           <SearchTextField id="header_search" label="Search..." variant="outlined" />
 
-          <Link to="/" className="header_log_out_link">
+          <Link to="/login" className="header_log_out_link">
             Log out
           </Link>
         </div>

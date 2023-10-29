@@ -15,9 +15,6 @@ export const AuthTextField = styled(TextField)({
     width: '100%',
     color: MAIN_GRAY_COLOR,
   },
-  // '& label': {
-  //   top: '-5px',
-  // },
 
   '& .MuiFormLabel-root.Mui-focused': {
     top: '2px',

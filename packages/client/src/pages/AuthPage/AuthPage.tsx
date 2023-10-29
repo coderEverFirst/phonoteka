@@ -1,8 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import { InputAdornment } from '@mui/material'
+import { InputAdornment, Checkbox } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+
+import { EAuthType } from '../../variables/eNums'
+import {
+  MAIN_BLUE_COLOR,
+  MAIN_GRAY_COLOR,
+  RENDER_AUTH_LOGIN_DATA,
+  RENDER_AUTH_SIGNUP_DATA,
+} from '../../variables/variables'
 
 import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
 import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
@@ -10,71 +18,6 @@ import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
 import logoImage from '../../assets/logo.svg'
 
 import './AuthPage.scss'
-import { EAuthType } from '../../variables/eNums'
-
-const RENDER_AUTH_LOGIN_DATA = {
-  title: 'LOGIN',
-  inputs: [
-    {
-      name: 'login',
-      type: 'text',
-      label: 'Enter your login',
-    },
-    {
-      name: 'password',
-      type: 'password',
-      label: 'Enter your password',
-    },
-  ],
-  buttons: [
-    {
-      name: 'login',
-      path: '/', //go to main component
-      label: 'login',
-    },
-    {
-      name: 'sign up',
-      path: '/sign-up',
-      label: 'to sign up',
-      className: 'auth_registration_btn',
-    },
-  ],
-}
-
-const RENDER_AUTH_SIGNUP_DATA = {
-  title: 'SIGN UP',
-  inputs: [
-    {
-      name: 'login',
-      type: 'text',
-      label: 'Enter your login',
-    },
-    {
-      name: 'password',
-      type: 'password',
-      label: 'Enter your password',
-    },
-    {
-      name: 'rePassword',
-      type: 'password',
-      label: 'Enter password again',
-    },
-  ],
-
-  buttons: [
-    {
-      name: 'sign up',
-      path: '/', //need create new user on server
-      label: 'sign up',
-      className: 'auth_registration_btn',
-    },
-    {
-      name: 'login',
-      label: 'to login',
-      path: '/login',
-    },
-  ],
-}
 
 const AuthPage = () => {
   const [showPassword, isShowPassword] = useState<boolean>(false)
@@ -86,21 +29,21 @@ const AuthPage = () => {
     [pathname],
   )
 
-  const handleNavigate = useCallback((path: string) => {
-    navigate(path)
+  const handleNavigate = useCallback((path: string | undefined) => {
+    if (path) {
+      navigate(path)
+    }
   }, [])
 
   const handleVisibilityPassword = useCallback(() => {
     isShowPassword(!showPassword)
   }, [showPassword])
 
-  const changeVisibilityPassword = (type: string, action: boolean) => {
-    if (type !== EAuthType.password) return
-    if (type === EAuthType.password && action) {
-      return EAuthType.text
-    } else {
-      return EAuthType.password
+  const getVisibilityPassword = (type: string) => {
+    if (type === EAuthType.password) {
+      return showPassword ? EAuthType.text : EAuthType.password
     }
+    return type
   }
 
   return (
@@ -110,34 +53,52 @@ const AuthPage = () => {
         <h1 className="auth_title">{renderData.title}</h1>
         {renderData.inputs.map(item => (
           <AuthTextField
-            id={item.name}
+            id={item.id}
             key={item.name}
-            type={changeVisibilityPassword(item.type, showPassword)}
+            type={getVisibilityPassword(item.type)}
             InputProps={
-              item.type === EAuthType.password && {
-                endAdornment: (
-                  <InputAdornment
-                    position="start"
-                    className="auth_visibility"
-                    onClick={() => {
-                      handleVisibilityPassword()
-                    }}
-                  >
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </InputAdornment>
-                ),
-              }
+              item.type === EAuthType.password && pathname === '/login'
+                ? {
+                    endAdornment: (
+                      <InputAdornment
+                        position="start"
+                        className="auth_visibility"
+                        onClick={() => {
+                          handleVisibilityPassword()
+                        }}
+                      >
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </InputAdornment>
+                    ),
+                  }
+                : undefined
             }
             className="auth_input"
             variant="standard"
             label={item.label}
           />
         ))}
-
-        <div className="auth_button_block">
+        {pathname === '/sign-up' && (
+          <div className="auth_showvisibility">
+            <Checkbox
+              checked={showPassword}
+              onChange={handleVisibilityPassword}
+              sx={{
+                color: MAIN_GRAY_COLOR,
+                '&.Mui-checked': {
+                  color: MAIN_BLUE_COLOR,
+                },
+              }}
+            />
+            <span className={`auth_showvisibility_text ${showPassword && 'active'}`}>
+              Show Password
+            </span>
+          </div>
+        )}
+        <div className={`auth_button_block ${pathname === '/login' ? 'auth_login' : ''}`}>
           {renderData.buttons.map(item => (
             <AuthButton
-              id={item.name}
+              id={item.id}
               key={item.name}
               variant="contained"
               className={`auth_btn ${item.name === 'login' ? '' : 'auth_registration_btn'}`}

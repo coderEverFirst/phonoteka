@@ -35,10 +35,9 @@ const MainTable = () => {
           <MainTableBody>
             {rowsData.map((row: IRowData) => (
               <TableRow key={row.id}>
-                <td>
+                <TableCell>
                   <Checkbox />
-                </td>
-
+                </TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.band}</TableCell>
                 <TableCell>{row.album}</TableCell>

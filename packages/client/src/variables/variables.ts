@@ -8,7 +8,7 @@ export const MAIN_GRAY_COLOR = '#5b5a5a'
 
 // ================ render objects ================
 
-interface IRenderAuthLoginData {
+export interface IRenderAuthLoginData {
   title: string
   inputs: {
     id: string
@@ -58,7 +58,7 @@ export const RENDER_AUTH_LOGIN_DATA: IRenderAuthLoginData = {
   ],
 }
 
-export const RENDER_AUTH_SIGNUP_DATA = {
+export const RENDER_AUTH_SIGNUP_DATA: IRenderAuthLoginData = {
   title: 'SIGN UP',
   inputs: [
     {
@@ -97,3 +97,19 @@ export const RENDER_AUTH_SIGNUP_DATA = {
     },
   ],
 }
+
+export interface IRenderTableHeaderData {
+  id: number
+  lable: string
+  width: string
+}
+
+export const RENDER_TABLE_HEADER_DATA: IRenderTableHeaderData[] = [
+  { id: 0, lable: '', width: '2%' },
+  { id: 1, lable: 'Name', width: '23%' },
+  { id: 2, lable: 'Band', width: '25%' },
+  { id: 3, lable: 'Album', width: '20%' },
+  { id: 4, lable: 'Year', width: '10%' },
+  { id: 5, lable: 'Genre', width: '10%' },
+  { id: 6, lable: 'Format', width: '10%' },
+]

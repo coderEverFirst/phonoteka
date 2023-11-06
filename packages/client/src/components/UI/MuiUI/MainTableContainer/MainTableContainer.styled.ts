@@ -11,6 +11,7 @@ export const MainTableContainer = styled(TableContainer)({
     width: '80%',
     margin: '0 auto',
     marginTop: '40px',
+    marginBottom: '40px',
     padding: '15px',
     backgroundColor: MAIN_DARKCREAM_COLOR,
     borderRadius: '10px',

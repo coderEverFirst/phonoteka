@@ -11,13 +11,13 @@ export const MAIN_GRAY_COLOR = '#5b5a5a'
 export interface IRenderAuthLoginData {
   title: string
   inputs: {
-    id: string | number
+    id: number
     name: string
     type: string
     label: string
   }[]
   buttons: {
-    id: string
+    id: number
     name: string
     path?: string
     label: string
@@ -29,13 +29,13 @@ export const RENDER_AUTH_LOGIN_DATA: IRenderAuthLoginData = {
   title: 'LOGIN',
   inputs: [
     {
-      id: '1',
+      id: 1,
       name: 'login',
       type: 'text',
       label: 'Enter your login',
     },
     {
-      id: '2',
+      id: 2,
       name: 'password',
       type: 'password',
       label: 'Enter your password',
@@ -43,13 +43,13 @@ export const RENDER_AUTH_LOGIN_DATA: IRenderAuthLoginData = {
   ],
   buttons: [
     {
-      id: '1',
+      id: 1,
       name: 'login',
       path: '/', //go to main component
       label: 'login',
     },
     {
-      id: '2',
+      id: 2,
       name: 'sign up',
       path: '/sign-up',
       label: 'to sign up',

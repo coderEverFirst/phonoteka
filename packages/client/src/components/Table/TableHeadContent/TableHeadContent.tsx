@@ -14,7 +14,7 @@ import { MainTableHead } from '../../UI/MuiUI/MainTableContainer/MainTableContai
 interface ITableHeadContent {
   valueToOrderBy: string
   orderDirection: ETableSort
-  handleRequestSort: (event: React.MouseEvent, property: number) => void
+  handleRequestSort: (event: React.MouseEvent, property: string) => void
 }
 
 const TableHeadContent = (props: ITableHeadContent) => {

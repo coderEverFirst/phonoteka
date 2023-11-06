@@ -29,13 +29,13 @@ export const RENDER_AUTH_LOGIN_DATA: IRenderAuthLoginData = {
   title: 'LOGIN',
   inputs: [
     {
-      id: 1,
+      id: 0,
       name: 'login',
       type: 'text',
       label: 'Enter your login',
     },
     {
-      id: 2,
+      id: 1,
       name: 'password',
       type: 'password',
       label: 'Enter your password',
@@ -43,13 +43,13 @@ export const RENDER_AUTH_LOGIN_DATA: IRenderAuthLoginData = {
   ],
   buttons: [
     {
-      id: 1,
+      id: 0,
       name: 'login',
       path: '/', //go to main component
       label: 'login',
     },
     {
-      id: 2,
+      id: 1,
       name: 'sign up',
       path: '/sign-up',
       label: 'to sign up',
@@ -62,19 +62,19 @@ export const RENDER_AUTH_SIGNUP_DATA: IRenderAuthLoginData = {
   title: 'SIGN UP',
   inputs: [
     {
-      id: '1',
+      id: 0,
       name: 'login',
       type: 'text',
       label: 'Enter your login',
     },
     {
-      id: '2',
+      id: 1,
       name: 'password',
       type: 'password',
       label: 'Enter your password',
     },
     {
-      id: '3',
+      id: 2,
       name: 'rePassword',
       type: 'password',
       label: 'Enter password again',
@@ -83,14 +83,14 @@ export const RENDER_AUTH_SIGNUP_DATA: IRenderAuthLoginData = {
 
   buttons: [
     {
-      id: '1',
+      id: 0,
       name: 'sign up',
       path: '/', //need create new user on server
       label: 'sign up',
       className: 'auth_registration_btn',
     },
     {
-      id: '2',
+      id: 1,
       name: 'login',
       label: 'to login',
       path: '/login',

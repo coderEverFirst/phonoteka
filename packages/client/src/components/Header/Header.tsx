@@ -1,19 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { InputAdornment } from '@mui/material'
-
 import logoImage from '../../assets/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
-
 import { SearchTextField } from '../UI/MuiUI/TextFields/SearchTextField.styled'
 
 import './Header.scss'
 
 const Header = () => {
+  const scrollUpWindow = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }
+
   return (
     <div className="header_wrapper">
       <div className="header_container">
-        <div className="header_logo_content">
+        <div className="header_logo_content" onClick={scrollUpWindow}>
           <img className="header_logo" src={logoImage} alt="logo" />
           <div className="header_name">
             <span>Ph</span>onoteka
@@ -34,7 +36,6 @@ const Header = () => {
               ),
             }}
           />
-
           <Link to="/login" className="header_log_out_link">
             Log out
           </Link>

@@ -53,8 +53,7 @@ const AuthPage = () => {
         <h1 className="auth_title">{renderData.title}</h1>
         {renderData.inputs.map(item => (
           <AuthTextField
-            id={item.id}
-            key={item.name}
+            key={item.id}
             type={getVisibilityPassword(item.type)}
             InputProps={
               item.type === EAuthType.password && pathname === '/login'
@@ -98,7 +97,6 @@ const AuthPage = () => {
         <div className={`auth_button_block ${pathname === '/login' ? 'auth_login' : ''}`}>
           {renderData.buttons.map(item => (
             <AuthButton
-              id={item.id}
               key={item.name}
               variant="contained"
               className={`auth_btn ${item.name === 'login' ? '' : 'auth_registration_btn'}`}

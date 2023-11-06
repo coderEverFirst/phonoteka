@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { TableBody, TableContainer, TableHead } from '@mui/material'
+import { TableBody, TableContainer, TableHead, TablePagination } from '@mui/material'
 import {
   MAIN_BLUE_COLOR,
   MAIN_DARKCREAM_COLOR,
@@ -75,5 +75,11 @@ export const MainTableBody = styled(TableBody)({
         color: MAIN_BLUE_COLOR,
       },
     },
+  },
+})
+
+export const MainTablePagination = styled(TablePagination)({
+  '& .MuiTablePagination-toolbar': {
+    paddingRight: '35px',
   },
 })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, TablePagination } from '@mui/material'
+import { Table } from '@mui/material'
 
 import TeableHeadContent from './TableHeadContent/TableHeadContent'
 import TableBodyContent from './TableBodyContent/TableBodyContent'
@@ -7,7 +7,10 @@ import TableBodyContent from './TableBodyContent/TableBodyContent'
 import { ETableSort } from '../../variables/eNums'
 import { rowsData, IRowData } from '../../variables/testFetchData'
 
-import { MainTableContainer } from '../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import {
+  MainTableContainer,
+  MainTablePagination,
+} from '../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 import { useMainTable } from './useMainTable'
 
 const MainTable = () => {
@@ -59,14 +62,17 @@ const MainTable = () => {
           />
           <TableBodyContent tableRowData={tableRowData} />
         </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 15, 20, rowsData.length]}
+        <MainTablePagination
+          rowsPerPageOptions={[10, 15, 20, 50, rowsData.length]}
           component="div"
           count={rowsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
+          labelRowsPerPage={null}
+          showFirstButton={true}
+          showLastButton={true}
         />
       </MainTableContainer>
     </>

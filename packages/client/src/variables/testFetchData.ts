@@ -6,6 +6,9 @@ export interface IRowData {
   year: string
   genre: string
   format: string
+  image: string
+  description: string
+  urlVideo: string
 }
 export const rowsData: IRowData[] = [
   {
@@ -16,6 +19,9 @@ export const rowsData: IRowData[] = [
     year: '2013',
     genre: 'Retrowave',
     format: 'flac',
+    image: '/',
+    description: 'something text',
+    urlVideo: '/',
   },
   {
     id: 1,
@@ -25,6 +31,10 @@ export const rowsData: IRowData[] = [
     year: '1975',
     genre: 'Rock',
     format: 'mp3',
+
+    image: '/',
+    description: 'something text',
+    urlVideo: '/',
   },
   {
     id: 2,
@@ -34,6 +44,10 @@ export const rowsData: IRowData[] = [
     year: '1976',
     genre: 'Rock',
     format: 'wav',
+
+    image: '/',
+    description: 'something text',
+    urlVideo: '/',
   },
   {
     id: 3,
@@ -43,5 +57,8 @@ export const rowsData: IRowData[] = [
     year: '1967',
     genre: 'Rock',
     format: 'flac',
+    image: '/',
+    description: 'something text',
+    urlVideo: '/',
   },
 ]

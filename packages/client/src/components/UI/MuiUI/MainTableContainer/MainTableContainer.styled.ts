@@ -26,10 +26,23 @@ export const MainTableHead = styled(TableHead)({
     },
 
     '& .MuiTableCell-root': {
-      alignItems: 'left',
+      padding: '5px',
       fontWeight: 600,
-      justifyContent: 'center',
       borderBottom: 'none',
+
+      '&:nth-last-child(-n+3)': {
+        textAlign: 'center',
+        paddingLeft: '25px',
+      },
+    },
+
+    '& .MuiCheckbox-root': {
+      height: '100%',
+      color: MAIN_GRAY_COLOR,
+
+      '&.Mui-checked': {
+        color: MAIN_BLUE_COLOR,
+      },
     },
   },
 })
@@ -42,14 +55,21 @@ export const MainTableBody = styled(TableBody)({
     },
 
     '& .MuiTableCell-root': {
-      justifyContent: 'center',
+      padding: '5px',
       borderBottom: 'none',
+
+      '&:first-of-type': {
+        padding: '5px',
+      },
+
+      '&:nth-last-child(-n+3)': {
+        textAlign: 'center',
+      },
     },
 
     '& .MuiCheckbox-root': {
-      marginTop: '5px',
-      height: '100%',
       color: MAIN_GRAY_COLOR,
+
       '&.Mui-checked': {
         color: MAIN_BLUE_COLOR,
       },

@@ -1,38 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Table, TableCell, TableRow, Checkbox } from '@mui/material'
 import { rowsData, IRowData } from '../../variables/testFetchData'
 
-import {
-  IRenderTableHeaderData,
-  MAIN_BLUE_COLOR,
-  RENDER_TABLE_HEADER_DATA,
-} from '../../variables/variables'
+import TeableHeadContent from './TableHeadContent/TableHeadContent'
+
+import { ETableSort } from '../../variables/eNums'
 
 import {
   MainTableBody,
   MainTableContainer,
-  MainTableHead,
 } from '../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 
-import './MainTable.scss'
-
 const MainTable = () => {
-  const headerData = RENDER_TABLE_HEADER_DATA
+  const [orderDirection, setOrderDirection] = useState<string>(ETableSort.asc)
+  const [valueToOrderBy, setValueToOrderBy] = useState<string>('Name')
+  const [page, setPage] = useState<number>(0)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(1)
+
+  const handleRequestSort = (event: Event, property: string) => {
+    const isAscending: boolean = valueToOrderBy === property && orderDirection === ETableSort.asc
+
+    setValueToOrderBy(property)
+    setOrderDirection(isAscending ? ETableSort.desc : ETableSort.asc)
+  }
+
+  // const tableData = sortedRowsData(rowsData, getComparator(orderDirection, valueToOrderBy))
+
   return (
     <>
       <MainTableContainer>
         <Table>
-          <MainTableHead>
-            <TableRow sx={{ color: MAIN_BLUE_COLOR }}>
-              {headerData.map((item: IRenderTableHeaderData) => (
-                <TableCell key={item.id} sx={{ width: item.width }} variant="head">
-                  {item.lable}
-                </TableCell>
-              ))}
-            </TableRow>
-          </MainTableHead>
+          <TeableHeadContent
+            orderDirection={orderDirection}
+            valueToOrderBy={valueToOrderBy}
+            handleRequestSort={handleRequestSort}
+          />
+
           <MainTableBody>
+            {/* {tableData.map()} */}
             {rowsData.map((row: IRowData) => (
               <TableRow key={row.id}>
                 <TableCell>

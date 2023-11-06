@@ -11,7 +11,7 @@ export const MAIN_GRAY_COLOR = '#5b5a5a'
 export interface IRenderAuthLoginData {
   title: string
   inputs: {
-    id: string
+    id: string | number
     name: string
     type: string
     label: string
@@ -101,15 +101,13 @@ export const RENDER_AUTH_SIGNUP_DATA: IRenderAuthLoginData = {
 export interface IRenderTableHeaderData {
   id: number
   lable: string
-  width: string
 }
 
 export const RENDER_TABLE_HEADER_DATA: IRenderTableHeaderData[] = [
-  { id: 0, lable: '', width: '2%' },
-  { id: 1, lable: 'Name', width: '23%' },
-  { id: 2, lable: 'Band', width: '25%' },
-  { id: 3, lable: 'Album', width: '20%' },
-  { id: 4, lable: 'Year', width: '10%' },
-  { id: 5, lable: 'Genre', width: '10%' },
-  { id: 6, lable: 'Format', width: '10%' },
+  { id: 0, lable: 'Name' },
+  { id: 1, lable: 'Band' },
+  { id: 2, lable: 'Album' },
+  { id: 3, lable: 'Year' },
+  { id: 4, lable: 'Genre' },
+  { id: 5, lable: 'Format' },
 ]

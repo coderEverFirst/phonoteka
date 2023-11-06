@@ -30,7 +30,7 @@ export const MainTableHead = styled(TableHead)({
       fontWeight: 600,
       borderBottom: 'none',
 
-      '&:nth-last-child(-n+3)': {
+      '&:nth-last-of-type(-n+3)': {
         textAlign: 'center',
         paddingLeft: '25px',
       },
@@ -62,7 +62,7 @@ export const MainTableBody = styled(TableBody)({
         padding: '5px',
       },
 
-      '&:nth-last-child(-n+3)': {
+      '&:nth-last-of-type(-n+3)': {
         textAlign: 'center',
       },
     },

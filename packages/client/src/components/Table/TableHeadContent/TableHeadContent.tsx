@@ -13,8 +13,8 @@ import { MainTableHead } from '../../UI/MuiUI/MainTableContainer/MainTableContai
 
 interface ITableHeadContent {
   valueToOrderBy: string
-  orderDirection: string
-  handleRequestSort: (event: Event, property: string) => void
+  orderDirection: ETableSort
+  handleRequestSort: (event: React.MouseEvent, property: number) => void
 }
 
 const TableHeadContent = (props: ITableHeadContent) => {
@@ -22,7 +22,7 @@ const TableHeadContent = (props: ITableHeadContent) => {
 
   const headerData = RENDER_TABLE_HEADER_DATA
 
-  const createSortHandler = (property: string) => (event: Event) => {
+  const createSortHandler = (property: string) => (event: React.MouseEvent) => {
     handleRequestSort(event, property)
   }
 
@@ -36,11 +36,11 @@ const TableHeadContent = (props: ITableHeadContent) => {
           {headerData.map((item: IRenderTableHeaderData) => (
             <TableCell key={item.id}>
               <TableSortLabel
-                active={valueToOrderBy === item.lable}
-                direction={valueToOrderBy === item.lable ? orderDirection : ETableSort.asc}
-                onClick={createSortHandler(item.lable)}
+                active={valueToOrderBy === item.label}
+                direction={valueToOrderBy === item.label ? orderDirection : ETableSort.asc}
+                onClick={createSortHandler(item.value)}
               >
-                {item.lable}
+                {item.label}
               </TableSortLabel>
             </TableCell>
           ))}

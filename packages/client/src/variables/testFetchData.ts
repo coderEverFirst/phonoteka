@@ -6,9 +6,9 @@ export interface IRowData {
   year: string
   genre: string
   format: string
-  image: string
-  description: string
-  urlVideo: string
+  image?: string
+  description?: string
+  urlVideo?: string
 }
 export const rowsData: IRowData[] = [
   {

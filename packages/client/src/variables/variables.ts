@@ -100,14 +100,15 @@ export const RENDER_AUTH_SIGNUP_DATA: IRenderAuthLoginData = {
 
 export interface IRenderTableHeaderData {
   id: number
-  lable: string
+  label: string
+  value: string
 }
 
 export const RENDER_TABLE_HEADER_DATA: IRenderTableHeaderData[] = [
-  { id: 0, lable: 'Name' },
-  { id: 1, lable: 'Band' },
-  { id: 2, lable: 'Album' },
-  { id: 3, lable: 'Year' },
-  { id: 4, lable: 'Genre' },
-  { id: 5, lable: 'Format' },
+  { id: 0, label: 'Name', value: 'name' },
+  { id: 1, label: 'Band', value: 'band' },
+  { id: 2, label: 'Album', value: 'album' },
+  { id: 3, label: 'Year', value: 'year' },
+  { id: 4, label: 'Genre', value: 'genre' },
+  { id: 5, label: 'Format', value: 'format' },
 ]

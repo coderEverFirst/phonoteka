@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from '@mui/material'
 
+import { useMainTable } from './useMainTable'
+
 import TeableHeadContent from './TableHeadContent/TableHeadContent'
 import TableBodyContent from './TableBodyContent/TableBodyContent'
+
+import { Box, Typography } from '@mui/material'
+
+import DeleteIcon from '@mui/icons-material/Delete'
 
 import { ETableSort } from '../../variables/eNums'
 import { rowsData, IRowData } from '../../variables/testFetchData'
@@ -11,7 +17,6 @@ import {
   MainTableContainer,
   MainTablePagination,
 } from '../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
-import { useMainTable } from './useMainTable'
 
 const MainTable = () => {
   const { stableSort, getComparator } = useMainTable()
@@ -78,10 +83,16 @@ const MainTable = () => {
   ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   // if you need to remove checkboxes for the entire list of data and put them on the current pagination page, throw tableRowData in TeableHeadContent instead of rowsData
-  
+
   return (
     <>
       <MainTableContainer>
+        <Box component="div" className={`wrapper ${selectedCheckbox.length > 0 && 'active'}`}>
+          <Typography>
+            Items checked: <Box component="span">{selectedCheckbox.length}</Box>
+          </Typography>
+          <DeleteIcon />
+        </Box>
         <Table>
           <TeableHeadContent
             orderDirection={orderDirection}

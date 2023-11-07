@@ -17,11 +17,53 @@ export const MainTableContainer = styled(TableContainer)({
     backgroundColor: MAIN_DARKCREAM_COLOR,
     borderRadius: '10px',
     boxShadow: '4px 4px 23px -3px rgba(217,186,152,0.71)',
+
+    '& .MuiBox-root.wrapper': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+      padding: '0px 30px 0px 20px',
+      backgroundColor: MAIN_LIGHTBLUE_COLOR,
+
+      transition: '0.2s ease-out',
+      opacity: 0,
+
+      '&.active': {
+        opacity: 1,
+        padding: '20px 30px 20px 20px',
+      },
+
+      '& .MuiTypography-root': {
+        display: 'flex',
+        gap: '5px',
+
+        '& span': {
+          fontWeight: 600,
+        },
+      },
+
+      '& .MuiSvgIcon-root': {
+        width: '30px',
+        cursor: 'pointer',
+        transition: '0.2s linear',
+
+        '&:hover': {
+          color: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
+    },
   },
 })
 
 export const MainTableHead = styled(TableHead)({
   '&.MuiTableHead-root': {
+    transition: '0.3s linear',
+
+    '&.active': {
+      backgroundColor: MAIN_LIGHTBLUE_COLOR,
+    },
+
     '& .MuiTableRow-root': {
       color: MAIN_BLUE_COLOR,
       borderBottom: 'none',
@@ -86,6 +128,6 @@ export const MainTableBody = styled(TableBody)({
 
 export const MainTablePagination = styled(TablePagination)({
   '& .MuiTablePagination-toolbar': {
-    paddingRight: '35px',
+    padding: '0 35px 0 0',
   },
 })

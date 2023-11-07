@@ -2,11 +2,7 @@ import React from 'react'
 
 import { TableCell, TableRow, Checkbox, TableSortLabel } from '@mui/material'
 
-import {
-  IRenderTableHeaderData,
-  MAIN_BLUE_COLOR,
-  RENDER_TABLE_HEADER_DATA,
-} from '../../../variables/variables'
+import { IRenderTableHeaderData, RENDER_TABLE_HEADER_DATA } from '../../../variables/variables'
 import { ETableSort } from '../../../variables/eNums'
 
 import { MainTableHead } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
@@ -16,7 +12,7 @@ interface ITableHeadContent {
   valueToOrderBy: string
   orderDirection: ETableSort
   handleRequestSort: (event: React.MouseEvent, property: string) => void
-  selectedCheckbox: any[]
+  selectedCheckbox: number[]
   rowsData: IRowData[]
   handleSelectedAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -39,8 +35,8 @@ const TableHeadContent = (props: ITableHeadContent) => {
 
   return (
     <>
-      <MainTableHead>
-        <TableRow sx={{ color: MAIN_BLUE_COLOR }}>
+      <MainTableHead className={`${rowsData.length === selectedCheckbox.length && 'active'}`}>
+        <TableRow>
           <TableCell>
             <Checkbox
               indeterminate={

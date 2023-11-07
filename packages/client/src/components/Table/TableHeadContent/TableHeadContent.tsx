@@ -10,15 +10,26 @@ import {
 import { ETableSort } from '../../../variables/eNums'
 
 import { MainTableHead } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { IRowData } from '../../../variables/testFetchData'
 
 interface ITableHeadContent {
   valueToOrderBy: string
   orderDirection: ETableSort
   handleRequestSort: (event: React.MouseEvent, property: string) => void
+  selectedCheckbox: any[]
+  rowsData: IRowData[]
+  handleSelectedAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const TableHeadContent = (props: ITableHeadContent) => {
-  const { valueToOrderBy, orderDirection, handleRequestSort } = props
+  const {
+    valueToOrderBy,
+    orderDirection,
+    handleRequestSort,
+    selectedCheckbox,
+    rowsData,
+    handleSelectedAllClick,
+  } = props
 
   const headerData = RENDER_TABLE_HEADER_DATA
 
@@ -31,7 +42,13 @@ const TableHeadContent = (props: ITableHeadContent) => {
       <MainTableHead>
         <TableRow sx={{ color: MAIN_BLUE_COLOR }}>
           <TableCell>
-            <Checkbox />
+            <Checkbox
+              indeterminate={
+                selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData.length
+              }
+              checked={selectedCheckbox.length === rowsData.length}
+              onChange={handleSelectedAllClick}
+            />
           </TableCell>
           {headerData.map((item: IRenderTableHeaderData) => (
             <TableCell key={item.id}>

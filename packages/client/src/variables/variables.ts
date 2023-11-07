@@ -5,6 +5,7 @@ export const MAIN_DARKCREAM_COLOR = '#dac0a3'
 export const MAIN_DARKCREAM_HOVER_COLOR = '#d9ba98'
 export const MAIN_BLUE_COLOR = '#102c57'
 export const MAIN_GRAY_COLOR = '#5b5a5a'
+export const MAIN_LIGHTBLUE_COLOR = '#39567e1e'
 
 // ================ render objects ================
 

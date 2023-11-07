@@ -4,6 +4,7 @@ import {
   MAIN_BLUE_COLOR,
   MAIN_DARKCREAM_COLOR,
   MAIN_GRAY_COLOR,
+  MAIN_LIGHTBLUE_COLOR,
 } from '../../../../variables/variables'
 
 export const MainTableContainer = styled(TableContainer)({
@@ -12,7 +13,7 @@ export const MainTableContainer = styled(TableContainer)({
     margin: '0 auto',
     marginTop: '40px',
     marginBottom: '40px',
-    padding: '15px',
+    padding: '15px 15px 15px 15px',
     backgroundColor: MAIN_DARKCREAM_COLOR,
     borderRadius: '10px',
     boxShadow: '4px 4px 23px -3px rgba(217,186,152,0.71)',
@@ -53,6 +54,11 @@ export const MainTableBody = styled(TableBody)({
     '& .MuiTableRow-root': {
       alignItems: 'center',
       height: '100%',
+      transition: '0.3s linear',
+
+      '&.active': {
+        backgroundColor: MAIN_LIGHTBLUE_COLOR,
+      },
     },
 
     '& .MuiTableCell-root': {

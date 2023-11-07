@@ -3,20 +3,30 @@ import { TableCell, TableRow, Checkbox } from '@mui/material'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 import { IRowData } from '../../../variables/testFetchData'
+import { MAIN_LIGHTBLUE_COLOR } from '../../../variables/variables'
 
 interface ITableBodyContent {
   tableRowData: IRowData[]
+  selectedCheckbox: number[]
+  handleCheckboxClick: (event: React.ChangeEvent<HTMLInputElement>, itemId: number) => void
 }
 
 const TableBodyContent = (props: ITableBodyContent) => {
-  const { tableRowData } = props
+  const { tableRowData, selectedCheckbox, handleCheckboxClick } = props
+
+  console.log(selectedCheckbox.length)
+  const isSelected = (id: number) => selectedCheckbox.indexOf(id) !== -1
+
   return (
     <>
       <MainTableBody>
         {tableRowData.map(rowItem => (
-          <TableRow key={rowItem.id}>
+          <TableRow key={rowItem.id} className={`${isSelected(rowItem.id) && 'active'}`}>
             <TableCell>
-              <Checkbox />
+              <Checkbox
+                checked={selectedCheckbox.indexOf(rowItem.id) !== -1}
+                onChange={e => handleCheckboxClick(e, rowItem.id)}
+              />
             </TableCell>
             <TableCell>{rowItem.name}</TableCell>
             <TableCell>{rowItem.band}</TableCell>

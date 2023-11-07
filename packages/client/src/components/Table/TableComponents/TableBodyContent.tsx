@@ -3,7 +3,6 @@ import { TableCell, TableRow, Checkbox } from '@mui/material'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 import { IRowData } from '../../../variables/testFetchData'
-import { MAIN_LIGHTBLUE_COLOR } from '../../../variables/variables'
 
 interface ITableBodyContent {
   tableRowData: IRowData[]

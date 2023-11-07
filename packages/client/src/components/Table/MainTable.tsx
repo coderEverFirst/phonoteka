@@ -3,12 +3,10 @@ import { Table } from '@mui/material'
 
 import { useMainTable } from './useMainTable'
 
-import TeableHeadContent from './TableHeadContent/TableHeadContent'
-import TableBodyContent from './TableBodyContent/TableBodyContent'
-
-import { Box, Typography } from '@mui/material'
-
-import DeleteIcon from '@mui/icons-material/Delete'
+import TeableHeadContent from './TableComponents/TableHeadContent'
+import TableBodyContent from './TableComponents/TableBodyContent'
+import AdditionalTableHeader from './TableComponents/AdditionalTableHeader'
+import RemoveTableModalWindow from './TableComponents/RemoveTableModalWindow'
 
 import { ETableSort } from '../../variables/eNums'
 import { rowsData, IRowData } from '../../variables/testFetchData'
@@ -26,6 +24,7 @@ const MainTable = () => {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
   const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   const scrollUpWindow = useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -41,14 +40,19 @@ const MainTable = () => {
 
   // handles for table pagination
 
-  const handlePageChange = (event: React.MouseEvent, newPage: number) => {
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    newPage: number,
+  ) => {
     setPage(newPage)
     if (rowsData.length <= 20) {
       scrollUpWindow
     }
   }
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setRowsPerPage(parseInt(event.target.value))
     setPage(0)
     if (rowsData.length <= 20) {
@@ -75,6 +79,21 @@ const MainTable = () => {
     }
   }
 
+  // handles for modal window
+
+  const handleOpenModalWindow = () => {
+    setOpenModal(true)
+  }
+
+  const handleCloseModalWindow = () => {
+    setOpenModal(false)
+  }
+
+  const handleArgeeRemoveItems = () => {
+    handleCloseModalWindow()
+    alert('Need delete items on server')
+  }
+
   // data form server after sorting with pagination
 
   const tableRowData: IRowData[] = stableSort(
@@ -87,12 +106,17 @@ const MainTable = () => {
   return (
     <>
       <MainTableContainer>
-        <Box component="div" className={`wrapper ${selectedCheckbox.length > 0 && 'active'}`}>
-          <Typography>
-            Items checked: <Box component="span">{selectedCheckbox.length}</Box>
-          </Typography>
-          <DeleteIcon />
-        </Box>
+        <AdditionalTableHeader
+          selectedCheckbox={selectedCheckbox}
+          handleOpenModalWindow={handleOpenModalWindow}
+        />
+
+        <RemoveTableModalWindow
+          openModal={openModal}
+          handleCloseModalWindow={handleCloseModalWindow}
+          handleArgeeRemoveItems={handleArgeeRemoveItems}
+        />
+
         <Table>
           <TeableHeadContent
             orderDirection={orderDirection}

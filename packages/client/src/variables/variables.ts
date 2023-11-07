@@ -2,10 +2,12 @@
 export const MAIN_BACKGROUND_COLOR = '#f8f0e5'
 export const MAIN_LIGHTCREAM_COLOR = '#eadbc8'
 export const MAIN_DARKCREAM_COLOR = '#dac0a3'
+export const MAIN_DARKCREAM_DARK_COLOR = '#7c5c39'
 export const MAIN_DARKCREAM_HOVER_COLOR = '#d9ba98'
 export const MAIN_BLUE_COLOR = '#102c57'
-export const MAIN_GRAY_COLOR = '#5b5a5a'
+export const MAIN_BACKDROP_BLUE_COLOR = 'rgba(16, 44, 86, 0.5)'
 export const MAIN_LIGHTBLUE_COLOR = '#39567e1e'
+export const MAIN_GRAY_COLOR = '#5b5a5a'
 
 // ================ render objects ================
 

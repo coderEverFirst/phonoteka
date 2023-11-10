@@ -1,0 +1,56 @@
+scalar DateTime
+
+type Query {
+  getBandById(id: Int): Band
+  getAllBands: [Band]
+}
+
+type Mutation {
+  createBand(input: BandInput!): Band
+  createTrack(input: TrackInput!): Track
+}
+
+# Track type
+type Track {
+  id: Int
+  name: String
+  createdAt: DateTime
+  releaseDate: DateTime
+  description: String
+  genre: String
+  videoUrl: String
+  format: String
+  band: Band
+}
+
+# Track input
+input TrackInput {
+  name: String!
+  releaseDate: DateTime
+  description: String
+  genre: String
+  videoUrl: String
+  format: String!
+  bandId: Int!
+}
+
+# Band type
+type Band {
+  id: Int
+  name: String
+  createdAt: DateTime
+  foundationDate: DateTime
+  genre: [String]
+  description: String
+  image: String
+  tracks: [Track]
+}
+
+# Band input
+input BandInput {
+  name: String!
+  foundationDate: DateTime
+  genre: [String!]!
+  description: String
+  image: String
+}

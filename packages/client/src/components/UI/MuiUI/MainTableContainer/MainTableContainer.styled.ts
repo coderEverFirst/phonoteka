@@ -172,6 +172,7 @@ export const RemoveMainTableModal = styled(Modal)({
 
           '&:hover': {
             backgroundColor: 'rgba(57, 86, 127, 1)',
+            boxShadow: '0 0 5px rgba(57, 86, 127, 1)',
           },
         },
 
@@ -182,6 +183,7 @@ export const RemoveMainTableModal = styled(Modal)({
           '&:hover': {
             color: MAIN_LIGHTCREAM_COLOR,
             backgroundColor: 'rgba(57, 86, 127, 1)',
+            boxShadow: '0 0 5px rgba(57, 86, 127, 1)',
           },
         },
       },

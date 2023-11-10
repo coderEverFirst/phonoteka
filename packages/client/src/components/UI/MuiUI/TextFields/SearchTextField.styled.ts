@@ -10,7 +10,7 @@ export const SearchTextField = styled(TextField)({
   '&.MuiTextField-root': {
     width: '100%',
     height: '100%',
-    maxWidth: '300px',
+    maxWidth: '500px',
   },
 
   '& .MuiFormLabel-root': {
@@ -54,5 +54,11 @@ export const SearchTextField = styled(TextField)({
         borderColor: MAIN_BLUE_COLOR,
       },
     },
+  },
+  '& .MuiSvgIcon-root': {
+    cursor: 'pointer',
+    transition: '0.3s linear',
+    color: MAIN_GRAY_COLOR,
+    '&:hover': { color: MAIN_BLUE_COLOR },
   },
 })

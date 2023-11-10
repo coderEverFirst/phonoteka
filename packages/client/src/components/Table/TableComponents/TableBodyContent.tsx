@@ -13,7 +13,6 @@ interface ITableBodyContent {
 const TableBodyContent = (props: ITableBodyContent) => {
   const { tableRowData, selectedCheckbox, handleCheckboxClick } = props
 
-  console.log(selectedCheckbox.length)
   const isSelected = (id: number) => selectedCheckbox.indexOf(id) !== -1
 
   return (

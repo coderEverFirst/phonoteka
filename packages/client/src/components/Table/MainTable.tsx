@@ -51,7 +51,7 @@ const MainTable = () => {
   }
 
   const handleRowsPerPageChange = (
-    event: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLTextAreaElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value))
     setPage(0)

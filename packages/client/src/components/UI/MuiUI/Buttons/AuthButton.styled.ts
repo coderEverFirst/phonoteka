@@ -1,6 +1,10 @@
 import styled from '@emotion/styled'
 import { Button } from '@mui/material'
-import { MAIN_DARKCREAM_HOVER_COLOR, MAIN_GRAY_COLOR } from '../../../../variables/variables'
+import {
+  MAIN_DARKCREAM_COLOR,
+  MAIN_DARKCREAM_HOVER_COLOR,
+  MAIN_GRAY_COLOR,
+} from '../../../../variables/variables'
 
 export const AuthButton = styled(Button)({
   '&.MuiButtonBase-root': {
@@ -13,6 +17,6 @@ export const AuthButton = styled(Button)({
   },
 
   '& .MuiTouchRipple-root': {
-    color: '#dac0a3',
+    color: MAIN_DARKCREAM_COLOR,
   },
 })

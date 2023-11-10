@@ -1,9 +1,9 @@
 @import '../../index.scss';
 
-.main_container {
+.user_cabinet_container {
   @include GLOBAL_PAGE_STYLES_CONTAINER;
 
-  .main_wrapper {
+  .user_cabinet_wrapper {
     @include GLOBAL_PAGE_STYLES_WRAPPER;
   }
 }

@@ -12,15 +12,15 @@ import Footer from './components/Footer/Footer'
 
 // ============ Styles ============
 import './App.scss'
-import UserCabinetPage from './pages/UserCabinetPage/UserCabinetPage'
-import { LOGIN_PAGE, SIGN_UP_PAGE, USER_CABINET_PAGE } from './variables/linksUrls'
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
+import { LOGIN_PAGE, SIGN_UP_PAGE, USER_PROFILE_PAGE } from './variables/linksUrls'
 
 const App = () => {
   const { pathname } = useLocation()
 
   const turnOnHeaderAndFooter = useCallback(
     (component: JSX.Element) => {
-      return pathname !== '/login' && pathname !== '/sign-up' && component
+      return pathname !== LOGIN_PAGE && pathname !== SIGN_UP_PAGE && component
     },
     [pathname],
   )
@@ -35,7 +35,7 @@ const App = () => {
         <Route index element={<MainPage />} />
 
         {/* check linksURLs need to gert unique codes for user */}
-        <Route path={USER_CABINET_PAGE} element={<UserCabinetPage />} />
+        <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />} />
       </Routes>
       {turnOnHeaderAndFooter(<Footer />)}
     </div>

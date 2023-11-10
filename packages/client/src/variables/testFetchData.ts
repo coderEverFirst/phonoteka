@@ -1,20 +1,24 @@
+import moment from 'moment'
+
+// console.log(moment('12-12-2012').toDate())
+
 export interface IUserData {
   id: number
   email: string
   name: string
   avatarImg: string
-  createdAt: string
+  createdAt?: Date
   token: string
 }
 
-export const userData = {
-  id: '93c25ed1-d4f0-4b2f-a2a3-5eed324376e5',
+export const userData: IUserData = {
+  id: 1,
   email: 'yoptaEmail@yopta.com',
   name: 'Billi Harington',
   avatarImg:
     'https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fuser-405654523&psig=AOvVaw2yi7SBVldonmYZww0eqaR6&ust=1699731024235000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLDvm9GVuoIDFQAAAAAdAAAAABAE',
-  createdAt: '12.12.2012',
-  token: 'token',
+  // createdAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
+  token: '98sd32-fdfd3-dfs-123xcxs-32423',
 }
 
 export interface IRowData {

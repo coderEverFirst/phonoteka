@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+.user_profile_container {
+  @include GLOBAL_PAGE_STYLES_CONTAINER;
+
+  .user_profile_wrapper {
+    @include GLOBAL_PAGE_STYLES_WRAPPER;
+    align-items: center;
+
+    .profile_title {
+      font-size: 35px;
+      font-weight: 500;
+    }
+
+    .profile_user_content {
+      display: flex;
+      gap: 15%;
+      width: 80%;
+
+      margin-top: 20px;
+
+      .profile_user_content_image {
+        max-width: 250px;
+        width: 100%;
+        max-height: 250px;
+        height: 100%;
+      }
+
+      .profile_user_content_info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        margin-top: 10px;
+
+        .user_info {
+          & span {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .profile_suptitle {
+      font-size: 25px;
+      font-weight: 500;
+    }
+  }
+}

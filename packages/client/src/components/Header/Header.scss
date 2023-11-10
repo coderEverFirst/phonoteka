@@ -71,15 +71,14 @@
       gap: 20px;
       height: 45px;
 
-      .header_user_cabinet {
+      .header_user_profile {
         @include headerFunctionLinks;
         justify-content: space-between;
         gap: 10px;
 
         .header_user_avatar {
           width: 30px;
-          border-radius: 50%;
-          transition: 0.3s linear;
+          height: 30px;
         }
       }
 

@@ -1,9 +1,0 @@
-@import '../../index.scss';
-
-.user_cabinet_container {
-  @include GLOBAL_PAGE_STYLES_CONTAINER;
-
-  .user_cabinet_wrapper {
-    @include GLOBAL_PAGE_STYLES_WRAPPER;
-  }
-}

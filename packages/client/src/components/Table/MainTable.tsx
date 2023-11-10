@@ -3,7 +3,7 @@ import { Table } from '@mui/material'
 
 import { useMainTable } from './useMainTable'
 
-import TeableHeadContent from './TableComponents/TableHeadContent'
+import TableHeadContent from './TableComponents/TableHeadContent'
 import TableBodyContent from './TableComponents/TableBodyContent'
 import AdditionalTableHeader from './TableComponents/AdditionalTableHeader'
 import RemoveTableModalWindow from './TableComponents/RemoveTableModalWindow'
@@ -60,7 +60,7 @@ const MainTable = () => {
     }
   }
 
-  // handles for table checkboxs
+  // handles for table checkboxes
 
   const handleSelectedAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -89,7 +89,7 @@ const MainTable = () => {
     setOpenModal(false)
   }
 
-  const handleArgeeRemoveItems = () => {
+  const handleAgreeRemoveItems = () => {
     handleCloseModalWindow()
     alert('Need delete items on server')
   }
@@ -101,7 +101,7 @@ const MainTable = () => {
     getComparator(orderDirection, valueToOrderBy),
   ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
-  // if you need to remove checkboxes for the entire list of data and put them on the current pagination page, throw tableRowData in TeableHeadContent instead of rowsData
+  // if you need to remove checkboxes for the entire list of data and put them on the current pagination page, throw tableRowData in TableHeadContent instead of rowsData
 
   return (
     <>
@@ -114,11 +114,11 @@ const MainTable = () => {
         <RemoveTableModalWindow
           openModal={openModal}
           handleCloseModalWindow={handleCloseModalWindow}
-          handleArgeeRemoveItems={handleArgeeRemoveItems}
+          handleAgreeRemoveItems={handleAgreeRemoveItems}
         />
 
         <Table>
-          <TeableHeadContent
+          <TableHeadContent
             orderDirection={orderDirection}
             valueToOrderBy={valueToOrderBy}
             handleRequestSort={handleRequestSort}

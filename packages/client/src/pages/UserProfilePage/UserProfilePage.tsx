@@ -27,13 +27,13 @@ const UserProfilePage = () => {
             <li className="user_info">
               E-Mail: <span>{userData.email}</span>
             </li>
-            <li className="user_info">
+            {/* <li className="user_info">
               Profile created at: <span>{userData.createdAt}</span>
-            </li>
+            </li> */}
           </ul>
         </div>
 
-        <h3 className="profile_suptitle">Your Phonoteka statistic</h3>
+        <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
 
         <div>
           Records in yours library: <span>{rowsData.length}</span>

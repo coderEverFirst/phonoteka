@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { TextField } from '@mui/material'
 import {
   MAIN_BLUE_COLOR,
-  MAIN_DARKCREAM_COLOR,
+  MAIN_DARK_CREAM_COLOR,
   MAIN_GRAY_COLOR,
 } from '../../../../variables/variables'
 
@@ -35,7 +35,7 @@ export const SearchTextField = styled(TextField)({
 
     '& fieldset': {
       transition: '0.2s linear',
-      border: `1px solid  ${MAIN_DARKCREAM_COLOR}`,
+      border: `1px solid  ${MAIN_DARK_CREAM_COLOR}`,
     },
 
     '&.Mui-focused fieldset': {

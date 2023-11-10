@@ -15,11 +15,11 @@
 
   transition: 0.3s linear;
   color: $MAIN_GRAY_COLOR;
-  background-color: $MAIN_DARKCREAM_COLOR;
+  background-color: $MAIN_DARK_CREAM_COLOR;
 
   &:hover {
     color: $MAIN_BLUE_COLOR;
-    filter: contrast(105%) drop-shadow(0 0 5px $MAIN_DARKCREAM_COLOR);
+    filter: contrast(105%) drop-shadow(0 0 5px $MAIN_DARK_CREAM_COLOR);
   }
 }
 
@@ -27,7 +27,7 @@
   position: fixed;
   z-index: 10;
   width: 100%;
-  background-color: $MAIN_LIGHTCREAM_COLOR;
+  background-color: $MAIN_LIGHT_CREAM_COLOR;
 
   .header_container {
     display: flex;

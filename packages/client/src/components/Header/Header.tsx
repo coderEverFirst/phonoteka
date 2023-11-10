@@ -14,7 +14,7 @@ import { SearchTextField } from '../UI/MuiUI/TextFields/SearchTextField.styled'
 import { USER_PROFILE_PAGE } from '../../variables/linksUrls'
 
 import './Header.scss'
-import { userData } from '../../variables/testFetchData'
+// import { userData } from '../../variables/testFetchData'
 
 const Header = () => {
   const { pathname } = useLocation()

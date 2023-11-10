@@ -7,11 +7,11 @@ import { RemoveMainTableModal } from '../../UI/MuiUI/MainTableContainer/MainTabl
 interface IRemoveTableModalWindow {
   openModal: boolean
   handleCloseModalWindow: () => void
-  handleArgeeRemoveItems: () => void
+  handleAgreeRemoveItems: () => void
 }
 
 const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
-  const { openModal, handleCloseModalWindow, handleArgeeRemoveItems } = props
+  const { openModal, handleCloseModalWindow, handleAgreeRemoveItems } = props
   return (
     <>
       <RemoveMainTableModal
@@ -29,10 +29,10 @@ const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
           <Box>
             <Typography component="h2">Do you agree to remove this?</Typography>
             <div className="buttons">
-              <Button className="btn_argee" onClick={handleArgeeRemoveItems}>
+              <Button className="btn_agree" onClick={handleAgreeRemoveItems}>
                 Yes
               </Button>
-              <Button className="btn_not_argee" onClick={handleCloseModalWindow}>
+              <Button className="btn_not_agree" onClick={handleCloseModalWindow}>
                 No
               </Button>
             </div>

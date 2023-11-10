@@ -3,12 +3,10 @@ import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@m
 import {
   MAIN_BACKDROP_BLUE_COLOR,
   MAIN_BLUE_COLOR,
-  MAIN_DARKCREAM_COLOR,
-  MAIN_DARKCREAM_DARK_COLOR,
-  MAIN_DARKCREAM_HOVER_COLOR,
+  MAIN_DARK_CREAM_COLOR,
   MAIN_GRAY_COLOR,
   MAIN_LIGHTBLUE_COLOR,
-  MAIN_LIGHTCREAM_COLOR,
+  MAIN_LIGHT_CREAM_COLOR,
 } from '../../../../variables/variables'
 
 export const MainTableContainer = styled(TableContainer)({
@@ -18,7 +16,7 @@ export const MainTableContainer = styled(TableContainer)({
     marginTop: '40px',
     marginBottom: '40px',
     padding: '15px 15px 15px 15px',
-    backgroundColor: MAIN_DARKCREAM_COLOR,
+    backgroundColor: MAIN_DARK_CREAM_COLOR,
     borderRadius: '10px',
     boxShadow: '4px 4px 23px -3px rgba(217,186,152,0.71)',
 
@@ -150,7 +148,7 @@ export const RemoveMainTableModal = styled(Modal)({
     padding: '40px 30px',
     borderRadius: '10px',
     boxShadow: '4px 5px 28px -4px rgba(0,0,0,0.75)',
-    backgroundColor: MAIN_DARKCREAM_COLOR,
+    backgroundColor: MAIN_DARK_CREAM_COLOR,
 
     '& .MuiTypography-root': {
       fontSize: '20px',
@@ -166,8 +164,8 @@ export const RemoveMainTableModal = styled(Modal)({
       '& .MuiButtonBase-root': {
         padding: '8px 35px',
 
-        '&.btn_argee': {
-          color: MAIN_LIGHTCREAM_COLOR,
+        '&.btn_agree': {
+          color: MAIN_LIGHT_CREAM_COLOR,
           backgroundColor: 'rgba(57, 86, 127, 0.8)',
 
           '&:hover': {
@@ -176,12 +174,12 @@ export const RemoveMainTableModal = styled(Modal)({
           },
         },
 
-        '&.btn_not_argee': {
+        '&.btn_not_agree': {
           color: MAIN_GRAY_COLOR,
           backgroundColor: 'rgba(57, 86, 127, 0.25)',
 
           '&:hover': {
-            color: MAIN_LIGHTCREAM_COLOR,
+            color: MAIN_LIGHT_CREAM_COLOR,
             backgroundColor: 'rgba(57, 86, 127, 1)',
             boxShadow: '0 0 5px rgba(57, 86, 127, 1)',
           },

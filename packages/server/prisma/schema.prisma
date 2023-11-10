@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  token     String   @unique
+}
+
+model Band {
+  id             Int       @id @default(autoincrement())
+  name           String
+  createdAt      DateTime  @default(now())
+  foundationDate DateTime?
+  genre          String[]
+  description    String?
+  image          String?
+  tracks         Track[]
+}
+
+model Track {
+  id          Int       @id @default(autoincrement())
+  name        String
+  createdAt   DateTime  @default(now())
+  releaseDate DateTime?
+  description String?
+  genre       String?
+  videoUrl    String?
+  format      String?
+  Band        Band      @relation(fields: [bandId], references: [id])
+  bandId      Int
+}

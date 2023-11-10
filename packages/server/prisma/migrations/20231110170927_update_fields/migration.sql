@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Band" ADD COLUMN     "image" TEXT,
+ALTER COLUMN "foundationDate" DROP NOT NULL,
+ALTER COLUMN "description" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Track" ALTER COLUMN "releaseDate" DROP NOT NULL,
+ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "genre" DROP NOT NULL,
+ALTER COLUMN "videoUrl" DROP NOT NULL,
+ALTER COLUMN "format" DROP NOT NULL;

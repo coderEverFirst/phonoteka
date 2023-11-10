@@ -9,14 +9,25 @@
   "scripts": {
     "start": "nodemon",
     "build": "tsc",
+    "sync-prisma-postgr": "npx prisma migrate dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.14",
     "@types/express": "^4.17.18",
     "nodemon": "^3.0.1",
+    "prisma": "^5.5.2",
     "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@apollo/server": "^4.9.3",
+    "@graphql-tools/graphql-file-loader": "^8.0.0",
+    "@graphql-tools/load": "^8.0.0",
+    "@prisma/client": "^5.3.1",
+    "apollo-server-express": "^3.12.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "graphql": "^16.8.1"
   }
 }

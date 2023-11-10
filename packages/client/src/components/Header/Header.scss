@@ -10,13 +10,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 40px;
     margin: 0 auto;
     padding: 20px 100px;
     max-width: 1920px;
 
     .header_logo_content {
       display: flex;
-      flex: 1 1 70%;
 
       gap: 15px;
       cursor: pointer;
@@ -28,49 +28,77 @@
 
       .header_name {
         font-size: 24px;
+        text-decoration: none;
+        color: #000;
+
         span {
           font-size: 28px;
           font-weight: bold;
         }
       }
+      transition: 0.3s linear;
+      &:hover {
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+      }
     }
     .header_function_content {
       display: flex;
-      flex: 1 1 30%;
       gap: 20px;
       align-items: center;
       justify-content: end;
+      opacity: 0.85;
 
-      .header_input_block {
+      height: 45px;
+
+      .header_user_cabinet {
         display: flex;
-        gap: 5px;
-        color: $MAIN_GRAY_COLOR;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+        height: 100%;
 
-        .header_input_search {
-          cursor: pointer;
-          transition: 0.2s ease-out;
+        background-color: $MAIN_DARKCREAM_COLOR;
+        padding: 0 20px;
+        border-radius: 10px;
+
+        text-decoration: none;
+        text-wrap: nowrap;
+
+        // .header_user_name {
+        // }
+
+        .header_user_avatar {
+          width: 30px;
+          border-radius: 50%;
+          transition: 0.3s linear;
         }
 
+        transition: 0.3s linear;
+        color: $MAIN_GRAY_COLOR;
+        color: $MAIN_GRAY_COLOR;
+        background-color: $MAIN_DARKCREAM_COLOR;
+
         &:hover {
-          .header_input_search {
-            color: $MAIN_BLUE_COLOR;
-          }
+          filter: contrast(105%) drop-shadow(0 0 5px $MAIN_DARKCREAM_COLOR);
         }
       }
 
       .header_log_out_link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
         text-decoration: none;
         white-space: nowrap;
-        background-color: $MAIN_DARKCREAM_COLOR;
-        padding: 8px 20px;
+        // background-color: $MAIN_DARKCREAM_COLOR;
+        padding: 0 20px;
         border-radius: 10px;
-        font-size: 18px;
-        color: #000;
         transition: 0.3s linear;
+        color: $MAIN_GRAY_COLOR;
+        background-color: $MAIN_DARKCREAM_COLOR;
 
         &:hover {
-          background-color: $MAIN_DARKCREAM_HOVER_COLOR;
-          color: $MAIN_BLUE_COLOR;
+          filter: contrast(105%) drop-shadow(0 0 5px $MAIN_DARKCREAM_COLOR);
         }
       }
     }

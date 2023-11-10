@@ -12,6 +12,9 @@ import Footer from './components/Footer/Footer'
 
 // ============ Styles ============
 import './App.scss'
+import UserPage from './pages/UserPage/UserPage'
+import { LOGIN_PAGE, SIGN_UP_PAGE, USER_CABINET_PAGE } from './variables/linksUrls'
+
 
 const App = () => {
   const { pathname } = useLocation()
@@ -27,10 +30,13 @@ const App = () => {
     <div className="App">
       {turnOnHeaderAndFooter(<Header />)}
       <Routes>
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/sign-up" element={<AuthPage />} />
+        <Route path={LOGIN_PAGE} element={<AuthPage />} />
+        <Route path={SIGN_UP_PAGE} element={<AuthPage />} />
+
         <Route index element={<MainPage />} />
-        {/* <Route path='/' element={<Add/>}/> */}
+
+        {/* check linksURLs need to gert unique codes for user */}
+        <Route path={USER_CABINET_PAGE} element={<UserPage />} />
       </Routes>
       {turnOnHeaderAndFooter(<Footer />)}
     </div>

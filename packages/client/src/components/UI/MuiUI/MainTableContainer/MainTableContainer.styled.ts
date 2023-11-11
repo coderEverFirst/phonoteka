@@ -132,7 +132,7 @@ export const MainTablePagination = styled(TablePagination)({
   '& .MuiTablePagination-toolbar': {
     padding: '0 35px 0 0',
   },
-})
+}) as typeof TablePagination
 
 export const RemoveMainTableModal = styled(Modal)({
   '& .MuiBackdrop-root': {

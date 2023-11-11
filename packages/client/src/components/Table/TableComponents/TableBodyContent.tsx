@@ -7,7 +7,7 @@ import { IRowData } from '../../../variables/testFetchData'
 interface ITableBodyContent {
   tableRowData: IRowData[]
   selectedCheckbox: number[]
-  handleCheckboxClick: (event: React.ChangeEvent<HTMLInputElement>, itemId: number) => void
+  handleCheckboxClick: (checked: boolean, itemId: number) => void
 }
 
 const TableBodyContent = (props: ITableBodyContent) => {
@@ -23,7 +23,7 @@ const TableBodyContent = (props: ITableBodyContent) => {
             <TableCell>
               <Checkbox
                 checked={selectedCheckbox.indexOf(rowItem.id) !== -1}
-                onChange={e => handleCheckboxClick(e, rowItem.id)}
+                onChange={e => handleCheckboxClick(e.target.checked, rowItem.id)}
               />
             </TableCell>
             <TableCell>{rowItem.name}</TableCell>

@@ -31,10 +31,7 @@ const App = () => {
       <Routes>
         <Route path={LOGIN_PAGE} element={<AuthPage />} />
         <Route path={SIGN_UP_PAGE} element={<AuthPage />} />
-
         <Route index element={<MainPage />} />
-
-        {/* check linksURLs need to gert unique codes for user */}
         <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />} />
       </Routes>
       {turnOnHeaderAndFooter(<Footer />)}

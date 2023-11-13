@@ -33,6 +33,8 @@ const TableHeadContent = (props: ITableHeadContent) => {
     handleRequestSort(event, property)
   }
 
+  console.log('valueToOrderBy', valueToOrderBy)
+
   return (
     <>
       <MainTableHead className={`${rowsData.length === selectedCheckbox.length && 'active'}`}>
@@ -50,7 +52,7 @@ const TableHeadContent = (props: ITableHeadContent) => {
             <TableCell key={item.id}>
               <TableSortLabel
                 active={valueToOrderBy === item.label}
-                direction={valueToOrderBy === item.label ? orderDirection : ETableSort.asc}
+                direction={valueToOrderBy === item.label ? ETableSort.asc : orderDirection}
                 onClick={createSortHandler(item.value)}
               >
                 {item.label}

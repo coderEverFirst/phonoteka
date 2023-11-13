@@ -33,35 +33,29 @@ const TableHeadContent = (props: ITableHeadContent) => {
     handleRequestSort(event, property)
   }
 
-  console.log('valueToOrderBy', valueToOrderBy)
-
   return (
-    <>
-      <MainTableHead className={`${rowsData.length === selectedCheckbox.length && 'active'}`}>
-        <TableRow>
-          <TableCell>
-            <Checkbox
-              indeterminate={
-                selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData.length
-              }
-              checked={selectedCheckbox.length === rowsData.length}
-              onChange={e => handleSelectedAllClick(e.target.checked)}
-            />
+    <MainTableHead className={`${rowsData.length === selectedCheckbox.length && 'active'}`}>
+      <TableRow>
+        <TableCell>
+          <Checkbox
+            indeterminate={selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData.length}
+            checked={selectedCheckbox.length === rowsData.length}
+            onChange={e => handleSelectedAllClick(e.target.checked)}
+          />
+        </TableCell>
+        {headerData.map((item: IRenderTableHeaderData) => (
+          <TableCell key={item.id}>
+            <TableSortLabel
+              active={valueToOrderBy === item.label}
+              direction={valueToOrderBy === item.label ? ETableSort.asc : orderDirection}
+              onClick={createSortHandler(item.value)}
+            >
+              {item.label}
+            </TableSortLabel>
           </TableCell>
-          {headerData.map((item: IRenderTableHeaderData) => (
-            <TableCell key={item.id}>
-              <TableSortLabel
-                active={valueToOrderBy === item.label}
-                direction={valueToOrderBy === item.label ? ETableSort.asc : orderDirection}
-                onClick={createSortHandler(item.value)}
-              >
-                {item.label}
-              </TableSortLabel>
-            </TableCell>
-          ))}
-        </TableRow>
-      </MainTableHead>
-    </>
+        ))}
+      </TableRow>
+    </MainTableHead>
   )
 }
 

@@ -12,14 +12,12 @@ interface IAdditionalTableHeader {
 const AdditionalTableHeader = (props: IAdditionalTableHeader) => {
   const { selectedCheckbox, handleOpenModalWindow } = props
   return (
-    <>
-      <Box component="div" className={`wrapper ${selectedCheckbox.length > 0 && 'active'}`}>
-        <Typography>
-          Items checked: <Box component="span">{selectedCheckbox.length}</Box>
-        </Typography>
-        <DeleteIcon onClick={handleOpenModalWindow} />
-      </Box>
-    </>
+    <Box component="div" className={`wrapper ${selectedCheckbox.length > 0 && 'active'}`}>
+      <Typography>
+        Items checked: <Box component="span">{selectedCheckbox.length}</Box>
+      </Typography>
+      <DeleteIcon onClick={handleOpenModalWindow} />
+    </Box>
   )
 }
 

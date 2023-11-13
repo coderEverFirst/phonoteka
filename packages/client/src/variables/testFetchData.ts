@@ -1,7 +1,3 @@
-// import moment from 'moment'
-
-// console.log(moment('12-12-2012').toDate())
-
 export interface IUserData {
   id: number
   email: string

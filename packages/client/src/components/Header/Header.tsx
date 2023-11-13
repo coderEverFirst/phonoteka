@@ -19,25 +19,9 @@ import './Header.scss'
 const Header = () => {
   const { pathname } = useLocation()
 
-  // const [searchFocus, isSearchFocus] = useState<boolean>()
-
   const scrollUpWindow = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
-
-  // useEffect(() => {
-  //   const handleKeyPress = (event: KeyboardEvent) => {
-  //     if (event.ctrlKey && event.key === 'b') {
-  //       isSearchFocus(!searchFocus)
-  //     }
-  //   }
-
-  //   window.addEventListener('keydown', handleKeyPress)
-
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyPress)
-  //   }
-  // }, [searchFocus])
 
   return (
     <div className="header_wrapper">
@@ -58,7 +42,6 @@ const Header = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" className="header_input_block">
-                {/* <div className="header_input_hotkey">Ctrl+B</div> */}
                 <SearchIcon className="header_input_search" />
               </InputAdornment>
             ),

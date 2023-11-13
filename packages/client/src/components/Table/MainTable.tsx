@@ -99,48 +99,46 @@ const MainTable = () => {
   // if you need to remove checkboxes for the entire list of data and put them on the current pagination page, throw tableRowData in TableHeadContent instead of rowsData
 
   return (
-    <>
-      <MainTableContainer>
-        <AdditionalTableHeader
+    <MainTableContainer>
+      <AdditionalTableHeader
+        selectedCheckbox={selectedCheckbox}
+        handleOpenModalWindow={handleOpenModalWindow}
+      />
+
+      <RemoveTableModalWindow
+        openModal={openModal}
+        handleCloseModalWindow={handleCloseModalWindow}
+        handleAgreeRemoveItems={handleAgreeRemoveItems}
+      />
+
+      <Table>
+        <TableHeadContent
+          orderDirection={orderDirection}
+          valueToOrderBy={valueToOrderBy}
+          handleRequestSort={handleRequestSort}
+          rowsData={rowsData}
           selectedCheckbox={selectedCheckbox}
-          handleOpenModalWindow={handleOpenModalWindow}
+          handleSelectedAllClick={handleSelectedAllClick}
         />
-
-        <RemoveTableModalWindow
-          openModal={openModal}
-          handleCloseModalWindow={handleCloseModalWindow}
-          handleAgreeRemoveItems={handleAgreeRemoveItems}
+        <TableBodyContent
+          tableRowData={tableRowData}
+          selectedCheckbox={selectedCheckbox}
+          handleCheckboxClick={handleCheckboxClick}
         />
-
-        <Table>
-          <TableHeadContent
-            orderDirection={orderDirection}
-            valueToOrderBy={valueToOrderBy}
-            handleRequestSort={handleRequestSort}
-            rowsData={rowsData}
-            selectedCheckbox={selectedCheckbox}
-            handleSelectedAllClick={handleSelectedAllClick}
-          />
-          <TableBodyContent
-            tableRowData={tableRowData}
-            selectedCheckbox={selectedCheckbox}
-            handleCheckboxClick={handleCheckboxClick}
-          />
-        </Table>
-        <MainTablePagination
-          rowsPerPageOptions={[10, 15, 20, 50, rowsData.length]}
-          component="div"
-          count={rowsData.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-          labelRowsPerPage={null}
-          showFirstButton={true}
-          showLastButton={true}
-        />
-      </MainTableContainer>
-    </>
+      </Table>
+      <MainTablePagination
+        rowsPerPageOptions={[10, 15, 20, 50, rowsData.length]}
+        component="div"
+        count={rowsData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        labelRowsPerPage={null}
+        showFirstButton={true}
+        showLastButton={true}
+      />
+    </MainTableContainer>
   )
 }
 

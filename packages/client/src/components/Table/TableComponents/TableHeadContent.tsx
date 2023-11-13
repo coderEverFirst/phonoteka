@@ -14,7 +14,7 @@ interface ITableHeadContent {
   handleRequestSort: (event: React.MouseEvent, property: string) => void
   selectedCheckbox: number[]
   rowsData: IRowData[]
-  handleSelectedAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelectedAllClick: (checked: boolean) => void
 }
 
 const TableHeadContent = (props: ITableHeadContent) => {
@@ -45,7 +45,7 @@ const TableHeadContent = (props: ITableHeadContent) => {
                 selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData.length
               }
               checked={selectedCheckbox.length === rowsData.length}
-              onChange={handleSelectedAllClick}
+              onChange={e => handleSelectedAllClick(e.target.checked)}
             />
           </TableCell>
           {headerData.map((item: IRenderTableHeaderData) => (

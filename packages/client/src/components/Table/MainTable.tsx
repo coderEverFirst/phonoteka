@@ -26,7 +26,7 @@ const MainTable = () => {
   const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
   const [openModal, setOpenModal] = useState<boolean>(false)
 
-  const scrollUpWindow = useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [page, rowsPerPage])
 
@@ -45,9 +45,6 @@ const MainTable = () => {
     newPage: number,
   ) => {
     setPage(newPage)
-    if (rowsData.length <= 20) {
-      scrollUpWindow
-    }
   }
 
   const handleRowsPerPageChange = (
@@ -55,15 +52,12 @@ const MainTable = () => {
   ) => {
     setRowsPerPage(parseInt(event.target.value))
     setPage(0)
-    if (rowsData.length <= 20) {
-      scrollUpWindow
-    }
   }
 
   // handles for table checkboxes
 
-  const handleSelectedAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
+  const handleSelectedAllClick = (checked: boolean) => {
+    if (checked) {
       const newSelectedCheckbox = rowsData.map(item => item.id)
       setSelectedCheckbox(newSelectedCheckbox)
     } else {
@@ -71,8 +65,8 @@ const MainTable = () => {
     }
   }
 
-  const handleCheckboxClick = (event: React.ChangeEvent<HTMLInputElement>, itemId: number) => {
-    if (event.target.checked) {
+  const handleCheckboxClick = (checked: boolean, itemId: number) => {
+    if (checked) {
       setSelectedCheckbox(prevSelected => [...prevSelected, itemId])
     } else {
       setSelectedCheckbox(prevSelected => prevSelected.filter(id => id !== itemId))
@@ -96,6 +90,7 @@ const MainTable = () => {
 
   // data form server after sorting with pagination
 
+  // this will be simplified in future with right backend data - .slice + comparator
   const tableRowData: IRowData[] = stableSort(
     rowsData,
     getComparator(orderDirection, valueToOrderBy),

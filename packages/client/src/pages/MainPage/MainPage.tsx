@@ -1,10 +1,17 @@
-import './MainPage.scss'
-
 import React from 'react'
+
+import MainTable from '../../components/Table/MainTable'
+
+import './MainPage.scss'
 
 const MainPage = () => {
   return (
-    <div>MainPage</div>
+    <div className="main_container">
+      <div className="main_wrapper">
+        <div className="main_title"> TABLEEEEEEEEEEEE!!!!!!!!!!</div>
+        <MainTable />
+      </div>
+    </div>
   )
 }
 

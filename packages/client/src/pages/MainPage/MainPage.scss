@@ -1,0 +1,9 @@
+@import '../../index.scss';
+
+.main_container {
+  @include GLOBAL_PAGE_STYLES_CONTAINER;
+
+  .main_wrapper {
+    @include GLOBAL_PAGE_STYLES_WRAPPER;
+  }
+}

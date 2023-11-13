@@ -1,4 +1,35 @@
+// =========== Variables ===========
+
+// colors for scss
+$MAIN_BACKGROUND_COLOR: #f8f0e5;
+$MAIN_LIGHT_CREAM_COLOR: #eadbc8;
+$MAIN_DARK_CREAM_COLOR: #dac0a3;
+$MAIN_DARK_CREAM_DARK_COLOR: #c7ae93;
+
+$MAIN_DARK_CREAM_HOVER_COLOR: #b69672;
+$MAIN_BLUE_COLOR: #102c57;
+$MAIN_BACKDROP_BLUE_COLOR: rgba(16, 44, 86, 0.5);
+$MAIN_LIGHTBLUE_COLOR: #39567e1e;
+$MAIN_GRAY_COLOR: #5b5a5a;
+
+$BLACK: #000;
+$WHITE: #fff;
+
+// fonts for scss
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+// mixins for scss
+@mixin GLOBAL_PAGE_STYLES_CONTAINER {
+  flex: 1 1 auto;
+  padding-top: 85px;
+  margin: 0 100px;
+}
+@mixin GLOBAL_PAGE_STYLES_WRAPPER {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  background-color: $MAIN_BACKGROUND_COLOR;
+}
 
 // ================ NullStyle ================
 
@@ -90,7 +121,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
-li{
+li {
   list-style-type: none;
 }
 
@@ -101,12 +132,11 @@ li{
 body {
   height: 100%;
   font-family: 'Poppins', sans-serif;
-  background-color: #fff;
-
+  background-color: $WHITE;
 }
 
 .wrapper {
-  background-color: #fff;
+  background-color: $WHITE;
   width: 100%;
   margin: 0 auto;
   min-height: 100%;
@@ -114,4 +144,6 @@ body {
   flex-direction: column;
 }
 
-
+body {
+  background-color: $MAIN_BACKGROUND_COLOR;
+}

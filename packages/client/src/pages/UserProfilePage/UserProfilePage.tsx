@@ -4,6 +4,8 @@ import { Avatar } from '@mui/material'
 
 import { userData, rowsData } from '../../variables/testFetchData'
 
+import ProfileChart from '../../components/ProfileChart/ProfileChart'
+
 import userImg from '../../assets/user_test_avatar.jpg'
 
 import './UserProfilePage.scss'
@@ -37,7 +39,7 @@ const UserProfilePage = () => {
 
         <div>
           Records in yours library: <span>{rowsData.length}</span>
-          <div> Charts</div>
+          <ProfileChart />
         </div>
       </div>
     </div>

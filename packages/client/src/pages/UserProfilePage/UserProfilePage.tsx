@@ -35,11 +35,18 @@ const UserProfilePage = () => {
           </ul>
         </div>
 
-        <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
+        <div className="profile_user_stats">
+          <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
+          <ul className="profile_stats_info">
+            <li className="stats_info_item">
+              Records in yours library: <span>{rowsData.length}</span>
+            </li>
+          </ul>
+          <div className="profile_chart_content">
+            <h4 className="chart_content_title">Your statistics in charts</h4>
 
-        <div>
-          Records in yours library: <span>{rowsData.length}</span>
-          <ProfileChart />
+            <ProfileChart />
+          </div>
         </div>
       </div>
     </div>

@@ -1,41 +1,66 @@
-import React from 'react'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import React, { useState, useEffect } from 'react'
 
-import { Pie } from 'react-chartjs-2'
-
-ChartJS.register(ArcElement, Tooltip, Legend)
+import { PieChart } from '@mui/x-charts/PieChart'
 
 const ProfileChart = () => {
-  const testDataChart = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  }
+  const chartData = [
+    { id: 0, value: 10, label: 'Rock' },
+    { id: 1, value: 15, label: 'Classic' },
+    { id: 3, value: 25, label: 'Pop' },
+    { id: 4, value: 56, label: 'Techno' },
+    { id: 5, value: 84, label: 'Hip-Hop' },
+    { id: 6, value: 12, label: 'Lo-Fi' },
+    { id: 7, value: 73, label: 'Dude`s music' },
+  ]
+
+  const [chartSpeedAngle, setChartSpeedAngle] = useState<number>(0)
+
+  useEffect(() => {
+    for (let i = 1; i <= 360; i++) {
+      const speedCoefficient: number = 0.6
+
+      setTimeout(() => {
+        setChartSpeedAngle(i)
+      }, i / speedCoefficient)
+    }
+  }, [])
+
+  const paletteChart = [
+    '#fd7f6f',
+    '#7eb0d5',
+    '#b2e061',
+    '#bd7ebe',
+    '#ffb55a',
+    '#ffee65',
+    '#beb9db',
+    '#fdcce5',
+    '#8bd3c7',
+  ]
+
+  const pieParams = { height: 500, margin: { left: 80, right: 80, top: 40, bottom: 100 } }
+
   return (
-    <div>
-      <Pie data={testDataChart} />
-    </div>
+    <PieChart
+      series={[
+        {
+          data: chartData,
+          highlightScope: { faded: 'global', highlighted: 'item' },
+          faded: { additionalRadius: -5, color: 'gray' },
+
+          startAngle: 0,
+          endAngle: chartSpeedAngle,
+        },
+      ]}
+      colors={paletteChart}
+      slotProps={{
+        legend: {
+          direction: 'row',
+          position: { vertical: 'bottom', horizontal: 'middle' },
+          padding: 0,
+        },
+      }}
+      {...pieParams}
+    />
   )
 }
 

@@ -11,7 +11,7 @@ interface ITrackDetails {
   open: boolean
 }
 
-const TrackDetailsModal = (props: ITrackDetails) => {
+const BandDetailsModal = (props: ITrackDetails) => {
   const { handleClose, open } = props
 
   return (
@@ -61,4 +61,4 @@ const TrackDetailsModal = (props: ITrackDetails) => {
   )
 }
 
-export default TrackDetailsModal
+export default BandDetailsModal

@@ -3,7 +3,7 @@ import { TableCell, TableRow, Checkbox } from '@mui/material'
 
 import { IRowData } from '../../../variables/testFetchData'
 
-import TrackDetailsModal from './TrackDetailsModal'
+import BandDetailsModal from './BandDetailsModal'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 
@@ -54,7 +54,7 @@ const TableBodyContent = (props: ITableBodyContent) => {
         ))}
       </MainTableBody>
 
-      <TrackDetailsModal handleClose={handleClose} open={open} />
+      <BandDetailsModal handleClose={handleClose} open={open} />
     </>
   )
 }

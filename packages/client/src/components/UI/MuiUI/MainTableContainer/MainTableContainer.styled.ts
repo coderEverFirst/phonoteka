@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@mui/material'
 import {
-  MAIN_BACKDROP_BLUE_COLOR,
+  BLACK,
   MAIN_BLUE_COLOR,
   MAIN_DARK_CREAM_COLOR,
   MAIN_DARK_CREAM_HOVER_COLOR,
@@ -133,6 +133,15 @@ export const MainTableBody = styled(TableBody)({
 
       '&:nth-last-of-type(-n+3)': {
         textAlign: 'center',
+      },
+
+      '& .table_cell_link': {
+        textDecoration: 'none',
+        color: BLACK,
+
+        '&:hover': {
+          textDecoration: 'underline',
+        },
       },
     },
   },

@@ -11,7 +11,7 @@ interface ITrackDetails {
   openModal: boolean
 }
 
-const BandDetailsModal = (props: ITrackDetails) => {
+const TrackDetailsModal = (props: ITrackDetails) => {
   const { handleCloseModal, openModal } = props
 
   return (
@@ -35,7 +35,7 @@ const BandDetailsModal = (props: ITrackDetails) => {
               <img src={BandImage} alt="BandImage" className="band_image" />
             </div>
             <div className="modal_content_right">
-              <h2 className="band_name">Band Name</h2>
+              <h2 className="band_name">Track Name</h2>
               <ul className="band_info_list">
                 <li className="band_info_item">
                   <span>Genre:</span> {'Rock'}
@@ -61,4 +61,4 @@ const BandDetailsModal = (props: ITrackDetails) => {
   )
 }
 
-export default BandDetailsModal
+export default TrackDetailsModal

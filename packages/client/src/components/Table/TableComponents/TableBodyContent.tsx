@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { TableCell, TableRow, Checkbox } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 import { IRowData } from '../../../variables/testFetchData'
 
+import TrackDetailsModal from './TrackDetailsModal'
 import BandDetailsModal from './BandDetailsModal'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
@@ -16,16 +18,16 @@ interface ITableBodyContent {
 const TableBodyContent = (props: ITableBodyContent) => {
   const { tableRowData, selectedCheckbox, handleCheckboxClick } = props
 
-  const [open, setOpen] = useState<boolean>(false)
+  const [openModalBand, setOpenModalBand] = useState<boolean>(false)
+  const [openModalTrack, setOpenModalTrack] = useState<boolean>(false)
 
   const isSelected = (id: number) => selectedCheckbox.indexOf(id) !== -1
 
-  const handleOpen = (event: React.ChangeEvent<EventTarget>) => {
-    if ((event.target as HTMLInputElement).name === 'checkbox') return
-    setOpen(true)
-  }
+  const handleOpenModalBand = () => setOpenModalBand(true)
+  const handleCloseModalBand = () => setOpenModalBand(false)
 
-  const handleClose = () => setOpen(false)
+  const handleOpenModalTrack = () => setOpenModalTrack(true)
+  const handleCloseModalTrack = () => setOpenModalTrack(false)
 
   return (
     <>
@@ -33,19 +35,26 @@ const TableBodyContent = (props: ITableBodyContent) => {
         {tableRowData.map(rowItem => (
           <TableRow
             key={rowItem.id}
-            className={`${isSelected(rowItem.id) && 'active'}`}
-            onClick={handleOpen}
+            className={`${isSelected(rowItem.id) ? 'active' : ''}`}
+            // onClick={handleOpen}
           >
             <TableCell>
               <Checkbox
-                name="checkbox"
                 checked={selectedCheckbox.indexOf(rowItem.id) !== -1}
                 onChange={e => handleCheckboxClick(e.target.checked, rowItem.id)}
               />
             </TableCell>
 
-            <TableCell>{rowItem.name}</TableCell>
-            <TableCell>{rowItem.band}</TableCell>
+            <TableCell>
+              <Link to="" className="table_cell_link" onClick={handleOpenModalTrack}>
+                {rowItem.name}
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Link to="" className="table_cell_link" onClick={handleOpenModalBand}>
+                {rowItem.band}
+              </Link>
+            </TableCell>
             <TableCell>{rowItem.album}</TableCell>
             <TableCell>{rowItem.year}</TableCell>
             <TableCell>{rowItem.genre}</TableCell>
@@ -54,7 +63,8 @@ const TableBodyContent = (props: ITableBodyContent) => {
         ))}
       </MainTableBody>
 
-      <BandDetailsModal handleClose={handleClose} open={open} />
+      <TrackDetailsModal handleCloseModal={handleCloseModalTrack} openModal={openModalTrack} />
+      <BandDetailsModal handleCloseModal={handleCloseModalBand} openModal={openModalBand} />
     </>
   )
 }

@@ -7,6 +7,8 @@ export const MAIN_BLUE_COLOR = '#102c57'
 export const MAIN_BACKDROP_BLUE_COLOR = 'rgba(16, 44, 86, 0.5)'
 export const MAIN_LIGHTBLUE_COLOR = '#39567e1e'
 export const MAIN_GRAY_COLOR = '#5b5a5a'
+export const BLACK = '#000'
+export const WHITE = '#fff'
 
 // ================ render objects ================
 

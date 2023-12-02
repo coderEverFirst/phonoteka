@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <div className="main_container">
       <div className="main_wrapper">
-        <div className="main_title"> TABLEEEEEEEEEEEE!!!!!!!!!!</div>
+        <h1 className="main_title">Your Phonoteka List</h1>
         <MainTable />
       </div>
     </div>

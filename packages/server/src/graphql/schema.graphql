@@ -1,15 +1,5 @@
 scalar DateTime
 
-type Query {
-  getBandById(id: Int): Band
-  getAllBands: [Band]
-}
-
-type Mutation {
-  createBand(input: BandInput!): Band
-  createTrack(input: TrackInput!): Track
-}
-
 # Track type
 type Track {
   id: Int
@@ -53,4 +43,37 @@ input BandInput {
   genre: [String!]!
   description: String
   image: String
+}
+
+#User ============================
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LoginResponse {
+  token: String!
+  refreshToken: String!
+  user: User!
+}
+
+# End of User definitions ============================
+
+type Query {
+  getBandById(id: Int): Band
+  getTrackById(id: Int): Track
+  getAllBands: [Band]
+  getAllTracks: [Track]
+  getTrackByQuery(bandId: Int): [Track]
+}
+
+type Mutation {
+  createBand(input: BandInput!): Band
+  createTrack(input: TrackInput!): Track
+  login(email: String!, password: String!): LoginResponse
+  register(email: String!, username: String!, password: String!, rePassword: String!): Boolean
 }

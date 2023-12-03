@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <div className="main_container">
       <div className="main_wrapper">
-        <div className="main_title"> TABLEEEEEEEEEEEE!!!!!!!!!!</div>
+        <div className="main_title"> КАТЯЯЯЯЯЯЯЯЯЯЯЯЯЯ!!!!!!!!!!</div>
         <MainTable />
       </div>
     </div>

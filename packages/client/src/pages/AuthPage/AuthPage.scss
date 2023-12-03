@@ -34,42 +34,25 @@
       margin-top: 10px;
     }
 
-    .auth_input {
-      height: 40px;
-      width: 100%;
-      margin-top: 30px;
+    .auth_inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
 
-      &:first-of-type {
-        margin-top: 0;
-      }
+      margin-top: 30px;
 
       .auth_visibility {
         cursor: pointer;
-        opacity: 0.85;
-        transition: 0.2s ease-out;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-
-    .auth_showvisibility {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 40px;
-
-      .auth_showvisibility_text {
         color: $MAIN_GRAY_COLOR;
-        transition: 0.2s ease-out;
+        transition: 0.3s linear;
 
-        &.active {
+        &:hover {
           color: $MAIN_BLUE_COLOR;
         }
       }
     }
 
-    .auth_button_block {
+    .auth_buttons {
       display: flex;
       justify-content: space-evenly;
       margin-top: 20px;
@@ -82,7 +65,7 @@
         font-weight: 600;
       }
 
-      .auth_registration_btn {
+      .sign_up {
         background-color: $MAIN_LIGHT_CREAM_COLOR;
         color: $MAIN_GRAY_COLOR;
       }

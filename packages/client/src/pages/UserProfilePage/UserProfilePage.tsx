@@ -4,6 +4,8 @@ import { Avatar } from '@mui/material'
 
 import { userData, rowsData } from '../../variables/testFetchData'
 
+import ProfileChart from '../../components/ProfileChart/ProfileChart'
+
 import userImg from '../../assets/user_test_avatar.jpg'
 
 import './UserProfilePage.scss'
@@ -33,11 +35,18 @@ const UserProfilePage = () => {
           </ul>
         </div>
 
-        <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
+        <div className="profile_user_stats">
+          <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
+          <ul className="profile_stats_info">
+            <li className="stats_info_item">
+              Records in yours library: <span>{rowsData.length}</span>
+            </li>
+          </ul>
+          <div className="profile_chart_content">
+            <h4 className="chart_content_title">Your statistics in charts</h4>
 
-        <div>
-          Records in yours library: <span>{rowsData.length}</span>
-          <div> Charts</div>
+            <ProfileChart />
+          </div>
         </div>
       </div>
     </div>

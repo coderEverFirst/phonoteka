@@ -1,9 +1,11 @@
 import styled from '@emotion/styled'
-import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@mui/material'
+import { TableBody, TableContainer, TableHead, TablePagination, Modal } 
+from '@mui/material'
 import {
-  MAIN_BACKDROP_BLUE_COLOR,
+  BLACK,
   MAIN_BLUE_COLOR,
   MAIN_DARK_CREAM_COLOR,
+  MAIN_DARK_CREAM_HOVER_COLOR,
   MAIN_GRAY_COLOR,
   MAIN_LIGHTBLUE_COLOR,
   MAIN_LIGHT_CREAM_COLOR,
@@ -25,7 +27,7 @@ export const MainTableContainer = styled(TableContainer)({
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: '100%',
-      padding: '0px 30px 0px 20px',
+      padding: '0 20px',
       backgroundColor: MAIN_LIGHTBLUE_COLOR,
 
       transition: '0.2s ease-out',
@@ -33,7 +35,7 @@ export const MainTableContainer = styled(TableContainer)({
 
       '&.active': {
         opacity: 1,
-        padding: '20px 30px 20px 20px',
+        padding: '20px',
       },
 
       '& .MuiTypography-root': {
@@ -56,7 +58,7 @@ export const MainTableContainer = styled(TableContainer)({
       },
     },
   },
-})
+}) as typeof TableContainer
 
 export const MainTableHead = styled(TableHead)({
   '&.MuiTableHead-root': {
@@ -91,17 +93,34 @@ export const MainTableHead = styled(TableHead)({
       },
     },
   },
-})
+}) as typeof TableHead
 
 export const MainTableBody = styled(TableBody)({
   '&.MuiTableBody-root': {
     '& .MuiTableRow-root': {
       alignItems: 'center',
       height: '100%',
+      cursor: 'pointer',
       transition: '0.3s linear',
 
       '&.active': {
         backgroundColor: MAIN_LIGHTBLUE_COLOR,
+
+        '&:hover': {
+          backgroundColor: MAIN_LIGHTBLUE_COLOR,
+        },
+      },
+
+      '&:hover': {
+        backgroundColor: MAIN_DARK_CREAM_HOVER_COLOR,
+      },
+    },
+
+    '& .MuiCheckbox-root': {
+      color: MAIN_GRAY_COLOR,
+
+      '&.Mui-checked': {
+        color: MAIN_BLUE_COLOR,
       },
     },
 
@@ -116,17 +135,18 @@ export const MainTableBody = styled(TableBody)({
       '&:nth-last-of-type(-n+3)': {
         textAlign: 'center',
       },
-    },
 
-    '& .MuiCheckbox-root': {
-      color: MAIN_GRAY_COLOR,
+      '& .table_cell_link': {
+        textDecoration: 'none',
+        color: BLACK,
 
-      '&.Mui-checked': {
-        color: MAIN_BLUE_COLOR,
+        '&:hover': {
+          textDecoration: 'underline',
+        },
       },
     },
   },
-})
+}) as typeof TableBody
 
 export const MainTablePagination = styled(TablePagination)({
   '& .MuiTablePagination-toolbar': {
@@ -135,9 +155,9 @@ export const MainTablePagination = styled(TablePagination)({
 }) as typeof TablePagination
 
 export const RemoveMainTableModal = styled(Modal)({
-  '& .MuiBackdrop-root': {
-    backgroundColor: MAIN_BACKDROP_BLUE_COLOR,
-  },
+  // '& .MuiBackdrop-root': {
+  //   backgroundColor: MAIN_BACKDROP_BLUE_COLOR,
+  // },
   '& .MuiBox-root': {
     position: 'absolute',
     top: '50%',
@@ -187,4 +207,79 @@ export const RemoveMainTableModal = styled(Modal)({
       },
     },
   },
-})
+}) as typeof Modal
+
+export const DetailModal = styled(Modal)({
+  '& .MuiBox-root': {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+
+    maxWidth: '60vw',
+    width: '100%',
+    maxHeight: '60vh',
+    height: '100%',
+
+    overflow: 'scroll',
+    scrollBehavior: 'auto',
+
+    padding: '30px 60px',
+    borderRadius: '10px',
+    boxShadow: '4px 5px 28px -4px rgba(0,0,0,0.75)',
+    backgroundColor: MAIN_DARK_CREAM_COLOR,
+
+    '& .modal_content': {
+      display: 'flex',
+
+      gap: '40px',
+
+      width: '100%',
+
+      '& .modal_content_left': {
+        flex: '1 1 20%',
+        width: '100%',
+
+        display: 'flex',
+        alignItems: 'start',
+
+        marginTop: '40px',
+
+        '& .modal_image': {
+          maxWidth: '250px',
+          width: '100%',
+          height: 'auto',
+          objectFit: 'cover',
+          borderRadius: '50%',
+        },
+      },
+
+      '& .modal_content_right': {
+        flex: '1 1 80%',
+        width: '100%',
+
+        '& .modal_title_name': {
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          fontSize: '25px',
+          fontWeight: 600,
+        },
+
+        '& .modal_info_list': {
+          display: 'flex',
+          flexDirection: 'column',
+
+          gap: '5px',
+
+          marginTop: '10px',
+
+          '& .modal_info_item': {
+            '& span': {
+              fontWeight: 500,
+            },
+          },
+        },
+      },
+    },
+  },
+}) as typeof Modal

@@ -7,6 +7,7 @@
   align-items: center;
   background-color: $MAIN_LIGHT_CREAM_COLOR;
   padding: 20px 0;
+
   font-size: 14px;
   color: $BLACK;
 
@@ -34,5 +35,11 @@
         width: 100%;
       }
     }
+  }
+}
+
+@media (min-height: 100vh) {
+  .footer_wrapper {
+    margin-top: 30px;
   }
 }

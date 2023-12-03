@@ -17,6 +17,7 @@ const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
       open={openModal}
       onClose={handleCloseModalWindow}
       closeAfterTransition
+      disableAutoFocus
       slots={{ backdrop: Backdrop }}
       slotProps={{
         backdrop: {
@@ -25,7 +26,7 @@ const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
       }}
     >
       <Fade in={openModal}>
-        <Box>
+        <Box component="div">
           <Typography component="h2">Do you agree to remove this?</Typography>
           <div className="buttons">
             <Button className="btn_agree" onClick={handleAgreeRemoveItems}>

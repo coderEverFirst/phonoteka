@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "apollo:download-schema": "apollo client:download-schema ./src/fragmentTypes.json --config=./apollo-json.config.ts",
+    "apollo:codegen": "apollo client:codegen ./src/types/graphql-queries.ts --target=typescript --endpoint=localhost/graphql --outputFlat --mergeInFieldsFromFragmentSpreads"
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
@@ -16,10 +18,14 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.10",
+    "@mui/x-charts": "^6.18.1",
+    "apollo": "^2.34.0",
+    "chart.js": "^4.4.0",
     "graphql": "^16.8.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-player": "^2.13.0",
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0"
   },

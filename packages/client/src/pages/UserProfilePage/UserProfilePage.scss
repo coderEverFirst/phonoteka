@@ -6,6 +6,10 @@
   .user_profile_wrapper {
     @include GLOBAL_PAGE_STYLES_WRAPPER;
     align-items: center;
+    width: 80%;
+    margin: 0 auto;
+
+    margin-top: 30px;
 
     .profile_title {
       font-size: 35px;
@@ -15,7 +19,8 @@
     .profile_user_content {
       display: flex;
       gap: 15%;
-      width: 80%;
+
+      width: 100%;
 
       margin-top: 20px;
 
@@ -40,10 +45,45 @@
         }
       }
     }
+    .profile_user_stats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    .profile_subtitle {
-      font-size: 25px;
-      font-weight: 500;
+      margin-top: 30px;
+      width: 100%;
+
+      .profile_subtitle {
+        font-size: 26px;
+        font-weight: 500;
+      }
+
+      .profile_stats_info{
+        width: 100%;
+        margin-top: 30px;
+        padding-left: 15px;
+
+        .stats_info_item{
+          span{
+            font-weight: 600;
+          }
+        }
+      }
+
+      .profile_chart_content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+        margin-top: 30px;
+
+        .chart_content_title {
+          
+          font-size: 22px;
+          font-weight: 500;
+        }
+      }
     }
   }
 }

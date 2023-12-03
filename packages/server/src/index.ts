@@ -17,7 +17,7 @@ import { loadSchemaSync } from '@graphql-tools/load'
 import resolvers from './graphql/resolvers'
 import prisma from './prisma/index'
 import generateToken from './utils/generateToken'
-import sendRefreshToken from 'utils/sendRefreshToken'
+import sendRefreshToken from './utils/sendRefreshToken'
 
 export interface MyContext extends BaseContext {
   req: Request

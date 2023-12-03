@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@mui/material'
+import { TableBody, TableContainer, TableHead, TablePagination, Modal } 
+from '@mui/material'
 import {
   BLACK,
   MAIN_BLUE_COLOR,
@@ -208,7 +209,7 @@ export const RemoveMainTableModal = styled(Modal)({
   },
 }) as typeof Modal
 
-export const TrackModal = styled(Modal)({
+export const DetailModal = styled(Modal)({
   '& .MuiBox-root': {
     position: 'absolute',
     top: '50%',
@@ -244,7 +245,7 @@ export const TrackModal = styled(Modal)({
 
         marginTop: '40px',
 
-        '& .band_image': {
+        '& .modal_image': {
           maxWidth: '250px',
           width: '100%',
           height: 'auto',
@@ -257,14 +258,14 @@ export const TrackModal = styled(Modal)({
         flex: '1 1 80%',
         width: '100%',
 
-        '& .band_name': {
+        '& .modal_title_name': {
           textAlign: 'center',
           textTransform: 'uppercase',
           fontSize: '25px',
           fontWeight: 600,
         },
 
-        '& .band_info_list': {
+        '& .modal_info_list': {
           display: 'flex',
           flexDirection: 'column',
 
@@ -272,7 +273,7 @@ export const TrackModal = styled(Modal)({
 
           marginTop: '10px',
 
-          '& .band_info_item': {
+          '& .modal_info_item': {
             '& span': {
               fontWeight: 500,
             },

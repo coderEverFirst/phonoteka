@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Backdrop, Box, Fade } from '@mui/material'
 
-import { TrackModal } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { DetailModal } from '../../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 
-import BandImage from '../../../assets/test_image_500_500.png'
+import BandImage from '../../../../assets/test_image_500_500.png'
 
 interface ITrackDetails {
   handleCloseModal: () => void
@@ -15,7 +15,7 @@ const BandDetailsModal = (props: ITrackDetails) => {
   const { handleCloseModal, openModal } = props
 
   return (
-    <TrackModal
+    <DetailModal
       open={openModal}
       // open={true}
       onClose={handleCloseModal}
@@ -32,21 +32,21 @@ const BandDetailsModal = (props: ITrackDetails) => {
         <Box component="div">
           <div className="modal_content">
             <div className="modal_content_left">
-              <img src={BandImage} alt="BandImage" className="band_image" />
+              <img src={BandImage} alt="BandImage" className="modal_image" />
             </div>
             <div className="modal_content_right">
-              <h2 className="band_name">Band Name</h2>
-              <ul className="band_info_list">
-                <li className="band_info_item">
+              <h2 className="modal_title_name">Band Name</h2>
+              <ul className="modal_info_list">
+                <li className="modal_info_item">
                   <span>Genre:</span> {'Rock'}
                 </li>
-                <li className="band_info_item">
+                <li className="modal_info_item">
                   <span>Created in:</span> {'1900'}
                 </li>
-                <li className="band_info_item">
+                <li className="modal_info_item">
                   <span>Albums:</span> {'10'}
                 </li>
-                <li className="band_info_item">
+                <li className="modal_info_item">
                   <span>Description:</span>{' '}
                   {
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iste fuga similique et repudiandae, totam deleniti, a neque laudantium nisi sunt nam, delectus ducimus tenetur sint facilis rerum minima dolore quae nemo autem eveniet expedita? Aliquid, ipsam enim suscipit fugiat quo officiis, nemo, nobis incidunt velit libero architecto? Optio, consequatur.'
@@ -57,7 +57,7 @@ const BandDetailsModal = (props: ITrackDetails) => {
           </div>
         </Box>
       </Fade>
-    </TrackModal>
+    </DetailModal>
   )
 }
 

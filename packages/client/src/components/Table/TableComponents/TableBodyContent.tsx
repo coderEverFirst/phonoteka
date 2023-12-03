@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { IRowData } from '../../../variables/testFetchData'
 
-import TrackDetailsModal from './TrackDetailsModal'
-import BandDetailsModal from './BandDetailsModal'
+import TrackDetailsModal from './ModalContent/TrackDetailsModal'
+import BandDetailsModal from './ModalContent/BandDetailsModal'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
 

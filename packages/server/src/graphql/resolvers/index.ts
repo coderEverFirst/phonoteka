@@ -6,7 +6,7 @@ import generateToken from '../../utils/generateToken'
 import { MyContext } from 'index'
 import authenticate from '../../middlewares/authenticate'
 import prisma from '../../prisma/index'
-import sendRefreshToken from 'utils/sendRefreshToken'
+import sendRefreshToken from '../../utils/sendRefreshToken'
 
 const resolvers = {
   Query: {

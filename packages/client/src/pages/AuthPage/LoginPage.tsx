@@ -68,10 +68,12 @@ const LoginPage = () => {
     handleSubmit()
 
     // returns first undefined
-    if (isValid && !hasEmptyFields && data) {
-      console.log('token', data?.login.token)
-      setCookie('token', data?.login.token)
-      handleNavigate(MAIN_PAGE)
+    if (isValid && !hasEmptyFields) {
+      if (data !== undefined) {
+        console.log('token', data?.login.token)
+        setCookie('token', data?.login.token)
+        handleNavigate(MAIN_PAGE)
+      }
     }
   }
 

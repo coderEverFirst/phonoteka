@@ -97,16 +97,16 @@ const resolvers = {
             expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
           },
         })
+      } else {
+        await prisma.tokens.create({
+          data: {
+            userId: user.id,
+            token,
+            refreshToken,
+            expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
+          },
+        })
       }
-
-      await prisma.tokens.create({
-        data: {
-          userId: user.id,
-          token,
-          refreshToken,
-          expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
-        },
-      })
 
       sendRefreshToken(res, refreshToken)
 

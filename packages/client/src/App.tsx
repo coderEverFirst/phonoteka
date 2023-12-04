@@ -16,6 +16,7 @@ import { LOGIN_PAGE, SIGN_UP_PAGE, USER_PROFILE_PAGE } from './variables/linksUr
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import LoginPage from './pages/AuthPage/LoginPage'
 import SignUpPage from './pages/AuthPage/SignUpPage'
+import PrivateRoute from './utils/router/privateRoute'
 
 const App = () => {
   const { pathname } = useLocation()
@@ -31,10 +32,12 @@ const App = () => {
     <div className="App">
       {turnOnHeaderAndFooter(<Header />)}
       <Routes>
-        <Route path={LOGIN_PAGE} element={<LoginPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />} />
+        </Route>
         <Route path={SIGN_UP_PAGE} element={<SignUpPage />} />
-        <Route index element={<MainPage />} />
-        <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />} />
+        <Route path={LOGIN_PAGE} element={<LoginPage />} />
       </Routes>
       {turnOnHeaderAndFooter(<Footer />)}
     </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { fromError, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
 import { InputAdornment } from '@mui/material'
+import { useCookies } from 'react-cookie'
 
 import { LOGIN_MUTATION } from '../../apollo/mutation/authPage'
 import { loginSchema } from '../../validations/authPageSchemas'
@@ -24,7 +25,10 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
-  const [LoginMutation, { data, loading, error, token }] = useMutation(LOGIN_MUTATION)
+  const [LoginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION)
+  console.log(data)
+
+  const [, setCookie] = useCookies(['token'])
 
   const formik = useFormik({
     initialValues: {
@@ -56,13 +60,15 @@ const LoginPage = () => {
   }, [])
 
   const handleOnSubmitForm = () => {
-    handleSubmit()
-
     const hasEmptyFields = Object.values(values).some(value => value === '')
 
-    if (isValid && !hasEmptyFields) {
-      console.log('success')
-      console.log('token', token)
+    handleSubmit()
+
+    // returns first undefined
+    if (isValid && !hasEmptyFields && data) {
+      console.log('token', data?.login.token)
+      setCookie('token', data?.login.token)
+      handleNavigate(MAIN_PAGE)
     }
   }
 
@@ -74,7 +80,7 @@ const LoginPage = () => {
       <div className="auth_container">
         <img src={logoImage} alt="Logo" className="auth_logo" />
         <h1 className="auth_title">LOGIN</h1>
-        <form className="auth_inputs" onSubmit={handleSubmit}>
+        <form className="auth_inputs" onSubmit={handleOnSubmitForm}>
           <AuthTextField
             variant="outlined"
             type={EAuthType.text}

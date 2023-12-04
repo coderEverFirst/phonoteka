@@ -10,6 +10,9 @@ import { loginSchema } from '../../validations/authPageSchemas'
 
 import { EAuthType } from '../../variables/eNums'
 
+import LoaderOval from '../../components/UI/Loader/LoaderOval'
+import Error from '../../components/UI/Error/Error'
+
 import { MAIN_PAGE, SIGN_UP_PAGE } from '../../variables/linksUrls'
 import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
 import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
@@ -72,14 +75,15 @@ const LoginPage = () => {
     }
   }
 
-  if (loading) return 'Submitting...'
-  if (error) return `Submission error! ${error.message}`
+  if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
+  if (error) return <Error label={error?.message} />
 
   return (
     <div className="auth_wrapper">
       <div className="auth_container">
         <img src={logoImage} alt="Logo" className="auth_logo" />
         <h1 className="auth_title">LOGIN</h1>
+
         <form className="auth_inputs" onSubmit={handleOnSubmitForm}>
           <AuthTextField
             variant="outlined"

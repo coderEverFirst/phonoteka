@@ -11,6 +11,9 @@ import { signUpSchema } from '../../validations/authPageSchemas'
 import { EAuthType } from '../../variables/eNums'
 import { LOGIN_PAGE } from '../../variables/linksUrls'
 
+import LoaderOval from '../../components/UI/Loader/LoaderOval'
+import Error from '../../components/UI/Error/Error'
+
 import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
 import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
 
@@ -26,7 +29,7 @@ const SignUpPage = () => {
 
   const navigate = useNavigate()
 
-  const [RegisterMutation] = useMutation(SIGN_UP_MUTATION)
+  const [RegisterMutation, { loading, error }] = useMutation(SIGN_UP_MUTATION)
 
   const formik = useFormik({
     initialValues: {
@@ -73,6 +76,9 @@ const SignUpPage = () => {
       // handleNavigate(MAIN_PAGE)
     }
   }
+
+  if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
+  if (error) return <Error label={error?.message} />
 
   return (
     <div className="auth_wrapper">

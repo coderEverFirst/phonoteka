@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { fromError, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
@@ -29,7 +29,6 @@ const LoginPage = () => {
   const navigate = useNavigate()
 
   const [LoginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION)
-  console.log(data)
 
   const [, setCookie] = useCookies(['token'])
 
@@ -62,20 +61,15 @@ const LoginPage = () => {
     }
   }, [])
 
-  const handleOnSubmitForm = () => {
+  useEffect(() => {
     const hasEmptyFields = Object.values(values).some(value => value === '')
-
-    handleSubmit()
-
-    // returns first undefined
     if (isValid && !hasEmptyFields) {
-      if (data !== undefined) {
-        console.log('token', data?.login.token)
-        setCookie('token', data?.login.token)
+      if (data) {
+        setCookie('token', data.login.token)
         handleNavigate(MAIN_PAGE)
       }
     }
-  }
+  }, [data])
 
   if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
   if (error) return <Error label={error?.message} />
@@ -86,7 +80,7 @@ const LoginPage = () => {
         <img src={logoImage} alt="Logo" className="auth_logo" />
         <h1 className="auth_title">LOGIN</h1>
 
-        <form className="auth_inputs" onSubmit={handleOnSubmitForm}>
+        <form className="auth_inputs" onSubmit={handleSubmit}>
           <AuthTextField
             variant="outlined"
             type={EAuthType.text}
@@ -125,7 +119,7 @@ const LoginPage = () => {
             }}
           />
           <div className="auth_buttons">
-            <AuthButton variant="contained" className="auth_btn login" onClick={handleOnSubmitForm}>
+            <AuthButton variant="contained" className="auth_btn login" type="submit">
               Login
             </AuthButton>
             <AuthButton

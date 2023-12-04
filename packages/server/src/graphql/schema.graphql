@@ -55,10 +55,10 @@ type User {
   updatedAt: DateTime!
 }
 
-type LoginResponse {
+type AuthResponse {
   token: String!
   refreshToken: String!
-  user: User!
+  # user: User!
 }
 
 # End of User definitions ============================
@@ -74,6 +74,6 @@ type Query {
 type Mutation {
   createBand(input: BandInput!): Band
   createTrack(input: TrackInput!): Track
-  login(email: String!, password: String!): LoginResponse
-  register(email: String!, username: String!, password: String!, rePassword: String!): Boolean
+  login(email: String!, password: String!): AuthResponse
+  register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse
 }

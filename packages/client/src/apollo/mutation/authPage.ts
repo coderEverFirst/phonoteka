@@ -16,6 +16,9 @@ export const SIGN_UP_MUTATION = gql`
     $password: String!
     $rePassword: String!
   ) {
-    register(email: $email, username: $username, password: $password, rePassword: $rePassword)
+    register(email: $email, username: $username, password: $password, rePassword: $rePassword) {
+      token
+      refreshToken
+    }
   }
 `

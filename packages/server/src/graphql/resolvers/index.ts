@@ -114,6 +114,7 @@ const resolvers = {
     },
     register: async (
       _: any,
+
       {
         email,
         username,
@@ -121,16 +122,31 @@ const resolvers = {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         rePassword,
       }: { email: string; username: string; password: string; rePassword: string },
+      { res }: MyContext,
     ) => {
       const hashedPassword = await bcrypt.hash(password, 12)
 
-      await prisma.users.create({
+      const newUser = await prisma.users.create({
         data: {
           email: email,
           name: username,
           password: hashedPassword,
         },
       })
+      const { token, refreshToken } = generateToken(newUser.id)
+
+      await prisma.tokens.create({
+        data: {
+          userId: newUser.id,
+          token,
+          refreshToken,
+          expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
+        },
+      })
+
+      sendRefreshToken(res, refreshToken)
+
+      return { token, refreshToken, newUser }
     },
   },
 }

@@ -1,15 +1,16 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { fromError, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
 import { InputAdornment } from '@mui/material'
+import { useCookies } from 'react-cookie'
 
 import { SIGN_UP_MUTATION } from '../../apollo/mutation/authPage'
 
 import { signUpSchema } from '../../validations/authPageSchemas'
 
 import { EAuthType } from '../../variables/eNums'
-import { LOGIN_PAGE } from '../../variables/linksUrls'
+import { LOGIN_PAGE, MAIN_PAGE } from '../../variables/linksUrls'
 
 import LoaderOval from '../../components/UI/Loader/LoaderOval'
 import Error from '../../components/UI/Error/Error'
@@ -29,7 +30,9 @@ const SignUpPage = () => {
 
   const navigate = useNavigate()
 
-  const [RegisterMutation, { loading, error }] = useMutation(SIGN_UP_MUTATION)
+  const [RegisterMutation, { data, loading, error }] = useMutation(SIGN_UP_MUTATION)
+
+  const [, setCookie] = useCookies(['token'])
 
   const formik = useFormik({
     initialValues: {
@@ -66,16 +69,16 @@ const SignUpPage = () => {
     }
   }, [])
 
-  const handleOnSubmitForm = () => {
-    handleSubmit()
-
+  useEffect(() => {
     const hasEmptyFields = Object.values(values).some(value => value === '')
-
     if (isValid && !hasEmptyFields) {
-      handleNavigate(LOGIN_PAGE)
-      // handleNavigate(MAIN_PAGE)
+      console.log(data)
+      if (data) {
+        setCookie('token', data.register.token)
+        handleNavigate(MAIN_PAGE)
+      }
     }
-  }
+  }, [data])
 
   if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
   if (error) return <Error label={error?.message} />
@@ -161,12 +164,7 @@ const SignUpPage = () => {
             }}
           />
           <div className="auth_buttons">
-            <AuthButton
-              variant="contained"
-              className="auth_btn login"
-              type={EAuthType.submit}
-              onClick={handleOnSubmitForm}
-            >
+            <AuthButton variant="contained" className="auth_btn login" type="submit">
               Sign Up
             </AuthButton>
             <AuthButton

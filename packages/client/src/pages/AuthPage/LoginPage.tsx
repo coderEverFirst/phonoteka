@@ -1,9 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-
+import { fromError, useMutation } from '@apollo/client'
+import { useFormik } from 'formik'
 import { InputAdornment } from '@mui/material'
+import { useCookies } from 'react-cookie'
+
+import { LOGIN_MUTATION } from '../../apollo/mutation/authPage'
+import { loginSchema } from '../../validations/authPageSchemas'
 
 import { EAuthType } from '../../variables/eNums'
+
+import LoaderOval from '../../components/UI/Loader/LoaderOval'
+import Error from '../../components/UI/Error/Error'
 
 import { MAIN_PAGE, SIGN_UP_PAGE } from '../../variables/linksUrls'
 import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
@@ -20,6 +28,29 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
+  const [LoginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION)
+
+  const [, setCookie] = useCookies(['token'])
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: async values => {
+      try {
+        await LoginMutation({
+          variables: values,
+        })
+      } catch (error) {
+        console.error('Sign up error!', fromError(error))
+      }
+    },
+  })
+
+  const { handleSubmit, handleChange, values, errors, touched, isValid } = formik
+
   const handleVisibilityPassword = useCallback(() => {
     isShowPassword(!showPassword)
   }, [showPassword])
@@ -30,25 +61,49 @@ const LoginPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const hasEmptyFields = Object.values(values).some(value => value === '')
+    if (isValid && !hasEmptyFields) {
+      if (data) {
+        setCookie('token', data.login.token)
+        handleNavigate(MAIN_PAGE)
+      }
+    }
+  }, [data])
+
+  if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
+  if (error) return <Error label={error?.message} />
+
   return (
     <div className="auth_wrapper">
       <div className="auth_container">
         <img src={logoImage} alt="Logo" className="auth_logo" />
         <h1 className="auth_title">LOGIN</h1>
-        <div className="auth_inputs">
+
+        <form className="auth_inputs" onSubmit={handleSubmit}>
           <AuthTextField
             variant="outlined"
-            type="text"
+            type={EAuthType.text}
             margin="none"
             size="small"
-            label="Enter your login"
+            name={EAuthType.email}
+            label="Enter your email"
+            value={values.email}
+            onChange={handleChange}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
           />
           <AuthTextField
             variant="outlined"
             type={showPassword ? EAuthType.password : EAuthType.text}
             margin="none"
             size="small"
+            name={EAuthType.password}
             label="Enter your password"
+            value={values.password}
+            onChange={handleChange}
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
             InputProps={{
               endAdornment: (
                 <InputAdornment
@@ -63,23 +118,19 @@ const LoginPage = () => {
               ),
             }}
           />
-        </div>
-        <div className="auth_buttons">
-          <AuthButton
-            variant="contained"
-            className="auth_btn login"
-            onClick={() => handleNavigate(MAIN_PAGE)}
-          >
-            Login
-          </AuthButton>
-          <AuthButton
-            variant="contained"
-            className="auth_btn sign_up"
-            onClick={() => handleNavigate(SIGN_UP_PAGE)}
-          >
-            Sign Up
-          </AuthButton>
-        </div>
+          <div className="auth_buttons">
+            <AuthButton variant="contained" className="auth_btn login" type="submit">
+              Login
+            </AuthButton>
+            <AuthButton
+              variant="contained"
+              className="auth_btn sign_up"
+              onClick={() => handleNavigate(SIGN_UP_PAGE)}
+            >
+              Sign Up
+            </AuthButton>
+          </div>
+        </form>
       </div>
     </div>
   )

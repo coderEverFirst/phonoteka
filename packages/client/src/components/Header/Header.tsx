@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 import { InputAdornment, Avatar } from '@mui/material'
 
@@ -19,8 +20,14 @@ import './Header.scss'
 const Header = () => {
   const { pathname } = useLocation()
 
+  const [, , removeCookie] = useCookies(['token'])
+
   const scrollUpWindow = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }
+
+  const handleRemoveCookie = () => {
+    removeCookie('token')
   }
 
   return (
@@ -66,7 +73,7 @@ const Header = () => {
             </Link>
           )}
 
-          <Link to="/login" className="header_log_out_link">
+          <Link to="/login" className="header_log_out_link" onClick={handleRemoveCookie}>
             Log out
           </Link>
         </div>

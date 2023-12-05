@@ -97,11 +97,47 @@ const resolvers = {
             expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
           },
         })
+      } else {
+        await prisma.tokens.create({
+          data: {
+            userId: user.id,
+            token,
+            refreshToken,
+            expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
+          },
+        })
       }
+
+      sendRefreshToken(res, refreshToken)
+
+      return { token, refreshToken, user }
+    },
+    register: async (
+      _: any,
+
+      {
+        email,
+        username,
+        password,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        rePassword,
+      }: { email: string; username: string; password: string; rePassword: string },
+      { res }: MyContext,
+    ) => {
+      const hashedPassword = await bcrypt.hash(password, 12)
+
+      const newUser = await prisma.users.create({
+        data: {
+          email: email,
+          name: username,
+          password: hashedPassword,
+        },
+      })
+      const { token, refreshToken } = generateToken(newUser.id)
 
       await prisma.tokens.create({
         data: {
-          userId: user.id,
+          userId: newUser.id,
           token,
           refreshToken,
           expiresAt: new Date(Date.now() + 3600000), // 1 hour expiration
@@ -110,27 +146,7 @@ const resolvers = {
 
       sendRefreshToken(res, refreshToken)
 
-      return { token, refreshToken, user }
-    },
-    register: async (
-      _: any,
-      {
-        email,
-        username,
-        password,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        rePassword,
-      }: { email: string; username: string; password: string; rePassword: string },
-    ) => {
-      const hashedPassword = await bcrypt.hash(password, 12)
-
-      await prisma.users.create({
-        data: {
-          email: email,
-          name: username,
-          password: hashedPassword,
-        },
-      })
+      return { token, refreshToken, newUser }
     },
   },
 }

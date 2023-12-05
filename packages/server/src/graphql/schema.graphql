@@ -58,7 +58,7 @@ type User {
 type AuthResponse {
   token: String!
   refreshToken: String!
-  # user: User!
+  user: User!
 }
 
 # End of User definitions ============================

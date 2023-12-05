@@ -5,6 +5,11 @@ export const LOGIN_MUTATION = gql`
     login(email: $email, password: $password) {
       token
       refreshToken
+      user {
+        id
+        email
+        name
+      }
     }
   }
 `
@@ -19,6 +24,11 @@ export const SIGN_UP_MUTATION = gql`
     register(email: $email, username: $username, password: $password, rePassword: $rePassword) {
       token
       refreshToken
+      user {
+        id
+        email
+        name
+      }
     }
   }
 `

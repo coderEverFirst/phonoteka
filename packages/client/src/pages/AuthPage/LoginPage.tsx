@@ -21,6 +21,9 @@ import logoImage from '../../assets/logo.svg'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
+import { userInfoVar } from '../../reactiveVars'
+import { client } from '../../apollo/client'
+
 import './AuthPage.scss'
 
 const LoginPage = () => {
@@ -65,8 +68,12 @@ const LoginPage = () => {
     const hasEmptyFields = Object.values(values).some(value => value === '')
     if (isValid && !hasEmptyFields) {
       if (data) {
+        userInfoVar(data.login.user)
         setCookie('token', data.login.token)
         handleNavigate(MAIN_PAGE)
+
+        // try to use refetch query query
+        // client.refetchQueries([{ query: LOGIN_MUTATION }])
       }
     }
   }, [data])

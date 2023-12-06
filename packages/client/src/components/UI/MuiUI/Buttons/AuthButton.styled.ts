@@ -19,4 +19,4 @@ export const AuthButton = styled(Button)({
   '& .MuiTouchRipple-root': {
     color: MAIN_DARK_CREAM_COLOR,
   },
-})
+}) as typeof Button

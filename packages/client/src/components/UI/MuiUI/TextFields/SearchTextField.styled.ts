@@ -61,4 +61,4 @@ export const SearchTextField = styled(TextField)({
     color: MAIN_GRAY_COLOR,
     '&:hover': { color: MAIN_BLUE_COLOR },
   },
-})
+}) as typeof TextField

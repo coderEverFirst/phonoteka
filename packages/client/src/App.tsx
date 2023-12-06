@@ -11,12 +11,19 @@ import Footer from './components/Footer/Footer'
 
 // ============ Styles ============
 import './App.scss'
-import { LOGIN_PAGE, SIGN_UP_PAGE, USER_PROFILE_PAGE } from './variables/linksUrls'
+import {
+  LOGIN_PAGE,
+  SIGN_UP_PAGE,
+  USER_CHANGE_PROFILE_PAGE,
+  USER_PROFILE_PAGE,
+} from './variables/linksUrls'
 
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
 import LoginPage from './pages/AuthPage/LoginPage'
 import SignUpPage from './pages/AuthPage/SignUpPage'
 import PrivateRoute from './utils/router/privateRoute'
+
+import UserChangingProfile from './components/UserProfile/UserChangingProfile'
 
 const App = () => {
   const { pathname } = useLocation()
@@ -34,7 +41,9 @@ const App = () => {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<MainPage />} />
-          <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />} />
+          <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />}>
+            <Route path={USER_CHANGE_PROFILE_PAGE} element={<UserChangingProfile />} />
+          </Route>
         </Route>
         <Route path={SIGN_UP_PAGE} element={<SignUpPage />} />
         <Route path={LOGIN_PAGE} element={<LoginPage />} />

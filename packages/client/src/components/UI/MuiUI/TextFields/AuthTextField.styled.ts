@@ -46,4 +46,4 @@ export const AuthTextField = styled(TextField)({
   '& label.Mui-focused': {
     color: MAIN_BLUE_COLOR,
   },
-})
+}) as typeof TextField

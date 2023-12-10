@@ -11,7 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import userImg from '../../assets/user_test_avatar.jpg'
 
-import { SearchTextField } from '../UI/MuiUI/TextFields/SearchTextField.styled'
+import { SearchTextField } from '../UI/MuiUI/TextFields.styled/SearchTextField.styled'
 
 import { USER_CHANGE_PROFILE_PAGE, USER_PROFILE_PAGE } from '../../variables/linksUrls'
 

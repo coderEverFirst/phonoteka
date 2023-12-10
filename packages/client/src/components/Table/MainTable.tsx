@@ -14,7 +14,7 @@ import { rowsData, IRowData } from '../../variables/testFetchData'
 import {
   MainTableContainer,
   MainTablePagination,
-} from '../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+} from '../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 
 const MainTable = () => {
   const { stableSort, getComparator } = useMainTable()
@@ -88,7 +88,7 @@ const MainTable = () => {
     alert('Need delete items on server')
   }
 
-  // data form server after sorting with pagination
+  // data from server after sorting with pagination
 
   // this will be simplified in future with right backend data - .slice + comparator
   const tableRowData: IRowData[] = stableSort(

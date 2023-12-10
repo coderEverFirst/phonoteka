@@ -14,8 +14,8 @@ import LoaderOval from '../../components/UI/Loader/LoaderOval'
 import Error from '../../components/UI/Error/Error'
 
 import { MAIN_PAGE, SIGN_UP_PAGE } from '../../variables/linksUrls'
-import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
-import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
+import { AuthTextField } from '../../components/UI/MuiUI/TextFields.styled/AuthTextField.styled'
+import { AuthButton } from '../../components/UI/MuiUI/Buttons.styled/AuthButton.styled'
 
 import logoImage from '../../assets/logo.svg'
 import VisibilityIcon from '@mui/icons-material/Visibility'
@@ -67,6 +67,8 @@ const LoginPage = () => {
     const hasEmptyFields = Object.values(values).some(value => value === '')
     if (isValid && !hasEmptyFields) {
       if (data) {
+        console.log('token', data.login.token)
+
         userInfoVar(data.login.user) //push user data to InfoVar Apollo
         setCookie('token', data.login.token) //push token to cookies
         handleNavigate(MAIN_PAGE)

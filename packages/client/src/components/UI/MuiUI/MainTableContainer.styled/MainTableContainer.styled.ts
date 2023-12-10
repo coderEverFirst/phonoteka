@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
-import { TableBody, TableContainer, TableHead, TablePagination, Modal } 
-from '@mui/material'
+import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@mui/material'
 import {
   BLACK,
   MAIN_BLUE_COLOR,
@@ -224,9 +223,10 @@ export const DetailModal = styled(Modal)({
     overflow: 'scroll',
     scrollBehavior: 'auto',
 
+    outline: 'none',
     padding: '30px 60px',
     borderRadius: '10px',
-    boxShadow: '4px 5px 28px -4px rgba(0,0,0,0.75)',
+    // boxShadow: '4px 5px 28px -4px rgba(0,0,0,0.75)',
     backgroundColor: MAIN_DARK_CREAM_COLOR,
 
     '& .modal_content': {

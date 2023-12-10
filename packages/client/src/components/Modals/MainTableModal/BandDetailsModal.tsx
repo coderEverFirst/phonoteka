@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Backdrop, Box, Fade } from '@mui/material'
 
-import { DetailModal } from '../../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 
-import BandImage from '../../../../assets/test_image_500_500.png'
+import BandImage from '../../../assets/test_image_500_500.png'
 
 interface ITrackDetails {
   handleCloseModal: () => void

@@ -7,7 +7,7 @@ import { Avatar } from '@mui/material'
 import { userData } from '../../variables/testFetchData'
 import userImg from '../../assets/user_test_avatar.jpg'
 import { USER_CHANGE_PROFILE_PAGE } from '../../variables/linksUrls'
-import { ChangeProfileButton } from '../UI/MuiUI/Buttons/ChangeProfileButton.styled'
+import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
 
 interface IUserProfile {
   handleChangeProfile: (arg0: string) => void

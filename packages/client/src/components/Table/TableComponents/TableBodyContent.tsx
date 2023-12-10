@@ -7,7 +7,7 @@ import { IRowData } from '../../../variables/testFetchData'
 import TrackDetailsModal from '../../Modals/MainTableModal/TrackDetailsModal'
 import BandDetailsModal from '../../Modals/MainTableModal/BandDetailsModal'
 
-import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { MainTableBody } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 
 interface ITableBodyContent {
   tableRowData: IRowData[]

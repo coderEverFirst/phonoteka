@@ -5,7 +5,7 @@ import { TableCell, TableRow, Checkbox, TableSortLabel } from '@mui/material'
 import { IRenderTableHeaderData, RENDER_TABLE_HEADER_DATA } from '../../../variables/variables'
 import { ETableSort } from '../../../variables/eNums'
 
-import { MainTableHead } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { MainTableHead } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 import { IRowData } from '../../../variables/testFetchData'
 
 interface ITableHeadContent {

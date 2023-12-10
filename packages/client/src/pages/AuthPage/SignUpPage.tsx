@@ -15,8 +15,8 @@ import { LOGIN_PAGE, MAIN_PAGE } from '../../variables/linksUrls'
 import LoaderOval from '../../components/UI/Loader/LoaderOval'
 import Error from '../../components/UI/Error/Error'
 
-import { AuthTextField } from '../../components/UI/MuiUI/TextFields/AuthTextField.styled'
-import { AuthButton } from '../../components/UI/MuiUI/Buttons/AuthButton.styled'
+import { AuthTextField } from '../../components/UI/MuiUI/TextFields.styled/AuthTextField.styled'
+import { AuthButton } from '../../components/UI/MuiUI/Buttons.styled/AuthButton.styled'
 
 import logoImage from '../../assets/logo.svg'
 import VisibilityIcon from '@mui/icons-material/Visibility'

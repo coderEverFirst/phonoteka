@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Typography, Fade, Button } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 
-import { RemoveMainTableModal } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { RemoveMainTableModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 
 interface IRemoveTableModalWindow {
   openModal: boolean

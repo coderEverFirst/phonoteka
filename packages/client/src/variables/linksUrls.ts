@@ -5,3 +5,4 @@ export const LOGIN_PAGE: string = '/login'
 export const SIGN_UP_PAGE: string = '/sign-up'
 
 export const USER_PROFILE_PAGE: string = `/user-page/${userData.id}`
+export const USER_CHANGE_PROFILE_PAGE: string = `/user-page/${userData.id}/change`

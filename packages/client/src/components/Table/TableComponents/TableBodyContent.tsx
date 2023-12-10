@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 
 import { IRowData } from '../../../variables/testFetchData'
 
-import TrackDetailsModal from './ModalContent/TrackDetailsModal'
-import BandDetailsModal from './ModalContent/BandDetailsModal'
+import TrackDetailsModal from '../../Modals/MainTableModal/TrackDetailsModal'
+import BandDetailsModal from '../../Modals/MainTableModal/BandDetailsModal'
 
-import { MainTableBody } from '../../UI/MuiUI/MainTableContainer/MainTableContainer.styled'
+import { MainTableBody } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 
 interface ITableBodyContent {
   tableRowData: IRowData[]

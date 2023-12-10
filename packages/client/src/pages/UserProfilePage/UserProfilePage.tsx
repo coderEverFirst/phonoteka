@@ -1,53 +1,32 @@
-import React from 'react'
-
-import { Avatar } from '@mui/material'
-
-import { userData, rowsData } from '../../variables/testFetchData'
-
-import ProfileChart from '../../components/ProfileChart/ProfileChart'
-
-import userImg from '../../assets/user_test_avatar.jpg'
+import React, { useCallback } from 'react'
 
 import './UserProfilePage.scss'
+import UserProfile from '../../components/UserProfile/UserProfile'
+import UserChangingProfile from '../../components/UserProfile/UserChangingProfile'
+import { useLocation, useNavigate } from 'react-router'
+import { USER_CHANGE_PROFILE_PAGE, USER_PROFILE_PAGE } from '../../variables/linksUrls'
 
 const UserProfilePage = () => {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const handleChangeProfile = useCallback((path: string | undefined) => {
+    if (path) {
+      navigate(path)
+    }
+  }, [])
+
   return (
     <div className="user_profile_container">
       <div className="user_profile_wrapper">
         <h2 className="profile_title">Your Phonoteka profile</h2>
 
-        <div className="profile_user_content">
-          <Avatar
-            // sx={{ maxWidth: '300px', maxHeight: '300px' }}
-            className="profile_user_content_image"
-            src={userImg}
-          />
-          <ul className="profile_user_content_info">
-            <li className="user_info">
-              Name: <span>{userData.name}</span>
-            </li>
-            <li className="user_info">
-              E-Mail: <span>{userData.email}</span>
-            </li>
-            {/* <li className="user_info">
-              Profile created at: <span>{userData.createdAt}</span>
-            </li> */}
-          </ul>
-        </div>
-
-        <div className="profile_user_stats">
-          <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
-          <ul className="profile_stats_info">
-            <li className="stats_info_item">
-              Records in yours library: <span>{rowsData.length}</span>
-            </li>
-          </ul>
-          <div className="profile_chart_content">
-            <h4 className="chart_content_title">Your statistics in charts</h4>
-
-            <ProfileChart />
-          </div>
-        </div>
+        {pathname === USER_PROFILE_PAGE && (
+          <UserProfile handleChangeProfile={handleChangeProfile} />
+        )}
+        {pathname === USER_CHANGE_PROFILE_PAGE && (
+          <UserChangingProfile handleChangeProfile={handleChangeProfile} />
+        )}
       </div>
     </div>
   )

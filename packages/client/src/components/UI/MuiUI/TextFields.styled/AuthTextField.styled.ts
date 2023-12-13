@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { TextField } from '@mui/material'
 import {
+  ERROR_COLOR,
   MAIN_BLUE_COLOR,
   MAIN_DARK_CREAM_COLOR,
   MAIN_GRAY_COLOR,
@@ -36,6 +37,15 @@ export const AuthTextField = styled(TextField)({
 
     '&.Mui-focused fieldset': {
       border: `1px solid  ${MAIN_BLUE_COLOR}`,
+    },
+  },
+
+  '& .Mui-error': {
+    color: ERROR_COLOR,
+    transition: '0.2s linear',
+
+    '&:hover': {
+      color: MAIN_GRAY_COLOR,
     },
   },
 

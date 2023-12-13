@@ -26,11 +26,11 @@ import { userInfoVar } from '../../reactiveVars'
 import './AuthPage.scss'
 
 const LoginPage = () => {
-  const [showPassword, isShowPassword] = useState<boolean>(false)
+  const [showPassword, isShowPassword] = useState<boolean>(true)
 
   const navigate = useNavigate()
 
-  const [LoginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION)
+  const [LoginMutation, { data, loading, error: serverError }] = useMutation(LOGIN_MUTATION)
 
   const [, setCookie] = useCookies(['token'])
 
@@ -40,13 +40,14 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema: loginSchema,
+
     onSubmit: async values => {
       try {
         await LoginMutation({
           variables: values,
         })
-      } catch (error) {
-        console.error('Sign up error!', fromError(error))
+      } catch (serverError) {
+        console.error('Sign up error!', fromError(serverError))
       }
     },
   })
@@ -77,7 +78,12 @@ const LoginPage = () => {
   }, [data])
 
   if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
-  if (error) return <Error label={error?.message} />
+
+  const invalidLoginOrPassword = serverError?.message === 'Invalid login credentials'
+
+  if (!invalidLoginOrPassword) {
+    if (serverError) return <Error label={serverError?.message} />
+  }
 
   return (
     <div className="auth_wrapper">
@@ -95,8 +101,8 @@ const LoginPage = () => {
             label="Enter your email"
             value={values.email}
             onChange={handleChange}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
+            error={invalidLoginOrPassword ? true : touched.email && Boolean(errors.email)}
+            helperText={invalidLoginOrPassword ? '' : touched.email && errors.email}
           />
           <AuthTextField
             variant="outlined"
@@ -107,8 +113,8 @@ const LoginPage = () => {
             label="Enter your password"
             value={values.password}
             onChange={handleChange}
-            error={touched.password && Boolean(errors.password)}
-            helperText={touched.password && errors.password}
+            error={invalidLoginOrPassword ? true : touched.password && Boolean(errors.password)}
+            helperText={invalidLoginOrPassword ? '' : touched.password && errors.password}
             InputProps={{
               endAdornment: (
                 <InputAdornment
@@ -123,6 +129,9 @@ const LoginPage = () => {
               ),
             }}
           />
+
+          {invalidLoginOrPassword && <div className="server_message">{serverError?.message}</div>}
+
           <div className="auth_buttons">
             <AuthButton variant="contained" className="auth_btn login" type="submit">
               Login

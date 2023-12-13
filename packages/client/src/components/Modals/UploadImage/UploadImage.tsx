@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
-import { Modal, Box } from '@mui/material'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Box } from '@mui/material'
 import { UploadImageModal } from '../../UI/MuiUI/ModalUploading.styled/UploadImageModal.styled'
 
 interface IUploadImageModal {
   openModal: boolean
   handleCloseModal: () => void
+  userNewImage: string | null
+  setUserNewImage: Dispatch<SetStateAction<string | null>>
 }
 
 const UploadImage = (props: IUploadImageModal) => {
-  const { openModal, handleCloseModal } = props
+  const { openModal, handleCloseModal, userNewImage, setUserNewImage } = props
 
   const [drag, setDrag] = useState<boolean>(false)
-
-  const [testData, setTestData] = useState<any[] | undefined>()
+  const [selectedFile, setSelectedFile] = useState<File[] | null>(null)
 
   const handleDragStart = (event: { preventDefault: () => void }) => {
     event.preventDefault()
@@ -26,15 +27,38 @@ const UploadImage = (props: IUploadImageModal) => {
 
   const handleOnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
-    const file = [event.dataTransfer.files]
 
-    // const allowedTypes = ['image/jpeg', 'image/png']
-    // const fileType = files.type
+    const file: File[] = [event.dataTransfer.files[0]]
+    const fileType: string = file[0].type
 
-    console.log('Yeah its a file, nice work dude. Take your data of file:', file)
+    console.log('file', file)
+    console.log('fileType', fileType)
 
-    handleCloseModal()
+    if (file) {
+      const allowedTypes: string[] = ['image/jpeg', 'image/png']
+      if (allowedTypes.includes(fileType)) {
+        console.log('Allowed!!!', file)
+        setSelectedFile(file)
+        handleCloseModal()
+        return
+      } else {
+        setDrag(false)
+        console.log('nope dude')
+        return
+      }
+    }
   }
+
+  useEffect(() => {
+    if (!selectedFile) {
+      return setUserNewImage(null)
+    }
+    const file = selectedFile[0]
+    const objectURL = URL.createObjectURL(file)
+    setUserNewImage(objectURL)
+
+    return () => URL.revokeObjectURL(objectURL)
+  }, [selectedFile])
 
   return (
     <UploadImageModal
@@ -48,7 +72,7 @@ const UploadImage = (props: IUploadImageModal) => {
         <div className={`modal_content ${!drag && 'active'}`}>
           {drag ? (
             <div
-              className="drag_and_drop_title drop_item"
+              className="drag_and_drop_zone drop_item"
               onDragStart={event => handleDragStart(event)}
               onDragLeave={event => handleDragLeave(event)}
               onDragOver={event => handleDragStart(event)}
@@ -57,14 +81,17 @@ const UploadImage = (props: IUploadImageModal) => {
               Drop files to upload
             </div>
           ) : (
-            <div
-              className="drag_and_drop_title drag_item"
-              onDragStart={event => handleDragStart(event)}
-              onDragLeave={event => handleDragLeave(event)}
-              onDragOver={event => handleDragStart(event)}
-            >
-              Drag files to upload
-            </div>
+            <>
+              <div
+                className="drag_and_drop_zone drag_item"
+                onDragStart={event => handleDragStart(event)}
+                onDragLeave={event => handleDragLeave(event)}
+                onDragOver={event => handleDragStart(event)}
+              >
+                <div className="drag_and_drop_title">Drag files to upload</div>
+                <div className="drag_and_drop_subtitle">File must be in png or jpeg format</div>
+              </div>
+            </>
           )}
         </div>
       </Box>

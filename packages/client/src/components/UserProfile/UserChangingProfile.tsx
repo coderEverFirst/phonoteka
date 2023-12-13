@@ -19,6 +19,7 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
   const { handleChangeProfile } = props
 
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [userNewImage, setUserNewImage] = useState<string | null>(null)
 
   const handleOpenModal = () => {
     setOpenModal(true)
@@ -34,7 +35,12 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
         <ul className="profile_user_content_left">
           <li className="content_left_info">
             <div className="default_item_image" onClick={handleOpenModal}>
-              <AccountCircleIcon className="default_image" />
+              {userNewImage ? (
+                <img src={userNewImage} alt="new user image" />
+              ) : (
+                <AccountCircleIcon className="default_image" />
+              )}
+
               <AddAPhotoIcon className="default_image_change" />
             </div>
           </li>
@@ -75,7 +81,12 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
           </ul>
         </form>
       </div>
-      <UploadImage openModal={openModal} handleCloseModal={handleCloseModal} />
+      <UploadImage
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        userNewImage={userNewImage}
+        setUserNewImage={setUserNewImage}
+      />
     </>
   )
 }

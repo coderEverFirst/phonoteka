@@ -13,16 +13,18 @@
     "apollo:codegen": "apollo client:codegen ./src/types/graphql-queries.ts --target=typescript --endpoint=localhost/graphql --outputFlat --mergeInFieldsFromFragmentSpreads"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.7",
+    "@apollo/client": "^3.8.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.10",
     "@mui/x-charts": "^6.18.1",
-    "apollo": "^2.34.0",
+    "apollo-link-token-refresh": "^0.6.1",
     "chart.js": "^4.4.0",
     "formik": "^2.4.5",
     "graphql": "^16.8.1",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-cookie": "^6.1.1",
@@ -34,6 +36,7 @@
     "yup": "^1.3.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",

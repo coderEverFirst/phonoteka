@@ -1,32 +1,28 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useNavigate } from 'react-router'
 import { Avatar } from '@mui/material'
-
+import { useReactiveVar } from '@apollo/client'
 // import ProfileChart from '../ProfileChart/ProfileChart'
-
-// import { userData, rowsData } from '../../variables/testFetchData'
-import { userData } from '../../variables/testFetchData'
 import userImg from '../../assets/user_test_avatar.jpg'
-import { USER_CHANGE_PROFILE_PAGE } from '../../variables/linksUrls'
 import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
+import { userInfoVar } from '../../reactiveVars'
 
 interface IUserProfile {
-  handleChangeProfile: (arg0: string) => void
+  userEditProfilePath: string
 }
 
 const UserProfile = (props: IUserProfile) => {
-  const { handleChangeProfile } = props
+  const navigate = useNavigate()
 
-  // const navigate = useNavigate()
+  const { userEditProfilePath } = props
 
-  // const handleNavigate = useCallback((path: string | undefined) => {
-  //   if (path) {
-  //     navigate(path)
-  //   }
-  // }, [])
+  const userData = useReactiveVar(userInfoVar)
 
-  // const handleOpenChangeProfile = () => {
-  //   handleNavigate(USER_CHANGE_PROFILE_PAGE)
-  // }
+  const handleChangeProfile = useCallback(() => {
+    if (userEditProfilePath) {
+      navigate(userEditProfilePath)
+    }
+  }, [userEditProfilePath])
 
   return (
     <>
@@ -36,12 +32,7 @@ const UserProfile = (props: IUserProfile) => {
             <Avatar className="profile_user_content_image" src={userImg} />
           </li>
           <li className="content_left_info">
-            <ChangeProfileButton
-              onClick={() => handleChangeProfile(USER_CHANGE_PROFILE_PAGE)}
-              // className="test"
-            >
-              Change Profile
-            </ChangeProfileButton>
+            <ChangeProfileButton onClick={handleChangeProfile}>Change Profile</ChangeProfileButton>
           </li>
         </ul>
         <ul className="profile_user_content_right">
@@ -51,9 +42,12 @@ const UserProfile = (props: IUserProfile) => {
           <li className="content_right_info">
             E-Mail: <span>{userData.email}</span>
           </li>
-          {/* <li className="content_right_info">
-        Profile created at: <span>{userData.createdAt}</span>
-      </li> */}
+          <li className="content_right_info">
+            Profile created at: <span>{userData.createdAt}</span>
+          </li>
+          <li className="content_right_info">
+            Profile updated at: <span>{userData.updatedAt}</span>
+          </li>
         </ul>
       </div>
 

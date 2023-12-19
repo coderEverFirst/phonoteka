@@ -1,20 +1,22 @@
-import { verify, JwtPayload } from 'jsonwebtoken'
+import { verify } from 'jsonwebtoken'
 import { Request } from 'express'
+import { CustomJwtPayload } from 'index'
 
 interface AuthRequest extends Request {
-  payload?: string | JwtPayload
+  payload?: string | CustomJwtPayload
 }
 
 export const authenticate = (req: AuthRequest) => {
-  const authorization = req.headers.authorization
+  const token = req.cookies.token
 
-  if (!authorization) {
+  if (!token) {
     throw new Error('Not authenticated')
   }
 
   try {
-    const token = authorization.split(' ')[1]
-    const payload = verify(token, process.env.SECRET!)
+    const payload = verify(token, process.env.SECRET!) as CustomJwtPayload
+    console.log('payloadpayloadpayload', payload)
+
     req.payload = payload
   } catch (err) {
     console.log(err)

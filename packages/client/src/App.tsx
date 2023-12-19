@@ -1,29 +1,14 @@
 import React, { useCallback } from 'react'
 import { JSX } from 'react/jsx-runtime'
 import { Route, Routes, useLocation } from 'react-router'
-
-// ============ Pages ============
-import MainPage from './pages/MainPage/MainPage'
-
-// ============ Components ============
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-
-// ============ Styles ============
-import './App.scss'
-import {
-  LOGIN_PAGE,
-  SIGN_UP_PAGE,
-  USER_CHANGE_PROFILE_PAGE,
-  USER_PROFILE_PAGE,
-} from './variables/linksUrls'
-
-import UserProfilePage from './pages/UserProfilePage/UserProfilePage'
+import ApplicationWrapper from './components/ApplicationWrapper/ApplicationWrapper'
+import { LOGIN_PAGE, SIGN_UP_PAGE } from './variables/linksUrls'
 import LoginPage from './pages/AuthPage/LoginPage'
 import SignUpPage from './pages/AuthPage/SignUpPage'
 import PrivateRoute from './utils/router/privateRoute'
-
-import UserChangingProfile from './components/UserProfile/UserChangingProfile'
+import './App.scss'
 
 const App = () => {
   const { pathname } = useLocation()
@@ -40,10 +25,7 @@ const App = () => {
       {turnOnHeaderAndFooter(<Header />)}
       <Routes>
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path={USER_PROFILE_PAGE} element={<UserProfilePage />}>
-            <Route path={USER_CHANGE_PROFILE_PAGE} element={<UserChangingProfile />} />
-          </Route>
+          <Route path="*" element={<ApplicationWrapper />} />
         </Route>
         <Route path={SIGN_UP_PAGE} element={<SignUpPage />} />
         <Route path={LOGIN_PAGE} element={<LoginPage />} />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-
-import { USER_PROFILE_PAGE } from '../../variables/linksUrls'
+import { useNavigate } from 'react-router'
 import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
 import { ChangingTextField } from '../UI/MuiUI/TextFields.styled/ChangingTextField.styled'
 
@@ -11,12 +10,14 @@ import UploadImage from '../Modals/UploadImage/UploadImage'
 
 import { userData } from '../../variables/testFetchData'
 
-interface IUserChangingProfile {
-  handleChangeProfile: (arg0: string | undefined) => void
+interface IUserProfileChange {
+  userProfilePath: string
 }
 
-const UserChangingProfile = (props: IUserChangingProfile) => {
-  const { handleChangeProfile } = props
+const UserProfileChange = (props: IUserProfileChange) => {
+  const { userProfilePath } = props
+
+  const navigate = useNavigate()
 
   const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -26,6 +27,12 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
 
   const handleCloseModal = () => {
     setOpenModal(false)
+  }
+
+  const saveChanges = () => {
+    if (userProfilePath) {
+      navigate(userProfilePath)
+    }
   }
 
   return (
@@ -39,9 +46,7 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
             </div>
           </li>
           <li className="content_left_info">
-            <ChangeProfileButton onClick={() => handleChangeProfile(USER_PROFILE_PAGE)}>
-              Save Changes
-            </ChangeProfileButton>
+            <ChangeProfileButton onClick={saveChanges}>Save Changes</ChangeProfileButton>
           </li>
         </ul>
         <form>
@@ -80,4 +85,4 @@ const UserChangingProfile = (props: IUserChangingProfile) => {
   )
 }
 
-export default UserChangingProfile
+export default UserProfileChange

@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from 'express'
+import { JwtPayload } from 'jsonwebtoken'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { join } from 'node:path'
@@ -19,8 +20,11 @@ import prisma from './prisma/index'
 import generateToken from './utils/generateToken'
 import sendRefreshToken from './utils/sendRefreshToken'
 
+export interface CustomJwtPayload extends JwtPayload {
+  userId: number
+}
 export interface MyContext extends BaseContext {
-  req: Request
+  req: Request & { payload?: CustomJwtPayload }
   res: Response
 }
 
@@ -29,7 +33,6 @@ const typeDefs = loadSchemaSync(join(__dirname, 'graphql/schema.graphql'), {
 })
 
 dotenv.config()
-const app: Application = express()
 const port = process.env.PORT || 4040
 
 const loggerPlugin = {
@@ -65,8 +68,13 @@ const responsePlugin = {
 }
 
 const setupServer = async () => {
-  app.use(cors())
-  app.use(express.json())
+  const app: Application = express()
+  app.use(
+    cors<cors.CorsRequest>({
+      origin: 'http://localhost:5173',
+      credentials: true,
+    }),
+  )
   app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())
 
@@ -110,6 +118,7 @@ const setupServer = async () => {
 
   app.use(
     '/graphql',
+    express.json(),
     expressMiddleware(apolloServer, {
       context: async ({ req, res }) => {
         return { req, res }

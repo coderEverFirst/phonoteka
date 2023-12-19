@@ -39,6 +39,14 @@ const resolvers = {
         },
       })
     },
+    getUserById: (_: any, variables: null, { req }: MyContext) => {
+      authenticate(req)
+      return prisma.users.findUnique({
+        where: {
+          id: req.payload?.userId,
+        },
+      })
+    },
     getAllBands: (_: any, variables: null, { req }: MyContext) => {
       authenticate(req)
       return prisma.bands.findMany()
@@ -110,7 +118,7 @@ const resolvers = {
 
       sendRefreshToken(res, refreshToken)
 
-      return { token, refreshToken, user }
+      return { token, refreshToken }
     },
     register: async (
       _: any,
@@ -146,7 +154,7 @@ const resolvers = {
 
       sendRefreshToken(res, refreshToken)
 
-      return { token, refreshToken, newUser }
+      return { token, refreshToken }
     },
   },
 }

@@ -1,31 +1,26 @@
-import React, { useCallback } from 'react'
-
-import './UserProfilePage.scss'
+import React from 'react'
+import { useLocation } from 'react-router'
 import UserProfile from '../../components/UserProfile/UserProfile'
-import UserChangingProfile from '../../components/UserProfile/UserChangingProfile'
-import { useLocation, useNavigate } from 'react-router'
-import { USER_CHANGE_PROFILE_PAGE, USER_PROFILE_PAGE } from '../../variables/linksUrls'
+import UserProfileChange from '../../components/UserProfile/UserProfileChange'
+import './UserProfilePage.scss'
 
-const UserProfilePage = () => {
+interface IUserProfilePage {
+  userEditProfilePath: string
+  userProfilePath: string
+}
+
+const UserProfilePage = (props: IUserProfilePage) => {
+  const { userEditProfilePath, userProfilePath } = props
   const { pathname } = useLocation()
-  const navigate = useNavigate()
-
-  const handleChangeProfile = useCallback((path: string | undefined) => {
-    if (path) {
-      navigate(path)
-    }
-  }, [])
 
   return (
     <div className="user_profile_container">
       <div className="user_profile_wrapper">
         <h2 className="profile_title">Your Phonoteka profile</h2>
-
-        {pathname === USER_PROFILE_PAGE && (
-          <UserProfile handleChangeProfile={handleChangeProfile} />
-        )}
-        {pathname === USER_CHANGE_PROFILE_PAGE && (
-          <UserChangingProfile handleChangeProfile={handleChangeProfile} />
+        {pathname === userEditProfilePath ? (
+          <UserProfileChange userProfilePath={userProfilePath} />
+        ) : (
+          <UserProfile userEditProfilePath={userEditProfilePath} />
         )}
       </div>
     </div>

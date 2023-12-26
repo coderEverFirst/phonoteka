@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import { Avatar } from '@mui/material'
 import { useReactiveVar } from '@apollo/client'
 // import ProfileChart from '../ProfileChart/ProfileChart'
-import userImg from '../../assets/user_test_avatar.jpg'
 import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
 import { userInfoVar } from '../../reactiveVars'
 
@@ -29,7 +28,7 @@ const UserProfile = (props: IUserProfile) => {
       <div className="profile_user_content">
         <ul className="profile_user_content_left">
           <li className="content_left_info">
-            <Avatar className="profile_user_content_image" src={userImg} />
+            <Avatar className="profile_user_content_image" src={userData.imgUrl} />
           </li>
           <li className="content_left_info">
             <ChangeProfileButton onClick={handleChangeProfile}>Change Profile</ChangeProfileButton>

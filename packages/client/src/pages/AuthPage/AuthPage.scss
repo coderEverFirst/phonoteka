@@ -51,6 +51,11 @@
           color: $MAIN_BLUE_COLOR;
         }
       }
+      & .server_message {
+        text-align: center;
+        font-size: 14px;
+        color: $ERROR_COLOR;
+      }
     }
 
     .auth_buttons {

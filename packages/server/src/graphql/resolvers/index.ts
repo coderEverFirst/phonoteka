@@ -7,6 +7,14 @@ import { MyContext } from 'index'
 import authenticate from '../../middlewares/authenticate'
 import prisma from '../../prisma/index'
 import sendRefreshToken from '../../utils/sendRefreshToken'
+import { signUpSchema, loginSchema } from '../../validations/authPageSchemas'
+import { profileChangesSchema } from '../../validations/profileChangeSchema'
+
+interface UserInput {
+  name: string
+  imgUrl: string
+  email: string
+}
 
 const resolvers = {
   Query: {
@@ -63,6 +71,21 @@ const resolvers = {
         data: input,
       })
     },
+    updateUser: async (_: any, { input }: { input: UserInput }, { req }: MyContext) => {
+      const { email, name, imgUrl } = input
+      authenticate(req)
+      await profileChangesSchema.validate({ email, name, imgUrl })
+      return await prisma.users.update({
+        where: {
+          id: req.payload?.userId,
+        },
+        data: {
+          email,
+          name,
+          imgUrl,
+        },
+      })
+    },
     createTrack: async (_: any, { input }: { input: Tracks }, { req }: MyContext) => {
       authenticate(req)
       const updatedTrack = {
@@ -79,7 +102,7 @@ const resolvers = {
       { res }: MyContext,
     ) => {
       const user = await prisma.users.findUnique({ where: { email } })
-
+      await loginSchema.validate({ email, password })
       if (!user) {
         throw new Error('Invalid login credentials')
       }
@@ -127,11 +150,11 @@ const resolvers = {
         email,
         username,
         password,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         rePassword,
       }: { email: string; username: string; password: string; rePassword: string },
       { res }: MyContext,
     ) => {
+      await signUpSchema.validate({ email, username, password, rePassword })
       const hashedPassword = await bcrypt.hash(password, 12)
 
       const newUser = await prisma.users.create({

@@ -4,7 +4,7 @@ export const userInfoVar = makeVar({
   name: '',
   email: '',
   id: null,
-  avatarImg: null,
+  imgUrl: '',
   createdAt: null,
   updatedAt: null,
 })

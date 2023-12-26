@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router'
+import { Avatar } from '@mui/material'
+import { useReactiveVar, fromError, useMutation } from '@apollo/client'
+import { useFormik } from 'formik'
 import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
 import { ChangingTextField } from '../UI/MuiUI/TextFields.styled/ChangingTextField.styled'
 
@@ -7,19 +10,50 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 
 import UploadImage from '../Modals/UploadImage/UploadImage'
-
-import { userData } from '../../variables/testFetchData'
+import { userInfoVar } from '../../reactiveVars'
+import { profileChangesSchema } from '../../validations/profileChangeSchema'
+import { UPDATE_USER_MUTATION } from '../../apollo/mutation/user'
 
 interface IUserProfileChange {
   userProfilePath: string
 }
 
 const UserProfileChange = (props: IUserProfileChange) => {
+  const navigate = useNavigate()
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [userNewImage, setUserNewImage] = useState<string | null>(null)
+
+  const userData = useReactiveVar(userInfoVar)
+
+  const [updateUserMutation] = useMutation(UPDATE_USER_MUTATION)
+
   const { userProfilePath } = props
 
-  const navigate = useNavigate()
+  const formik = useFormik({
+    initialValues: {
+      name: userData.name,
+      email: userData.email,
+    },
+    validateOnBlur: true,
+    validationSchema: profileChangesSchema,
 
-  const [openModal, setOpenModal] = useState<boolean>(false)
+    onSubmit: async values => {
+      try {
+        await updateUserMutation({
+          variables: { input: { ...values, imgUrl: userNewImage || userData.imgUrl } },
+        })
+        handleChangeProfile()
+      } catch (serverError) {
+        console.error('Sign up error!', fromError(serverError))
+      }
+    },
+  })
+
+  const { handleSubmit, handleChange, setValues, values, errors, touched } = formik
+
+  useEffect(() => {
+    setValues({ name: userData.name, email: userData.email })
+  }, [userData])
 
   const handleOpenModal = () => {
     setOpenModal(true)
@@ -29,11 +63,11 @@ const UserProfileChange = (props: IUserProfileChange) => {
     setOpenModal(false)
   }
 
-  const saveChanges = () => {
+  const handleChangeProfile = useCallback(() => {
     if (userProfilePath) {
       navigate(userProfilePath)
     }
-  }
+  }, [userProfilePath])
 
   return (
     <>
@@ -41,46 +75,54 @@ const UserProfileChange = (props: IUserProfileChange) => {
         <ul className="profile_user_content_left">
           <li className="content_left_info">
             <div className="default_item_image" onClick={handleOpenModal}>
-              <AccountCircleIcon className="default_image" />
+              {userNewImage ? (
+                <Avatar className="profile_user_content_image" src={userNewImage} />
+              ) : (
+                <AccountCircleIcon className="default_image" />
+              )}
+
               <AddAPhotoIcon className="default_image_change" />
             </div>
           </li>
-          <li className="content_left_info">
-            <ChangeProfileButton onClick={saveChanges}>Save Changes</ChangeProfileButton>
-          </li>
         </ul>
-        <form>
+        <form onSubmit={handleSubmit}>
           <ul className="profile_user_content_right">
             <li className="content_right_info changing_info">
-              {/* Name: <span>{userData.name}</span> */}
               Name:
-              <span>
-                <ChangingTextField
-                  variant="standard"
-                  size="small"
-                  margin="none"
-                  defaultValue={userData.name}
-                />
-              </span>
+              <ChangingTextField
+                variant="standard"
+                size="small"
+                margin="none"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                error={touched.name || Boolean(errors.name)}
+                helperText={errors.name}
+              />
             </li>
             <li className="content_right_info changing_info">
               Email:
-              <span>
-                <ChangingTextField
-                  variant="standard"
-                  size="small"
-                  margin="none"
-                  defaultValue={userData.email}
-                />
-              </span>
+              <ChangingTextField
+                variant="standard"
+                size="small"
+                margin="none"
+                name="email"
+                onChange={handleChange}
+                value={values.email}
+                error={touched.email || Boolean(errors.email)}
+                helperText={errors.email}
+              />
             </li>
-            {/* <li className="content_right_info">
-        Profile created at: <span>{userData.createdAt}</span>
-      </li> */}
           </ul>
+          <ChangeProfileButton type="submit">Save Changes</ChangeProfileButton>
         </form>
       </div>
-      <UploadImage openModal={openModal} handleCloseModal={handleCloseModal} />
+      <UploadImage
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        userNewImage={userNewImage}
+        setUserNewImage={setUserNewImage}
+      />
     </>
   )
 }

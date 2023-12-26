@@ -8,18 +8,14 @@ import {
 
 export const ChangeProfileButton = styled(Button)({
   '&.MuiButtonBase-root': {
-    height: '100%',
+    marginTop: 20,
     padding: '5px 20px',
     borderRadius: '10px',
-
     color: MAIN_GRAY_COLOR,
     backgroundColor: MAIN_DARK_CREAM_COLOR,
-
     fontWeight: 600,
-
     whiteSpace: 'nowrap',
     transition: '0.3s linear',
-
     '&:hover': {
       filter: 'contrast(105%) drop-shadow(0 0 5px #dac0a3)',
       color: MAIN_BLUE_COLOR,

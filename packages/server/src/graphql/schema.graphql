@@ -45,12 +45,20 @@ input BandInput {
   image: String
 }
 
+# Band input
+input UserInput {
+  name: String!
+  imgUrl: String
+  email: String!
+}
+
 #User ============================
 type User {
   id: Int!
   email: String!
   password: String!
   name: String
+  imgUrl: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -73,6 +81,7 @@ type Query {
 
 type Mutation {
   createBand(input: BandInput!): Band
+  updateUser(input: UserInput!): User
   createTrack(input: TrackInput!): Track
   login(email: String!, password: String!): AuthResponse
   register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse

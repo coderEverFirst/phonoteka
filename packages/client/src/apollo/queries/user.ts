@@ -5,6 +5,7 @@ export const GET_USER_QUERY = gql`
     getUserById {
       id
       email
+      imgUrl
       name
       createdAt
       updatedAt

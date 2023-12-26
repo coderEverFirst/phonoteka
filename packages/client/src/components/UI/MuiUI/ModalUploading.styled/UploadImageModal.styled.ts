@@ -37,15 +37,17 @@ export const UploadImageModal = styled(Modal)({
         border: `2px dashed ${MAIN_GRAY_COLOR}`,
       },
 
-      '& .drag_and_drop_title': {
+      '& .drag_and_drop_zone': {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
 
         width: '100%',
         height: '100%',
 
         fontSize: 28,
+        fontWeight: 500,
         transition: '0.3s linear',
 
         '&.drop_item': {
@@ -54,6 +56,11 @@ export const UploadImageModal = styled(Modal)({
 
         '&.drag_item': {
           color: MAIN_GRAY_COLOR,
+        },
+
+        '& .drag_and_drop_subtitle ': {
+          fontSize: 18,
+          fontWeight: 400,
         },
       },
     },

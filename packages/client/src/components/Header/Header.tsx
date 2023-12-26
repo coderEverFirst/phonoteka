@@ -7,7 +7,6 @@ import logoImage from '../../assets/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { userInfoVar } from '../../reactiveVars'
-import userImg from '../../assets/user_test_avatar.jpg'
 
 import { SearchTextField } from '../UI/MuiUI/TextFields.styled/SearchTextField.styled'
 
@@ -66,8 +65,7 @@ const Header = () => {
             <Link to={userProfilePath} className="header_user_profile">
               <h3 className="header_user_name">{userData.name}</h3>
               <Avatar
-                // src={userData?.avatarImg}
-                src={userImg}
+                src={userData.imgUrl}
                 className="header_user_avatar
             "
               />

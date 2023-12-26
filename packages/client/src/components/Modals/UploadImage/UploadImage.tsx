@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
-import { Modal, Box } from '@mui/material'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Box } from '@mui/material'
+import { useReactiveVar } from '@apollo/client'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { UploadImageModal } from '../../UI/MuiUI/ModalUploading.styled/UploadImageModal.styled'
+import { storage } from '../../../utils/firebaseInit'
+import { userInfoVar } from '../../../reactiveVars'
+import { v4 } from 'uuid'
 
 interface IUploadImageModal {
   openModal: boolean
   handleCloseModal: () => void
+  userNewImage: string | null
+  setUserNewImage: Dispatch<SetStateAction<string | null>>
 }
 
 const UploadImage = (props: IUploadImageModal) => {
-  const { openModal, handleCloseModal } = props
-
+  const { openModal, handleCloseModal, setUserNewImage } = props
+  const userData = useReactiveVar(userInfoVar)
   const [drag, setDrag] = useState<boolean>(false)
-
-  const [testData, setTestData] = useState<any[] | undefined>()
+  // const [selectedFile, setSelectedFile] = useState<File[] | null>(null)
 
   const handleDragStart = (event: { preventDefault: () => void }) => {
     event.preventDefault()
@@ -24,22 +30,43 @@ const UploadImage = (props: IUploadImageModal) => {
     setDrag(false)
   }
 
-  const handleOnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleOnDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
-    const file = [event.dataTransfer.files]
 
-    // const allowedTypes = ['image/jpeg', 'image/png']
-    // const fileType = files.type
+    const file: File[] = [event.dataTransfer.files[0]]
+    const fileType: string = file[0].type
 
-    console.log('Yeah its a file, nice work dude. Take your data of file:', file)
-
-    handleCloseModal()
+    if (file) {
+      const allowedTypes: string[] = ['image/jpeg', 'image/png']
+      if (allowedTypes.includes(fileType)) {
+        // setSelectedFile(file)
+        const imageRef = ref(storage, `images/user/${userData.id}/${file[0].name + v4()}`)
+        await uploadBytes(imageRef, file[0])
+        const userProfileImageUrl = await getDownloadURL(imageRef)
+        setUserNewImage(userProfileImageUrl)
+        handleCloseModal()
+        return
+      } else {
+        setDrag(false)
+        return
+      }
+    }
   }
+
+  // useEffect(() => {
+  //   if (!selectedFile) {
+  //     return setUserNewImage(null)
+  //   }
+  //   const file = selectedFile[0]
+  //   const objectURL = URL.createObjectURL(file)
+  //   setUserNewImage(objectURL)
+
+  //   return () => URL.revokeObjectURL(objectURL)
+  // }, [selectedFile])
 
   return (
     <UploadImageModal
       open={openModal}
-      // open={true}
       onClose={handleCloseModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -48,7 +75,7 @@ const UploadImage = (props: IUploadImageModal) => {
         <div className={`modal_content ${!drag && 'active'}`}>
           {drag ? (
             <div
-              className="drag_and_drop_title drop_item"
+              className="drag_and_drop_zone drop_item"
               onDragStart={event => handleDragStart(event)}
               onDragLeave={event => handleDragLeave(event)}
               onDragOver={event => handleDragStart(event)}
@@ -57,14 +84,17 @@ const UploadImage = (props: IUploadImageModal) => {
               Drop files to upload
             </div>
           ) : (
-            <div
-              className="drag_and_drop_title drag_item"
-              onDragStart={event => handleDragStart(event)}
-              onDragLeave={event => handleDragLeave(event)}
-              onDragOver={event => handleDragStart(event)}
-            >
-              Drag files to upload
-            </div>
+            <>
+              <div
+                className="drag_and_drop_zone drag_item"
+                onDragStart={event => handleDragStart(event)}
+                onDragLeave={event => handleDragLeave(event)}
+                onDragOver={event => handleDragStart(event)}
+              >
+                <div className="drag_and_drop_title">Drag files to upload</div>
+                <div className="drag_and_drop_subtitle">File must be in png or jpeg format</div>
+              </div>
+            </>
           )}
         </div>
       </Box>

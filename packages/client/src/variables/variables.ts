@@ -27,3 +27,5 @@ export const RENDER_TABLE_HEADER_DATA: IRenderTableHeaderData[] = [
   { id: 4, label: 'Genre', value: 'genre' },
   { id: 5, label: 'Format', value: 'format' },
 ]
+
+export const allowedImageTypes: string[] = ['image/jpeg', 'image/png']

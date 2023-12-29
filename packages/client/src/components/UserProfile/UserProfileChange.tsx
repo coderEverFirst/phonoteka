@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { Avatar } from '@mui/material'
 import { useReactiveVar, fromError, useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
-import { ChangeProfileButton } from '../UI/MuiUI/Buttons.styled/ChangeProfileButton.styled'
+import { ActionButton } from '../UI/MuiUI/Buttons.styled/ActionButton.styled'
 import { ChangingTextField } from '../UI/MuiUI/TextFields.styled/ChangingTextField.styled'
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -114,7 +114,7 @@ const UserProfileChange = (props: IUserProfileChange) => {
               />
             </li>
           </ul>
-          <ChangeProfileButton type="submit">Save Changes</ChangeProfileButton>
+          <ActionButton type="submit">Save Changes</ActionButton>
         </form>
       </div>
       <UploadImage

@@ -6,8 +6,9 @@ import {
   MAIN_GRAY_COLOR,
 } from '../../../../variables/variables'
 
-export const ChangeProfileButton = styled(Button)({
+export const ActionButton = styled(Button)({
   '&.MuiButtonBase-root': {
+    alignSelf: 'start',
     marginTop: 20,
     padding: '5px 20px',
     borderRadius: '10px',

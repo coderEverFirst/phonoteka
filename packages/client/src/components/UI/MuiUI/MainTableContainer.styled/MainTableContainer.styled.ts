@@ -1,5 +1,12 @@
 import styled from '@emotion/styled'
-import { TableBody, TableContainer, TableHead, TablePagination, Modal } from '@mui/material'
+import {
+  TableBody,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  Modal,
+  Typography,
+} from '@mui/material'
 import {
   BLACK,
   MAIN_BLUE_COLOR,
@@ -215,9 +222,9 @@ export const DetailModal = styled(Modal)({
     left: '50%',
     transform: 'translate(-50%, -50%)',
 
-    maxWidth: '60vw',
+    maxWidth: '85vw',
     width: '100%',
-    maxHeight: '60vh',
+    maxHeight: '80vh',
     height: '100%',
 
     overflow: 'scroll',
@@ -226,8 +233,7 @@ export const DetailModal = styled(Modal)({
     outline: 'none',
     padding: '30px 60px',
     borderRadius: '10px',
-    // boxShadow: '4px 5px 28px -4px rgba(0,0,0,0.75)',
-    backgroundColor: MAIN_DARK_CREAM_COLOR,
+    backgroundColor: MAIN_LIGHT_CREAM_COLOR,
 
     '& .modal_content': {
       display: 'flex',
@@ -283,3 +289,10 @@ export const DetailModal = styled(Modal)({
     },
   },
 }) as typeof Modal
+
+export const ModalTypography = styled(Typography)({
+  '&.MuiTypography-root': {
+    margin: '10px 0',
+    color: MAIN_BLUE_COLOR,
+  },
+}) as typeof Typography

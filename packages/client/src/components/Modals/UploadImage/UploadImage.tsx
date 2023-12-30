@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Box } from '@mui/material'
 import { useReactiveVar } from '@apollo/client'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { UploadImageModal } from '../../UI/MuiUI/ModalUploading.styled/UploadImageModal.styled'
 import { storage } from '../../../utils/firebaseInit'
 import { userInfoVar } from '../../../reactiveVars'
+import { allowedImageTypes } from '../../../variables/variables'
 import { v4 } from 'uuid'
 
 interface IUploadImageModal {
@@ -18,7 +19,6 @@ const UploadImage = (props: IUploadImageModal) => {
   const { openModal, handleCloseModal, setUserNewImage } = props
   const userData = useReactiveVar(userInfoVar)
   const [drag, setDrag] = useState<boolean>(false)
-  // const [selectedFile, setSelectedFile] = useState<File[] | null>(null)
 
   const handleDragStart = (event: { preventDefault: () => void }) => {
     event.preventDefault()
@@ -37,9 +37,7 @@ const UploadImage = (props: IUploadImageModal) => {
     const fileType: string = file[0].type
 
     if (file) {
-      const allowedTypes: string[] = ['image/jpeg', 'image/png']
-      if (allowedTypes.includes(fileType)) {
-        // setSelectedFile(file)
+      if (allowedImageTypes.includes(fileType)) {
         const imageRef = ref(storage, `images/user/${userData.id}/${file[0].name + v4()}`)
         await uploadBytes(imageRef, file[0])
         const userProfileImageUrl = await getDownloadURL(imageRef)
@@ -52,17 +50,6 @@ const UploadImage = (props: IUploadImageModal) => {
       }
     }
   }
-
-  // useEffect(() => {
-  //   if (!selectedFile) {
-  //     return setUserNewImage(null)
-  //   }
-  //   const file = selectedFile[0]
-  //   const objectURL = URL.createObjectURL(file)
-  //   setUserNewImage(objectURL)
-
-  //   return () => URL.revokeObjectURL(objectURL)
-  // }, [selectedFile])
 
   return (
     <UploadImageModal

@@ -1,0 +1,93 @@
+@import '../../../index.scss';
+
+
+.modal_body{
+    display: flex;
+    flex-direction: column;
+
+
+    .modal_dnd{
+        width: 250px;
+        height: 250px;
+        border: 2px dashed $BLACK;
+        &.band_image_error{
+            border: 2px dashed $ERROR_COLOR;
+        }
+    }
+
+    .modal_drop_error{
+        text-transform: capitalize;
+        color: $ERROR_COLOR;
+    }
+
+    .modal-drop-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        span{
+            font-weight: 600;
+        }
+    }
+
+    .band_image_selector{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        margin-top: 15px;
+       
+    }
+
+    .band_title{
+        margin-top: 15px;
+    }
+
+    .modal-input{
+        width: 250px;
+        height: 250px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .band_cover_preview{
+        width: 250px;
+        height: 250px;
+        position: relative;
+        z-index: -1;
+        object-fit: cover;
+    }
+
+    .band_additional_info{
+        margin-top: 15px;
+        &:nth-child(2){
+            margin: 10px 0;
+        }
+    }
+
+    .band_fields_column{
+        width: 100%;
+    }
+
+    .band_tracks_list{
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .band_fields_row{
+        display: flex;
+        gap: 40px;
+        justify-content: space-between;
+        &:not(:first-child){
+            margin-top: 20px;
+        }
+    }
+
+}

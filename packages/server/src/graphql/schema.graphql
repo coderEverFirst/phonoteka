@@ -5,10 +5,10 @@ type Track {
   id: Int
   name: String
   createdAt: DateTime
-  releaseDate: DateTime
+  year: DateTime
   description: String
   genre: String
-  videoUrl: String
+  url: String
   format: String
   band: Band
 }
@@ -16,12 +16,11 @@ type Track {
 # Track input
 input TrackInput {
   name: String!
-  releaseDate: DateTime
-  description: String
+  year: DateTime!
+  album: String!
   genre: String
-  videoUrl: String
+  url: String
   format: String!
-  bandId: Int!
 }
 
 # Band type
@@ -30,8 +29,11 @@ type Band {
   name: String
   createdAt: DateTime
   foundationDate: DateTime
-  genre: [String]
+  genre: String
+  members: String
   description: String
+  about: String
+  location: String
   image: String
   tracks: [Track]
 }
@@ -39,9 +41,12 @@ type Band {
 # Band input
 input BandInput {
   name: String!
-  foundationDate: DateTime
-  genre: [String!]!
+  foundationDate: DateTime!
   description: String
+  members: String!
+  about: String
+  location: String
+  tracks: [TrackInput!]
   image: String
 }
 

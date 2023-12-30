@@ -4,6 +4,7 @@ import { Formik, FormikErrors } from 'formik'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { fromError, useMutation, useReactiveVar } from '@apollo/client'
 import { v4 } from 'uuid'
+import { CREATE_BAND_MUTATION } from '../../../apollo/mutation/band'
 import { userInfoVar } from '../../../reactiveVars'
 import { storage } from '../../../utils/firebaseInit'
 import { createBandSchema } from '../../../validations/createBandSchema'
@@ -47,6 +48,8 @@ const CreateBandModal = (props: ICreateBandModal) => {
 
   const userData = useReactiveVar(userInfoVar)
 
+  const [createBandMutation] = useMutation(CREATE_BAND_MUTATION)
+
   const handleFormSubmit: (
     values: IFormValues,
     { setValues }: IHandleFormSubmit,
@@ -56,13 +59,15 @@ const CreateBandModal = (props: ICreateBandModal) => {
         const imageRef = ref(storage, `images/user/${userData.id}/band/${selectedImg.name + v4()}`)
         await uploadBytes(imageRef, selectedImg)
         const userProfileImageUrl = await getDownloadURL(imageRef)
-        setValues({ ...values, image: userProfileImageUrl })
+        await setValues({ ...values, image: userProfileImageUrl })
       }
-      // await updateUserMutation({
-      //   variables: { input: { ...values, imgUrl: userNewImage || userData.imgUrl } },
-      // })
+
+      await createBandMutation({
+        variables: { input: values },
+      })
+      handleCloseModal(false)
     } catch (serverError) {
-      console.error('Sign up error!', fromError(serverError))
+      console.error('Band creation error', fromError(serverError))
     }
   }
 
@@ -85,7 +90,6 @@ const CreateBandModal = (props: ICreateBandModal) => {
             initialValues={{
               name: '',
               foundationDate: '',
-              genre: '',
               about: '',
               tracks: [{ name: '', album: '', year: '', format: '', url: '', genre: '' }],
               description: '',

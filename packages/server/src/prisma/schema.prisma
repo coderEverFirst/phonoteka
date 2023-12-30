@@ -33,26 +33,29 @@ model Tokens {
 
 model Bands {
   id             Int       @id @default(autoincrement())
-  name           String
+  name           String    @unique
   createdAt      DateTime  @default(now())
   foundationDate DateTime?
-  genre          String[]
+  genre          String
+  members        String
   description    String?
+  about          String?
+  location       String?
   image          String?
   tracks         Tracks[]
 }
 
 model Tracks {
-  id          Int       @id @default(autoincrement())
-  name        String
-  createdAt   DateTime  @default(now())
-  releaseDate DateTime?
-  description String?
-  genre       String?
-  videoUrl    String?
-  format      String?
-  Band        Bands     @relation(fields: [bandId], references: [id])
-  bandId      Int
+  id        Int      @id @default(autoincrement())
+  name      String
+  year      DateTime
+  album     String
+  createdAt DateTime @default(now())
+  genre     String?
+  url       String?
+  format    String?
+  Band      Bands    @relation(fields: [bandId], references: [id])
+  bandId    Int
 
   @@index([bandId], name: "idx_bandId")
 }

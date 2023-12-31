@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Tracks, Bands } from '@prisma/client'
+import { Tracks, Bands, Prisma } from '@prisma/client'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
 import generateToken from '../../utils/generateToken'
@@ -13,6 +13,7 @@ import { createBandSchema } from '../../validations/createBandSchema'
 import getUniqueGenres from '../../utils/getUniqueGenres'
 
 type ExtendedBands = Bands & { tracks: Array<Tracks> }
+type SortOrder = 'asc' | 'desc'
 interface UserInput {
   name: string
   imgUrl: string
@@ -65,9 +66,73 @@ const resolvers = {
       authenticate(req)
       return prisma.bands.findMany()
     },
-    getAllTracks: (_: any, variables: null, { req }: MyContext) => {
+    getAllTracks: async (
+      _: any,
+      {
+        order,
+        sortBy,
+        search,
+        pageSize,
+        pageNumber,
+      }: { order: SortOrder; sortBy: string; search: string; pageSize: number; pageNumber: number },
+      { req }: MyContext,
+    ) => {
       authenticate(req)
-      return prisma.tracks.findMany()
+
+      const skip = (pageNumber - 1) * pageSize
+
+      const searchCondition: Prisma.TracksWhereInput = {
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { band: { name: { contains: search, mode: 'insensitive' } } },
+        ],
+      }
+
+      const allTracksCount = await prisma.tracks.count({
+        where: searchCondition,
+      })
+
+      if (sortBy === 'band') {
+        const tracks = await prisma.tracks.findMany({
+          where: searchCondition,
+          orderBy: [
+            {
+              band: {
+                name: order,
+              },
+            },
+          ],
+          include: {
+            band: true,
+          },
+          skip,
+          take: pageSize,
+        })
+
+        return {
+          allTracksCount,
+          tracks,
+        }
+      }
+
+      const tracks = await prisma.tracks.findMany({
+        where: searchCondition,
+        orderBy: [
+          {
+            [sortBy]: order,
+          },
+        ],
+        include: {
+          band: true,
+        },
+        skip,
+        take: pageSize,
+      })
+
+      return {
+        allTracksCount,
+        tracks,
+      }
     },
   },
   Mutation: {

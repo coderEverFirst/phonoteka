@@ -8,3 +8,5 @@ export const userInfoVar = makeVar({
   createdAt: null,
   updatedAt: null,
 })
+
+export const headerSearchValue = makeVar('')

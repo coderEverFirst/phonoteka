@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { InputAdornment, Avatar } from '@mui/material'
@@ -6,15 +6,15 @@ import { useReactiveVar } from '@apollo/client'
 import logoImage from '../../assets/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { userInfoVar } from '../../reactiveVars'
-
+import { userInfoVar, headerSearchValue } from '../../reactiveVars'
+import useDebounce from '../../utils/debounce'
 import { SearchTextField } from '../UI/MuiUI/TextFields.styled/SearchTextField.styled'
-
 import { USER_PROFILE_PAGE } from '../../variables/linksUrls'
 
 import './Header.scss'
 
 const Header = () => {
+  const [searchValue, setSearchValue] = useState('')
   const { pathname } = useLocation()
   const userData = useReactiveVar(userInfoVar)
   const [, , removeCookie] = useCookies(['token'])
@@ -26,6 +26,17 @@ const Header = () => {
   const handleRemoveCookie = () => {
     removeCookie('token')
   }
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+    setSearchValue(value)
+  }
+
+  const debouncedValue = useDebounce(searchValue, 500)
+
+  useEffect(() => {
+    headerSearchValue(debouncedValue)
+  }, [debouncedValue])
 
   const userProfilePath = USER_PROFILE_PAGE.concat(`${userData?.id}`)
   const userEditProfilePath = userProfilePath.concat('/edit')
@@ -46,6 +57,8 @@ const Header = () => {
           label="Search..."
           variant="outlined"
           size="small"
+          value={searchValue}
+          onChange={handleSearchChange}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" className="header_input_block">

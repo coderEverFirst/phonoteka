@@ -6,6 +6,8 @@ import UserProfilePage from '../../pages/UserProfilePage/UserProfilePage'
 import { GET_USER_QUERY } from '../../apollo/queries/user'
 import { userInfoVar } from '../../reactiveVars'
 import { USER_PROFILE_PAGE } from '../../variables/linksUrls'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 const ApplicationWrapper = () => {
   const { data: userData, loading: userDataLoading } = useQuery(GET_USER_QUERY)
@@ -19,20 +21,24 @@ const ApplicationWrapper = () => {
   const userEditProfilePath = userProfilePath.concat('/edit')
 
   return (
-    <Routes>
-      <Route index element={<MainPage />} />
-      <Route
-        path={userProfilePath}
-        element={
-          <UserProfilePage
-            userEditProfilePath={userEditProfilePath}
-            userProfilePath={userProfilePath}
-          />
-        }
-      >
-        <Route path={userEditProfilePath} />
-      </Route>
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route index element={<MainPage />} />
+        <Route
+          path={userProfilePath}
+          element={
+            <UserProfilePage
+              userEditProfilePath={userEditProfilePath}
+              userProfilePath={userProfilePath}
+            />
+          }
+        >
+          <Route path={userEditProfilePath} />
+        </Route>
+      </Routes>
+      <Footer />
+    </>
   )
 }
 

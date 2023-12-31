@@ -6,11 +6,12 @@ type Track {
   name: String
   createdAt: DateTime
   year: DateTime
-  description: String
+  album: String
   genre: String
   url: String
   format: String
   band: Band
+  bandId: Int
 }
 
 # Track input
@@ -73,6 +74,11 @@ type AuthResponse {
   refreshToken: String!
 }
 
+type TracksQuery {
+  tracks: [Track]
+  allTracksCount: Int
+}
+
 # End of User definitions ============================
 
 type Query {
@@ -80,7 +86,13 @@ type Query {
   getTrackById(id: Int): Track
   getUserById: User
   getAllBands: [Band]
-  getAllTracks: [Track]
+  getAllTracks(
+    order: String
+    sortBy: String
+    search: String
+    pageSize: Int
+    pageNumber: Int
+  ): TracksQuery
   getTrackByQuery(bandId: Int): [Track]
 }
 

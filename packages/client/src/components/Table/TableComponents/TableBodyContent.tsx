@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { TableCell, TableRow, Checkbox } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-import { IRowData } from '../../../variables/testFetchData'
-
 import TrackDetailsModal from '../../Modals/MainTableModal/TrackDetailsModal'
 import BandDetailsModal from '../../Modals/MainTableModal/BandDetailsModal'
 
 import { MainTableBody } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
+import { IRowData } from '../MainTable'
+import moment from 'moment'
 
 interface ITableBodyContent {
   tableRowData: IRowData[]
@@ -52,11 +52,11 @@ const TableBodyContent = (props: ITableBodyContent) => {
             </TableCell>
             <TableCell>
               <Link to="" className="table_cell_link" onClick={handleOpenModalBand}>
-                {rowItem.band}
+                {rowItem.band.name}
               </Link>
             </TableCell>
             <TableCell>{rowItem.album}</TableCell>
-            <TableCell>{rowItem.year}</TableCell>
+            <TableCell>{moment(rowItem.year).year()}</TableCell>
             <TableCell>{rowItem.genre}</TableCell>
             <TableCell>{rowItem.format}</TableCell>
           </TableRow>

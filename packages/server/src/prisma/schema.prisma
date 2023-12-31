@@ -54,7 +54,7 @@ model Tracks {
   genre     String?
   url       String?
   format    String?
-  Band      Bands    @relation(fields: [bandId], references: [id])
+  band      Bands    @relation(fields: [bandId], references: [id])
   bandId    Int
 
   @@index([bandId], name: "idx_bandId")

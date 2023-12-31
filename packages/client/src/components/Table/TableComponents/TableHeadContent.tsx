@@ -6,7 +6,7 @@ import { IRenderTableHeaderData, RENDER_TABLE_HEADER_DATA } from '../../../varia
 import { ETableSort } from '../../../variables/eNums'
 
 import { MainTableHead } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-import { IRowData } from '../../../variables/testFetchData'
+import { IRowData } from '../MainTable'
 
 interface ITableHeadContent {
   valueToOrderBy: string
@@ -43,17 +43,19 @@ const TableHeadContent = (props: ITableHeadContent) => {
             onChange={e => handleSelectedAllClick(e.target.checked)}
           />
         </TableCell>
-        {headerData.map((item: IRenderTableHeaderData) => (
-          <TableCell key={item.id}>
-            <TableSortLabel
-              active={valueToOrderBy === item.label}
-              direction={valueToOrderBy === item.label ? ETableSort.asc : orderDirection}
-              onClick={createSortHandler(item.value)}
-            >
-              {item.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+        {headerData.map((item: IRenderTableHeaderData) => {
+          return (
+            <TableCell key={item.id}>
+              <TableSortLabel
+                active={valueToOrderBy === item.label.toLocaleLowerCase()}
+                direction={valueToOrderBy === item.label ? ETableSort.asc : orderDirection}
+                onClick={createSortHandler(item.value)}
+              >
+                {item.label}
+              </TableSortLabel>
+            </TableCell>
+          )
+        })}
       </TableRow>
     </MainTableHead>
   )

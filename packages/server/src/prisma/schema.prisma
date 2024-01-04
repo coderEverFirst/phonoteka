@@ -32,10 +32,10 @@ model Tokens {
 }
 
 model Bands {
-  id             Int       @id @default(autoincrement())
-  name           String    @unique
-  createdAt      DateTime  @default(now())
-  foundationDate DateTime?
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  createdAt      DateTime @default(now())
+  foundationDate DateTime
   genre          String
   members        String
   description    String?
@@ -51,9 +51,9 @@ model Tracks {
   year      DateTime
   album     String
   createdAt DateTime @default(now())
-  genre     String?
+  genre     String
   url       String?
-  format    String?
+  format    String
   band      Bands    @relation(fields: [bandId], references: [id])
   bandId    Int
 

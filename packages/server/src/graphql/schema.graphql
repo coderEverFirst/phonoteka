@@ -79,6 +79,17 @@ type TracksQuery {
   allTracksCount: Int
 }
 
+type ChartGenreData {
+  value: Int
+  label: String
+  id: Int
+}
+
+type ChartDataResponse {
+  tracksAmount: Int
+  genreData: [ChartGenreData]
+}
+
 # End of User definitions ============================
 
 type Query {
@@ -86,6 +97,7 @@ type Query {
   getTrackById(id: Int): Track
   getUserById: User
   getAllBands: [Band]
+  getChartData: ChartDataResponse
   getAllTracks(
     order: String
     sortBy: String

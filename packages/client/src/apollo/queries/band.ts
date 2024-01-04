@@ -42,3 +42,15 @@ export const GET_ALL_TRACKS_QUERY = gql`
     }
   }
 `
+export const GET_CHART_DATA_QUERY = gql`
+  query GetChartData {
+    getChartData {
+      genreData {
+        id
+        value
+        label
+      }
+      tracksAmount
+    }
+  }
+`

@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
-
 import { PieChart } from '@mui/x-charts/PieChart'
 
-const ProfileChart = () => {
-  const chartData = [
-    { id: 0, value: 10, label: 'Rock' },
-    { id: 1, value: 15, label: 'Classic' },
-    { id: 3, value: 25, label: 'Pop' },
-    { id: 4, value: 56, label: 'Techno' },
-    { id: 5, value: 84, label: 'Hip-Hop' },
-    { id: 6, value: 12, label: 'Lo-Fi' },
-    { id: 7, value: 73, label: 'Dude`s music' },
-  ]
+interface IProfileChart {
+  genreData: Array<{
+    id: number
+    label: string
+    value: number
+  }>
+}
 
+const ProfileChart = (props: IProfileChart) => {
+  const { genreData } = props
   const [chartSpeedAngle, setChartSpeedAngle] = useState<number>(0)
 
   useEffect(() => {
@@ -43,10 +41,10 @@ const ProfileChart = () => {
     <PieChart
       series={[
         {
-          data: chartData,
+          data: genreData,
           highlightScope: { faded: 'global', highlighted: 'item' },
           faded: { additionalRadius: -5, color: 'gray' },
-
+          cornerRadius: 0,
           startAngle: 0,
           endAngle: chartSpeedAngle,
         },

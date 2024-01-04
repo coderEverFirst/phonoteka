@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '@mui/material'
+import { useQuery } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
-// import ProfileChart from '../ProfileChart/ProfileChart'
+import ProfileChart from '../ProfileChart/ProfileChart'
 import { ActionButton } from '../UI/MuiUI/Buttons.styled/ActionButton.styled'
 import { userInfoVar } from '../../reactiveVars'
+import { GET_CHART_DATA_QUERY } from '../../apollo/queries/band'
+import LoaderOval from '../UI/Loader/LoaderOval'
 
 interface IUserProfile {
   userEditProfilePath: string
@@ -12,6 +15,10 @@ interface IUserProfile {
 
 const UserProfile = (props: IUserProfile) => {
   const navigate = useNavigate()
+
+  const { data, loading: chartDataLoading } = useQuery(GET_CHART_DATA_QUERY)
+
+  const { genreData, tracksAmount } = data?.getChartData || {}
 
   const { userEditProfilePath } = props
 
@@ -50,19 +57,22 @@ const UserProfile = (props: IUserProfile) => {
         </ul>
       </div>
 
-      {/* <div className="profile_user_stats">
-        <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
-        <ul className="profile_stats_info">
-          <li className="stats_info_item">
-            Records in yours library: <span>{rowsData.length}</span>
-          </li>
-        </ul>
-        <div className="profile_chart_content">
-          <h4 className="chart_content_title">Your statistics in charts</h4>
-
-          <ProfileChart />
+      {chartDataLoading ? (
+        <LoaderOval />
+      ) : (
+        <div className="profile_user_stats">
+          <h3 className="profile_subtitle">Your Phonoteka statistic</h3>
+          <ul className="profile_stats_info">
+            <li className="stats_info_item">
+              Records in yours library: <span>{tracksAmount}</span>
+            </li>
+          </ul>
+          <div className="profile_chart_content">
+            <h4 className="chart_content_title">Your statistics in charts</h4>
+            <ProfileChart genreData={genreData} />
+          </div>
         </div>
-      </div> */}
+      )}
     </>
   )
 }

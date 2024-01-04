@@ -66,6 +66,28 @@ const resolvers = {
       authenticate(req)
       return prisma.bands.findMany()
     },
+    getChartData: async (_: any, variables: null, { req }: MyContext) => {
+      authenticate(req)
+      const tracksAmount = await prisma.tracks.count()
+
+      const trackCountsByGenre = await prisma.tracks.groupBy({
+        by: ['genre'],
+        _count: {
+          id: true,
+        },
+      })
+
+      const genreData = trackCountsByGenre.map((group, i) => ({
+        id: i,
+        label: group.genre,
+        value: group._count.id,
+      }))
+
+      return {
+        tracksAmount,
+        genreData,
+      }
+    },
     getAllTracks: async (
       _: any,
       {

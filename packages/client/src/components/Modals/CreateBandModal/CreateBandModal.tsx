@@ -58,8 +58,8 @@ const CreateBandModal = (props: ICreateBandModal) => {
       if (selectedImg) {
         const imageRef = ref(storage, `images/user/${userData.id}/band/${selectedImg.name + v4()}`)
         await uploadBytes(imageRef, selectedImg)
-        const userProfileImageUrl = await getDownloadURL(imageRef)
-        await setValues({ ...values, image: userProfileImageUrl })
+        const bandCoverImage = await getDownloadURL(imageRef)
+        await setValues({ ...values, image: bandCoverImage })
       }
 
       await createBandMutation({

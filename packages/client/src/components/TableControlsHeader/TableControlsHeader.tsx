@@ -11,7 +11,9 @@ const TableControlsHeader = () => {
       <ActionButton onClick={() => setOpenCreateBand(true)}>Create band</ActionButton>
       <ActionButton onClick={() => setOpenCreateTrack(true)}>Create track</ActionButton>
       <CreateBandModal handleCloseModal={setOpenCreateBand} openModal={openCreateBand} />
-      <CreateTrackModal handleCloseModal={setOpenCreateTrack} openModal={openCreateTrack} />
+      {openCreateTrack && (
+        <CreateTrackModal handleCloseModal={setOpenCreateTrack} openModal={openCreateTrack} />
+      )}
     </>
   )
 }

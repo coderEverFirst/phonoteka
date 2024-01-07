@@ -6,7 +6,7 @@ import { CREATE_TRACKS_MUTATION } from '../../../apollo/mutation/band'
 import { GET_ALL_BANDS_QUERY } from '../../../apollo/queries/band'
 import { createTrackSchema } from '../../../validations/createTrackSchema'
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-import CreateTrackForm from './CreateTrackForm'
+import TrackForm from '../Forms/TrackForm'
 import { wasTracksCreated } from '../../../reactiveVars'
 import '../CreateBandModal/CreateBandModal.scss'
 
@@ -39,7 +39,6 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
 
   useEffect(() => {
     return () => {
-      console.log('unmount')
       wasTracksCreated(false)
     }
   }, [])
@@ -86,7 +85,7 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
           >
             {({ handleSubmit, handleChange, values, errors, touched }) => {
               return (
-                <CreateTrackForm
+                <TrackForm
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   values={values}
@@ -94,6 +93,8 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
                   touched={touched}
                   bandsData={bandsData?.getAllBands}
                   bandsLoading={bandsLoading}
+                  mainFormTitle="Select band to add tracks"
+                  tracksFormTitle="Add tracks to band"
                 />
               )
             }}

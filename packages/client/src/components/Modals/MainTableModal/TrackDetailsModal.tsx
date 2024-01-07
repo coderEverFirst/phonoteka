@@ -1,24 +1,53 @@
 import React from 'react'
-
 import { Backdrop, Box, Fade } from '@mui/material'
+import { Formik, FormikErrors } from 'formik'
+import { fromError, useMutation, useQuery } from '@apollo/client'
 
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-
-import BandImage from '../../../assets/test_image_500_500.png'
-import ReactPlayer from 'react-player'
+import { UPDATE_TRACK_MUTATION } from '../../../apollo/mutation/band'
+import { GET_ALL_BANDS_QUERY } from '../../../apollo/queries/band'
+import { createTrackSchema } from '../../../validations/createTrackSchema'
+import { wasTracksCreated } from '../../../reactiveVars'
+import TrackForm from '../Forms/TrackForm'
+import { ISelectedTrack } from '../../Table/TableComponents/TableBodyContent'
 
 interface ITrackDetails {
   handleCloseModal: () => void
   openModal: boolean
+  selectedTrack: ISelectedTrack
+}
+
+interface IHandleFormSubmit {
+  setValues: (
+    values: React.SetStateAction<ISelectedTrack>,
+    shouldValidate?: boolean,
+  ) => Promise<void | FormikErrors<ISelectedTrack>>
 }
 
 const TrackDetailsModal = (props: ITrackDetails) => {
-  const { handleCloseModal, openModal } = props
+  const { handleCloseModal, openModal, selectedTrack } = props
+
+  const [updateTrackMutation] = useMutation(UPDATE_TRACK_MUTATION)
+  const { data: bandsData, loading: bandsLoading } = useQuery(GET_ALL_BANDS_QUERY)
+
+  const handleFormSubmit: (
+    values: ISelectedTrack,
+    { setValues }: IHandleFormSubmit,
+  ) => Promise<void> = async values => {
+    try {
+      await updateTrackMutation({
+        variables: { input: values },
+      })
+      handleCloseModal()
+      wasTracksCreated(true)
+    } catch (serverError) {
+      console.error('Band creation error', fromError(serverError))
+    }
+  }
 
   return (
     <DetailModal
       open={openModal}
-      // open={true}
       onClose={handleCloseModal}
       closeAfterTransition
       disableAutoFocus
@@ -31,39 +60,28 @@ const TrackDetailsModal = (props: ITrackDetails) => {
     >
       <Fade in={openModal}>
         <Box component="div">
-          <div className="modal_content">
-            <div className="modal_content_left">
-              <img src={BandImage} alt="BandImage" className="modal_image" />
-            </div>
-            <div className="modal_content_right">
-              <h2 className="modal_title_name">Track Name</h2>
-              <ul className="modal_info_list">
-                <li className="modal_info_item">
-                  <span>Genre:</span> {'Rock'}
-                </li>
-                <li className="modal_info_item">
-                  <span>Created in:</span> {'1900'}
-                </li>
-                <li className="modal_info_item">
-                  <span>Albums:</span> {'10'}
-                </li>
-
-                <li className="modal_info_item">
-                  <span>Description:</span>{' '}
-                  {
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iste fuga similique et repudiandae, totam deleniti, a neque laudantium nisi sunt nam, delectus ducimus tenetur sint facilis rerum minima dolore quae nemo autem eveniet expedita? Aliquid, ipsam enim suscipit fugiat quo officiis, nemo, nobis incidunt velit libero architecto? Optio, consequatur.'
-                  }
-                </li>
-                <li className="modal_info_item">
-                  <ReactPlayer
-                    url="https://www.youtube.com/watch?app=desktop&v=aGob2BwZvmI"
-                    controls={true}
-                    playing={true}
-                  />
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Formik
+            initialValues={selectedTrack}
+            validationSchema={createTrackSchema}
+            onSubmit={handleFormSubmit}
+          >
+            {({ handleSubmit, handleChange, values, errors, touched }) => {
+              return (
+                <TrackForm
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  bandsData={bandsData?.getAllBands}
+                  bandsLoading={bandsLoading}
+                  isTrackEditing
+                  mainFormTitle="Selected band"
+                  tracksFormTitle="Edit track"
+                />
+              )
+            }}
+          </Formik>
         </Box>
       </Fade>
     </DetailModal>

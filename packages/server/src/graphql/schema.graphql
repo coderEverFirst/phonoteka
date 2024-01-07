@@ -30,6 +30,12 @@ input CreateTracksInput {
   bandId: Int
 }
 
+input UpdateTrackInput {
+  tracks: [TrackInput]
+  bandId: Int
+  trackId: Int
+}
+
 # Band type
 type Band {
   id: Int
@@ -119,6 +125,7 @@ type Mutation {
   createBand(input: BandInput!): Band
   updateUser(input: UserInput!): User
   createTracks(input: CreateTracksInput!): [Track]
+  updateTrack(input: UpdateTrackInput!): [Track]
   login(email: String!, password: String!): AuthResponse
   register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse
 }

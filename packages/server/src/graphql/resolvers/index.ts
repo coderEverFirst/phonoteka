@@ -10,6 +10,7 @@ import sendRefreshToken from '../../utils/sendRefreshToken'
 import { signUpSchema, loginSchema } from '../../validations/authPageSchemas'
 import { profileChangesSchema } from '../../validations/profileChangeSchema'
 import { createBandSchema } from '../../validations/createBandSchema'
+import { createTrackSchema } from '../../validations/createTrackSchema'
 import getUniqueGenres from '../../utils/getUniqueGenres'
 
 type ExtendedBands = Bands & { tracks: Array<Tracks> }
@@ -18,6 +19,11 @@ interface UserInput {
   name: string
   imgUrl: string
   email: string
+}
+
+interface CreateTracks {
+  bandId: number
+  tracks: Tracks[]
 }
 
 const resolvers = {
@@ -64,7 +70,11 @@ const resolvers = {
     },
     getAllBands: (_: any, variables: null, { req }: MyContext) => {
       authenticate(req)
-      return prisma.bands.findMany()
+      return prisma.bands.findMany({
+        where: {
+          userId: req.payload!.userId,
+        },
+      })
     },
     getChartData: async (_: any, variables: null, { req }: MyContext) => {
       authenticate(req)
@@ -175,11 +185,13 @@ const resolvers = {
         image: input.image,
         location: input.location,
         members: input.members,
+        userId: req.payload!.userId,
       }
 
-      const existedBand = await prisma.bands.findUnique({
+      const existedBand = await prisma.bands.findFirst({
         where: {
-          name: bandInput.name,
+          userId: req.payload!.userId,
+          name: { contains: bandInput.name, mode: 'insensitive' },
         },
       })
 
@@ -193,7 +205,12 @@ const resolvers = {
 
       tracksInput.map(async track => {
         return await prisma.tracks.create({
-          data: { ...track, bandId: bandResult.id, year: moment(track.year).toISOString() },
+          data: {
+            ...track,
+            bandId: bandResult.id,
+            year: moment(track.year).toISOString(),
+            userId: req.payload!.userId,
+          },
         })
       })
 
@@ -221,15 +238,33 @@ const resolvers = {
         },
       })
     },
-    createTrack: async (_: any, { input }: { input: Tracks }, { req }: MyContext) => {
+    createTracks: async (_: any, { input }: { input: CreateTracks }, { req }: MyContext) => {
       authenticate(req)
-      const updatedTrack = {
-        ...input,
-        year: moment(input.year).toISOString(),
-      }
-      return prisma.tracks.create({
-        data: updatedTrack,
+      await createTrackSchema.validate(input)
+
+      const { tracks: reqTracks, bandId } = input
+      const existedBand = await prisma.bands.findFirst({
+        where: {
+          userId: req.payload!.userId,
+        },
       })
+
+      if (!existedBand) {
+        throw new Error(`User has no bands`)
+      }
+
+      const tracks = reqTracks.map(async track => {
+        return await prisma.tracks.create({
+          data: {
+            ...track,
+            year: moment(track.year).toISOString(),
+            userId: req.payload!.userId,
+            bandId,
+          },
+        })
+      })
+
+      return tracks
     },
     login: async (
       _: any,

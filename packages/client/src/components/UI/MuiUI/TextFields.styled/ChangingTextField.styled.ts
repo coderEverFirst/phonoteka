@@ -36,40 +36,5 @@ export const ChangingTextField = styled(TextField)({
         borderBottomColor: MAIN_BLUE_COLOR,
       },
     },
-
-    // '& .MuiInput-underline': {
-    //   borderBottomColor: MAIN_BLUE_COLOR, // Change the color accordingly
-    // },
   },
-
-  //   '& .MuiFormLabel-root': {
-  //     color: MAIN_GRAY_COLOR,
-
-  //     transition: '0.15s ease-out',
-  //   },
-
-  //   '& .MuiInputBase-root': {
-  //     color: MAIN_GRAY_COLOR,
-
-  //     '& fieldset': {
-  //       transition: '0.2s linear',
-  //       border: `1px solid  ${MAIN_DARK_CREAM_COLOR}`,
-  //     },
-
-  //     '&:hover fieldset': {
-  //       borderColor: MAIN_BLUE_COLOR,
-  //     },
-
-  //     '&.Mui-focused fieldset': {
-  //       border: `1px solid  ${MAIN_BLUE_COLOR}`,
-  //     },
-  //   },
-
-  //   '&fieldset': {
-  //     borderColor: MAIN_BLUE_COLOR,
-  //   },
-
-  //   '& label.Mui-focused': {
-  //     color: MAIN_BLUE_COLOR,
-  //   },
 }) as typeof TextField

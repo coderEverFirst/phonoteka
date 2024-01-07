@@ -10,3 +10,5 @@ export const userInfoVar = makeVar({
 })
 
 export const headerSearchValue = makeVar('')
+
+export const wasTracksCreated = makeVar(false)

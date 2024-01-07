@@ -54,3 +54,12 @@ export const GET_CHART_DATA_QUERY = gql`
     }
   }
 `
+export const GET_ALL_BANDS_QUERY = gql`
+  query GetAllBands {
+    getAllBands {
+      id
+      name
+      location
+    }
+  }
+`

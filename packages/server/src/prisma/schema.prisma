@@ -16,6 +16,8 @@ model Users {
   updatedAt DateTime @updatedAt
   imgUrl    String?
   Tokens    Tokens[]
+  Bands     Bands[]
+  Tracks    Tracks[]
 }
 
 model Tokens {
@@ -33,8 +35,10 @@ model Tokens {
 
 model Bands {
   id             Int      @id @default(autoincrement())
-  name           String   @unique
+  name           String
   createdAt      DateTime @default(now())
+  user           Users    @relation(fields: [userId], references: [id])
+  userId         Int
   foundationDate DateTime
   genre          String
   members        String
@@ -43,10 +47,14 @@ model Bands {
   location       String?
   image          String?
   tracks         Tracks[]
+
+  @@index([userId], name: "idx_userId_band")
 }
 
 model Tracks {
   id        Int      @id @default(autoincrement())
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    Int
   name      String
   year      DateTime
   album     String
@@ -58,4 +66,5 @@ model Tracks {
   bandId    Int
 
   @@index([bandId], name: "idx_bandId")
+  @@index([userId], name: "idx_userId_track")
 }

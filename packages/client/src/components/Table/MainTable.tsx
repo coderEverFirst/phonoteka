@@ -8,7 +8,7 @@ import RemoveTableModalWindow from './TableComponents/RemoveTableModalWindow'
 import { ETableSort } from '../../variables/eNums'
 import { GET_ALL_TRACKS_QUERY } from '../../apollo/queries/band'
 import LoaderOval from '../UI/Loader/LoaderOval'
-import { headerSearchValue } from '../../reactiveVars'
+import { headerSearchValue, wasTracksCreated } from '../../reactiveVars'
 import {
   MainTableContainer,
   MainTablePagination,
@@ -49,6 +49,7 @@ const MainTable = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   const searchValue = useReactiveVar(headerSearchValue)
+  const wasTracksCreatedValue = useReactiveVar(wasTracksCreated)
 
   const {
     data: tracksData,
@@ -78,7 +79,7 @@ const MainTable = () => {
       pageNumber: page + 1,
       pageSize: rowsPerPage,
     })
-  }, [valueToOrderBy, orderDirection, searchValue])
+  }, [valueToOrderBy, orderDirection, searchValue, wasTracksCreatedValue])
 
   const handleRequestSort = (event: React.MouseEvent, property: string) => {
     const isAscending: boolean = valueToOrderBy === property && orderDirection === ETableSort.asc

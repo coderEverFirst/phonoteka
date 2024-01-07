@@ -64,7 +64,7 @@ const CreateTrackForm = (props: ICreateTrackForm) => {
     setValues({ ...values, bandId: value })
   }
 
-  const selectedBand = bandsData.find(band => band.id === values.bandId)
+  const selectedBand = bandsData?.find(band => band.id === values.bandId)
 
   return (
     <form className="modal_body" onSubmit={handleSubmit}>

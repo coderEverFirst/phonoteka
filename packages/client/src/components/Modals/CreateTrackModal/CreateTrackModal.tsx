@@ -39,6 +39,7 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
 
   useEffect(() => {
     return () => {
+      console.log('unmount')
       wasTracksCreated(false)
     }
   }, [])

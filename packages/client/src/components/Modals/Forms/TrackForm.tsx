@@ -5,10 +5,11 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import { SelectChangeEvent } from '@mui/material'
 import { Select } from '@mui/material'
+import ReactPlayer from 'react-player'
 import { ChangingTextField } from '../../UI/MuiUI/TextFields.styled/ChangingTextField.styled'
 import { ActionButton } from '../../UI/MuiUI/Buttons.styled/ActionButton.styled'
 import { ModalTypography } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-import { IFormValues } from './CreateTrackModal'
+import { IFormValues } from '../CreateTrackModal/CreateTrackModal'
 import LoaderOval from '../../UI/Loader/LoaderOval'
 
 interface IFormValueErrors {
@@ -33,7 +34,7 @@ interface IFormValuesTouched {
   tracks: Array<{ name: boolean; album: boolean; year: boolean; format: boolean; genre: boolean }>
 }
 
-interface ICreateTrackForm {
+interface ITrackForm {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> & {
@@ -45,10 +46,24 @@ interface ICreateTrackForm {
   touched: FormikTouched<IFormValuesTouched>
   bandsLoading: boolean
   bandsData: IBandsData[]
+  mainFormTitle: string
+  tracksFormTitle: string
+  isTrackEditing?: boolean
 }
 
-const CreateTrackForm = (props: ICreateTrackForm) => {
-  const { handleSubmit, handleChange, values, errors, touched, bandsData, bandsLoading } = props
+const TrackForm = (props: ITrackForm) => {
+  const {
+    handleSubmit,
+    handleChange,
+    values,
+    errors,
+    touched,
+    bandsData,
+    bandsLoading,
+    isTrackEditing,
+    mainFormTitle,
+    tracksFormTitle,
+  } = props
 
   const { resetForm, setValues } = useFormikContext()
 
@@ -70,10 +85,10 @@ const CreateTrackForm = (props: ICreateTrackForm) => {
     <form className="modal_body" onSubmit={handleSubmit}>
       <div className="band_fields_row">
         <ModalTypography textAlign="center" variant="h5">
-          Select band to add tracks
+          {mainFormTitle}
         </ModalTypography>
         <div className="band_field_column">
-          <ActionButton type="submit">Create</ActionButton>
+          <ActionButton type="submit">Submit</ActionButton>
         </div>
       </div>
 
@@ -85,6 +100,7 @@ const CreateTrackForm = (props: ICreateTrackForm) => {
             id="band-name-select"
             variant="standard"
             name="bandId"
+            disabled={isTrackEditing}
             className="modal-band-selector"
             value={`${selectedBand?.id ? selectedBand.id : ''}`}
             onChange={handleSelectChange}
@@ -116,7 +132,7 @@ const CreateTrackForm = (props: ICreateTrackForm) => {
       </div>
 
       <ModalTypography textAlign="center" variant="h5">
-        Add tracks to band
+        {tracksFormTitle}
       </ModalTypography>
       <div className="band_fields_row">
         <div className="band_fields_column">
@@ -202,40 +218,49 @@ const CreateTrackForm = (props: ICreateTrackForm) => {
                         error={touchTracks?.[index]?.url && Boolean(errorTracks?.[index]?.url)}
                         helperText={touchTracks?.[index]?.url && errorTracks?.[index]?.url}
                       />
-                      <ActionButton
-                        type="button"
-                        onClick={() => {
-                          if (values.tracks.length === 1) return
-                          remove(index)
-                        }}
-                      >
-                        <ClearIcon />
-                      </ActionButton>
+                      {!isTrackEditing && (
+                        <ActionButton
+                          type="button"
+                          onClick={() => {
+                            if (values.tracks.length === 1) return
+                            remove(index)
+                          }}
+                        >
+                          <ClearIcon />
+                        </ActionButton>
+                      )}
                     </div>
                   )
                 })}
-                <ActionButton
-                  type="button"
-                  onClick={() =>
-                    push({
-                      name: '',
-                      album: values.tracks[values.tracks.length - 1]?.album || '',
-                      year: values.tracks[values.tracks.length - 1]?.year || '',
-                      genre: values.tracks[values.tracks.length - 1]?.genre || '',
-                      format: values.tracks[values.tracks.length - 1]?.format || '',
-                      url: '',
-                    })
-                  }
-                >
-                  Add track
-                </ActionButton>
+                {!isTrackEditing && (
+                  <ActionButton
+                    type="button"
+                    onClick={() =>
+                      push({
+                        name: '',
+                        album: values.tracks[values.tracks.length - 1]?.album || '',
+                        year: values.tracks[values.tracks.length - 1]?.year || '',
+                        genre: values.tracks[values.tracks.length - 1]?.genre || '',
+                        format: values.tracks[values.tracks.length - 1]?.format || '',
+                        url: '',
+                      })
+                    }
+                  >
+                    Add track
+                  </ActionButton>
+                )}
               </>
             )}
           </FieldArray>
+          {isTrackEditing && (
+            <div className="react-video-player">
+              <ReactPlayer url={values.tracks[0].url} controls={true} playing={true} />
+            </div>
+          )}
         </div>
       </div>
     </form>
   )
 }
 
-export default CreateTrackForm
+export default TrackForm

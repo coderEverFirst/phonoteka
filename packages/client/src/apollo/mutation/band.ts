@@ -38,3 +38,19 @@ export const CREATE_TRACKS_MUTATION = gql`
     }
   }
 `
+export const UPDATE_TRACK_MUTATION = gql`
+  mutation UpdateTrack($input: UpdateTrackInput!) {
+    updateTrack(input: $input) {
+      id
+      name
+      userId
+      createdAt
+      year
+      album
+      genre
+      url
+      format
+      bandId
+    }
+  }
+`

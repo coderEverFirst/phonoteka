@@ -26,6 +26,12 @@ interface CreateTracks {
   tracks: Tracks[]
 }
 
+interface UpdateTrack {
+  bandId: number
+  trackId: number
+  tracks: Tracks[]
+}
+
 const resolvers = {
   Query: {
     getBandById: (_: any, { id }: { id: number }, { req }: MyContext) => {
@@ -255,6 +261,37 @@ const resolvers = {
 
       const tracks = reqTracks.map(async track => {
         return await prisma.tracks.create({
+          data: {
+            ...track,
+            year: moment(track.year).toISOString(),
+            userId: req.payload!.userId,
+            bandId,
+          },
+        })
+      })
+
+      return tracks
+    },
+    updateTrack: async (_: any, { input }: { input: UpdateTrack }, { req }: MyContext) => {
+      authenticate(req)
+      await createTrackSchema.validate(input)
+
+      const { tracks: reqTracks, bandId, trackId } = input
+      const existedBand = await prisma.bands.findFirst({
+        where: {
+          userId: req.payload!.userId,
+        },
+      })
+
+      if (!existedBand) {
+        throw new Error(`User has no bands`)
+      }
+
+      const tracks = reqTracks.map(async track => {
+        return await prisma.tracks.update({
+          where: {
+            id: trackId,
+          },
           data: {
             ...track,
             year: moment(track.year).toISOString(),

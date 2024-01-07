@@ -4,6 +4,7 @@ scalar DateTime
 type Track {
   id: Int
   name: String
+  userId: Int
   createdAt: DateTime
   year: DateTime
   album: String
@@ -24,10 +25,16 @@ input TrackInput {
   format: String!
 }
 
+input CreateTracksInput {
+  tracks: [TrackInput]
+  bandId: Int
+}
+
 # Band type
 type Band {
   id: Int
   name: String
+  userId: Int
   createdAt: DateTime
   foundationDate: DateTime
   genre: String
@@ -111,7 +118,7 @@ type Query {
 type Mutation {
   createBand(input: BandInput!): Band
   updateUser(input: UserInput!): User
-  createTrack(input: TrackInput!): Track
+  createTracks(input: CreateTracksInput!): [Track]
   login(email: String!, password: String!): AuthResponse
   register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse
 }

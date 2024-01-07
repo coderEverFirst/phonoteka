@@ -92,6 +92,7 @@ const setupServer = async () => {
 
   app.post('/refresh-token', async (req: Request, res: Response) => {
     const token = req.cookies.urt
+
     if (!token) {
       return res.send({ ok: false, token: '' })
     }
@@ -102,12 +103,12 @@ const setupServer = async () => {
       payload = jwt.verify(token, process.env.SECRET_REFRESH!)
     } catch (error) {
       console.log('error', error)
-      return res.send({ ok: false, token: '' })
+      return res.send({ ok: false, token: '', message: 'Jwt verify error' })
     }
 
     const user = await prisma.users.findUnique({ where: { id: payload.userId } })
     if (!user) {
-      return res.send({ ok: false, token: '' })
+      return res.send({ ok: false, token: '', message: 'User not found' })
     }
 
     const { token: accessToken, refreshToken } = generateToken(user.id)

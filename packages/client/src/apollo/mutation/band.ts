@@ -6,7 +6,6 @@ export const CREATE_BAND_MUTATION = gql`
       tracks {
         id
         year
-        description
         genre
         url
         format
@@ -20,6 +19,22 @@ export const CREATE_BAND_MUTATION = gql`
       foundationDate
       name
       id
+    }
+  }
+`
+export const CREATE_TRACKS_MUTATION = gql`
+  mutation CreateTracks($input: CreateTracksInput!) {
+    createTracks(input: $input) {
+      id
+      name
+      userId
+      createdAt
+      year
+      album
+      genre
+      url
+      format
+      bandId
     }
   }
 `

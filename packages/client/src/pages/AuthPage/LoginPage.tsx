@@ -72,7 +72,12 @@ const LoginPage = () => {
     }
   }, [data])
 
-  if (loading) return <LoaderOval height={50} width={50} label="Loading..." />
+  if (loading)
+    return (
+      <div className="login-loader-wrapper">
+        <LoaderOval height={50} width={50} label="Loading..." />
+      </div>
+    )
 
   const invalidLoginOrPassword = serverError?.message === 'Invalid login credentials'
 

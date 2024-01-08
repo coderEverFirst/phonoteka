@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Backdrop, Box, Fade } from '@mui/material'
 import { Formik, FormikErrors } from 'formik'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -7,9 +7,10 @@ import { v4 } from 'uuid'
 import { CREATE_BAND_MUTATION } from '../../../apollo/mutation/band'
 import { userInfoVar } from '../../../reactiveVars'
 import { storage } from '../../../utils/firebaseInit'
-import { createBandSchema } from '../../../validations/createBandSchema'
+import { bandValidationSchema } from '../../../validations/bandValidationSchema'
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-import CreateBandForm from './CreateBandForm'
+import { shouldRefetchTracks } from '../../../reactiveVars'
+import BandForm from '../Forms/BandForm'
 import './CreateBandModal.scss'
 
 export interface IFormValues {
@@ -30,7 +31,7 @@ export interface IFormValues {
   members: string
 }
 
-interface IHandleFormSubmit {
+export interface IHandleFormSubmit {
   setValues: (
     values: React.SetStateAction<IFormValues>,
     shouldValidate?: boolean,
@@ -44,6 +45,13 @@ interface ICreateBandModal {
 
 const CreateBandModal = (props: ICreateBandModal) => {
   const { handleCloseModal, openModal } = props
+
+  useEffect(() => {
+    return () => {
+      shouldRefetchTracks(false)
+    }
+  }, [])
+
   const [selectedImg, setSelectedImg] = useState<File | null>(null)
 
   const userData = useReactiveVar(userInfoVar)
@@ -65,6 +73,7 @@ const CreateBandModal = (props: ICreateBandModal) => {
       await createBandMutation({
         variables: { input: values },
       })
+      shouldRefetchTracks(true)
       handleCloseModal(false)
     } catch (serverError) {
       console.error('Band creation error', fromError(serverError))
@@ -97,18 +106,20 @@ const CreateBandModal = (props: ICreateBandModal) => {
               location: '',
               members: '',
             }}
-            validationSchema={createBandSchema}
+            validationSchema={bandValidationSchema}
             onSubmit={handleFormSubmit}
           >
             {({ handleSubmit, handleChange, values, errors, touched }) => {
               return (
-                <CreateBandForm
+                <BandForm
                   handleSubmit={handleSubmit}
                   handleChange={handleChange}
                   setSelectedImg={setSelectedImg}
                   values={values}
                   errors={errors}
                   touched={touched}
+                  tracksTitleText="Add tracks to band"
+                  coverTitleText="Add cover image for band"
                 />
               )
             }}

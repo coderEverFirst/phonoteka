@@ -4,22 +4,23 @@ import { Formik, FormikErrors } from 'formik'
 import { fromError, useMutation, useQuery } from '@apollo/client'
 import { CREATE_TRACKS_MUTATION } from '../../../apollo/mutation/band'
 import { GET_ALL_BANDS_QUERY } from '../../../apollo/queries/band'
-import { createTrackSchema } from '../../../validations/createTrackSchema'
+import { trackValidationSchema } from '../../../validations/trackValidationSchema'
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 import TrackForm from '../Forms/TrackForm'
-import { wasTracksCreated } from '../../../reactiveVars'
+import { shouldRefetchTracks } from '../../../reactiveVars'
 import '../CreateBandModal/CreateBandModal.scss'
 
+export interface ITrack {
+  name: string
+  album: string
+  year: string
+  format: string
+  url: string
+  genre: string
+}
 export interface IFormValues {
   bandId: number
-  tracks: Array<{
-    name: string
-    album: string
-    year: string
-    format: string
-    url: string
-    genre: string
-  }>
+  tracks: Array<ITrack>
 }
 
 interface IHandleFormSubmit {
@@ -39,7 +40,7 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
 
   useEffect(() => {
     return () => {
-      wasTracksCreated(false)
+      shouldRefetchTracks(false)
     }
   }, [])
 
@@ -54,9 +55,9 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
         variables: { input: values },
       })
       handleCloseModal(false)
-      wasTracksCreated(true)
+      shouldRefetchTracks(true)
     } catch (serverError) {
-      console.error('Band creation error', fromError(serverError))
+      console.error('Track creation error', fromError(serverError))
     }
   }
 
@@ -80,7 +81,7 @@ const CreateTrackModal = (props: ICreateTrackModal) => {
               bandId: 0,
               tracks: [{ name: '', album: '', year: '', format: '', url: '', genre: '' }],
             }}
-            validationSchema={createTrackSchema}
+            validationSchema={trackValidationSchema}
             onSubmit={handleFormSubmit}
           >
             {({ handleSubmit, handleChange, values, errors, touched }) => {

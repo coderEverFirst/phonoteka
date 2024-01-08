@@ -1,23 +1,66 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
 import { Backdrop, Box, Fade } from '@mui/material'
-
+import { Formik } from 'formik'
+import { v4 } from 'uuid'
+import { fromError, useMutation, useReactiveVar } from '@apollo/client'
+import { UPDATE_BAND_MUTATION } from '../../../apollo/mutation/band'
+import { userInfoVar } from '../../../reactiveVars'
+import { storage } from '../../../utils/firebaseInit'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-
-import BandImage from '../../../assets/test_image_500_500.png'
+import { IFormValues } from '../CreateBandModal/CreateBandModal'
+import { shouldRefetchTracks } from '../../../reactiveVars'
+import { IHandleFormSubmit } from '../CreateBandModal/CreateBandModal'
+import BandForm from '../Forms/BandForm'
+import { ISelectedBand } from '../../Table/TableComponents/TableBodyContent'
+import LoaderOval from '../../UI/Loader/LoaderOval'
+import { bandValidationSchema } from '../../../validations/bandValidationSchema'
 
 interface ITrackDetails {
   handleCloseModal: () => void
   openModal: boolean
+  selectedBand: ISelectedBand
+  bandLoading: boolean
 }
 
 const BandDetailsModal = (props: ITrackDetails) => {
-  const { handleCloseModal, openModal } = props
+  const { handleCloseModal, openModal, selectedBand, bandLoading } = props
+
+  useEffect(() => {
+    return () => {
+      shouldRefetchTracks(false)
+    }
+  }, [])
+
+  const [selectedImg, setSelectedImg] = useState<File | null>(null)
+  const userData = useReactiveVar(userInfoVar)
+  const [updateBandMutation] = useMutation(UPDATE_BAND_MUTATION)
+
+  const handleFormSubmit: (
+    values: IFormValues,
+    { setValues }: IHandleFormSubmit,
+  ) => Promise<void> = async values => {
+    try {
+      let bandCoverImage = ''
+      if (selectedImg) {
+        const imageRef = ref(storage, `images/user/${userData.id}/band/${selectedImg.name + v4()}`)
+        await uploadBytes(imageRef, selectedImg)
+        bandCoverImage = await getDownloadURL(imageRef)
+      }
+
+      await updateBandMutation({
+        variables: { input: { ...values, image: bandCoverImage } },
+      })
+      shouldRefetchTracks(true)
+      handleCloseModal()
+    } catch (serverError) {
+      console.error('Band update error', fromError(serverError))
+    }
+  }
 
   return (
     <DetailModal
       open={openModal}
-      // open={true}
       onClose={handleCloseModal}
       closeAfterTransition
       disableAutoFocus
@@ -30,31 +73,31 @@ const BandDetailsModal = (props: ITrackDetails) => {
     >
       <Fade in={openModal}>
         <Box component="div">
-          <div className="modal_content">
-            <div className="modal_content_left">
-              <img src={BandImage} alt="BandImage" className="modal_image" />
-            </div>
-            <div className="modal_content_right">
-              <h2 className="modal_title_name">Band Name</h2>
-              <ul className="modal_info_list">
-                <li className="modal_info_item">
-                  <span>Genre:</span> {'Rock'}
-                </li>
-                <li className="modal_info_item">
-                  <span>Created in:</span> {'1900'}
-                </li>
-                <li className="modal_info_item">
-                  <span>Albums:</span> {'10'}
-                </li>
-                <li className="modal_info_item">
-                  <span>Description:</span>{' '}
-                  {
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iste fuga similique et repudiandae, totam deleniti, a neque laudantium nisi sunt nam, delectus ducimus tenetur sint facilis rerum minima dolore quae nemo autem eveniet expedita? Aliquid, ipsam enim suscipit fugiat quo officiis, nemo, nobis incidunt velit libero architecto? Optio, consequatur.'
-                  }
-                </li>
-              </ul>
-            </div>
-          </div>
+          {bandLoading ? (
+            <LoaderOval height={30} width={30} />
+          ) : (
+            <Formik
+              initialValues={selectedBand}
+              validationSchema={bandValidationSchema}
+              onSubmit={handleFormSubmit}
+            >
+              {({ handleSubmit, handleChange, values, errors, touched }) => {
+                return (
+                  <BandForm
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange}
+                    setSelectedImg={setSelectedImg}
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    isBandEditing
+                    tracksTitleText="Add and edit tracks in band"
+                    coverTitleText="Add or edit cover image for band"
+                  />
+                )
+              }}
+            </Formik>
+          )}
         </Box>
       </Fade>
     </DetailModal>

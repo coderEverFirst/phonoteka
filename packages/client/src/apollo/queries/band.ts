@@ -63,3 +63,33 @@ export const GET_ALL_BANDS_QUERY = gql`
     }
   }
 `
+
+export const GET_BAND_BY_ID_QUERY = gql`
+  query GetBandById($id: Int) {
+    getBandById(id: $id) {
+      id
+      name
+      userId
+      createdAt
+      foundationDate
+      genre
+      members
+      description
+      about
+      location
+      image
+      tracks {
+        id
+        name
+        userId
+        createdAt
+        year
+        album
+        genre
+        url
+        format
+        bandId
+      }
+    }
+  }
+`

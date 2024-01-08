@@ -9,8 +9,8 @@ import prisma from '../../prisma/index'
 import sendRefreshToken from '../../utils/sendRefreshToken'
 import { signUpSchema, loginSchema } from '../../validations/authPageSchemas'
 import { profileChangesSchema } from '../../validations/profileChangeSchema'
-import { createBandSchema } from '../../validations/createBandSchema'
-import { createTrackSchema } from '../../validations/createTrackSchema'
+import { bandValidationSchema } from '../../validations/bandValidationSchema'
+import { trackValidationSchema } from '../../validations/trackValidationSchema'
 import getUniqueGenres from '../../utils/getUniqueGenres'
 
 type ExtendedBands = Bands & { tracks: Array<Tracks> }
@@ -42,27 +42,6 @@ const resolvers = {
         },
         include: {
           tracks: true,
-        },
-      })
-    },
-    getTrackByQuery: (_: any, { bandId }: { bandId: number }, { req }: MyContext) => {
-      authenticate(req)
-      return prisma.tracks.findMany({
-        orderBy: [
-          {
-            year: 'asc',
-          },
-        ],
-        where: {
-          bandId,
-        },
-      })
-    },
-    getTrackById: (_: any, { id }: { id: number }, { req }: MyContext) => {
-      authenticate(req)
-      return prisma.tracks.findUnique({
-        where: {
-          id,
         },
       })
     },
@@ -176,7 +155,7 @@ const resolvers = {
   Mutation: {
     createBand: async (_: any, { input }: { input: ExtendedBands }, { req }: MyContext) => {
       authenticate(req)
-      await createBandSchema.validate(input)
+      await bandValidationSchema.validate(input)
 
       const tracksInput = input.tracks
 
@@ -229,6 +208,94 @@ const resolvers = {
         },
       })
     },
+    updateBand: async (_: any, { input }: { input: ExtendedBands }, { req }: MyContext) => {
+      authenticate(req)
+      await bandValidationSchema.validate(input)
+
+      const tracksInput = input.tracks
+
+      const calculatedGenres = getUniqueGenres(tracksInput)
+
+      const bandInput = {
+        name: input.name,
+        foundationDate: moment(input.foundationDate).toISOString(),
+        about: input.about,
+        genre: calculatedGenres,
+        description: input.description,
+        image: input.image,
+        location: input.location,
+        members: input.members,
+        userId: req.payload!.userId,
+      }
+
+      const existedBand = await prisma.bands.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+
+      if (!existedBand) {
+        throw new Error(`Band with name ${bandInput.name} doesn't exist`)
+      }
+
+      const [tracksToUpdate, tracksToCreate]: [Tracks[], Tracks[]] = tracksInput.reduce(
+        (result, track) => {
+          const [updateArray, createArray] = result
+          if (track.id) {
+            updateArray.push(track)
+          } else {
+            createArray.push(track)
+          }
+          return result
+        },
+        [[], []] as [Tracks[], Tracks[]],
+      )
+
+      const bandResult = await prisma.bands.update({
+        where: {
+          id: input.id,
+        },
+        data: bandInput,
+      })
+
+      if (tracksToUpdate.length) {
+        tracksToUpdate.map(async track => {
+          return await prisma.tracks.update({
+            where: {
+              id: track.id,
+            },
+            data: {
+              ...track,
+              bandId: bandResult.id,
+              year: moment(track.year).toISOString(),
+              userId: req.payload!.userId,
+            },
+          })
+        })
+      }
+
+      if (tracksToCreate.length) {
+        tracksToCreate.map(async track => {
+          return await prisma.tracks.create({
+            data: {
+              ...track,
+              bandId: bandResult.id,
+              year: moment(track.year).toISOString(),
+              userId: req.payload!.userId,
+            },
+          })
+        })
+      }
+
+      return await prisma.bands.findUnique({
+        where: {
+          id: bandResult.id,
+        },
+        include: {
+          tracks: true,
+        },
+      })
+    },
     updateUser: async (_: any, { input }: { input: UserInput }, { req }: MyContext) => {
       const { email, name, imgUrl } = input
       authenticate(req)
@@ -246,7 +313,7 @@ const resolvers = {
     },
     createTracks: async (_: any, { input }: { input: CreateTracks }, { req }: MyContext) => {
       authenticate(req)
-      await createTrackSchema.validate(input)
+      await trackValidationSchema.validate(input)
 
       const { tracks: reqTracks, bandId } = input
       const existedBand = await prisma.bands.findFirst({
@@ -274,7 +341,7 @@ const resolvers = {
     },
     updateTrack: async (_: any, { input }: { input: UpdateTrack }, { req }: MyContext) => {
       authenticate(req)
-      await createTrackSchema.validate(input)
+      await trackValidationSchema.validate(input)
 
       const { tracks: reqTracks, bandId, trackId } = input
       const existedBand = await prisma.bands.findFirst({

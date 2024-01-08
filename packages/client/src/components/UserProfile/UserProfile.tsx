@@ -34,10 +34,10 @@ const UserProfile = (props: IUserProfile) => {
     <>
       <div className="profile_user_content">
         <ul className="profile_user_content_left">
-          <li className="content_left_info">
+          <li className="profile_user_image">
             <Avatar className="profile_user_content_image" src={userData.imgUrl} />
           </li>
-          <li className="content_left_info">
+          <li>
             <ActionButton onClick={handleChangeProfile}>Change Profile</ActionButton>
           </li>
         </ul>

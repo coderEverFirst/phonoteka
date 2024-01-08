@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Backdrop, Box, Fade } from '@mui/material'
 import { Formik, FormikErrors } from 'formik'
 import { fromError, useMutation, useQuery } from '@apollo/client'
@@ -6,8 +6,8 @@ import { fromError, useMutation, useQuery } from '@apollo/client'
 import { DetailModal } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
 import { UPDATE_TRACK_MUTATION } from '../../../apollo/mutation/band'
 import { GET_ALL_BANDS_QUERY } from '../../../apollo/queries/band'
-import { createTrackSchema } from '../../../validations/createTrackSchema'
-import { wasTracksCreated } from '../../../reactiveVars'
+import { trackValidationSchema } from '../../../validations/trackValidationSchema'
+import { shouldRefetchTracks } from '../../../reactiveVars'
 import TrackForm from '../Forms/TrackForm'
 import { ISelectedTrack } from '../../Table/TableComponents/TableBodyContent'
 
@@ -27,6 +27,12 @@ interface IHandleFormSubmit {
 const TrackDetailsModal = (props: ITrackDetails) => {
   const { handleCloseModal, openModal, selectedTrack } = props
 
+  useEffect(() => {
+    return () => {
+      shouldRefetchTracks(false)
+    }
+  }, [])
+
   const [updateTrackMutation] = useMutation(UPDATE_TRACK_MUTATION)
   const { data: bandsData, loading: bandsLoading } = useQuery(GET_ALL_BANDS_QUERY)
 
@@ -39,9 +45,9 @@ const TrackDetailsModal = (props: ITrackDetails) => {
         variables: { input: values },
       })
       handleCloseModal()
-      wasTracksCreated(true)
+      shouldRefetchTracks(true)
     } catch (serverError) {
-      console.error('Band creation error', fromError(serverError))
+      console.error('Track update error', fromError(serverError))
     }
   }
 
@@ -62,7 +68,7 @@ const TrackDetailsModal = (props: ITrackDetails) => {
         <Box component="div">
           <Formik
             initialValues={selectedTrack}
-            validationSchema={createTrackSchema}
+            validationSchema={trackValidationSchema}
             onSubmit={handleFormSubmit}
           >
             {({ handleSubmit, handleChange, values, errors, touched }) => {

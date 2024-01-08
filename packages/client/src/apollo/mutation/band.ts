@@ -78,3 +78,10 @@ export const UPDATE_TRACK_MUTATION = gql`
     }
   }
 `
+export const DELETE_TRACKS_MUTATION = gql`
+  mutation DeleteTracks($ids: [Int]!) {
+    deleteTracks(ids: $ids) {
+      count
+    }
+  }
+`

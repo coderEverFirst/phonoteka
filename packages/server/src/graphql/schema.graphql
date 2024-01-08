@@ -15,6 +15,10 @@ type Track {
   bandId: Int
 }
 
+type DeletedTracks {
+  count: Int
+}
+
 # Track input
 input TrackInput {
   name: String!
@@ -149,6 +153,7 @@ type Mutation {
   updateBand(input: UpdateBandInput!): Band
   updateUser(input: UserInput!): User
   createTracks(input: CreateTracksInput!): [Track]
+  deleteTracks(ids: [Int]!): DeletedTracks
   updateTrack(input: UpdateTrackInput!): [Track]
   login(email: String!, password: String!): AuthResponse
   register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse

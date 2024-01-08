@@ -6,12 +6,13 @@ import { RemoveMainTableModal } from '../../UI/MuiUI/MainTableContainer.styled/M
 
 interface IRemoveTableModalWindow {
   openModal: boolean
+  selectedCheckbox: number[]
   handleCloseModalWindow: () => void
   handleAgreeRemoveItems: () => void
 }
 
 const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
-  const { openModal, handleCloseModalWindow, handleAgreeRemoveItems } = props
+  const { openModal, selectedCheckbox, handleCloseModalWindow, handleAgreeRemoveItems } = props
   return (
     <RemoveMainTableModal
       open={openModal}
@@ -27,13 +28,15 @@ const RemoveTableModalWindow = (props: IRemoveTableModalWindow) => {
     >
       <Fade in={openModal}>
         <Box component="div">
-          <Typography component="h2">Do you agree to remove this?</Typography>
+          <Typography component="h2">
+            Do you agree to remove {selectedCheckbox.length} items?
+          </Typography>
           <div className="buttons">
-            <Button className="btn_agree" onClick={handleAgreeRemoveItems}>
-              Yes
-            </Button>
             <Button className="btn_not_agree" onClick={handleCloseModalWindow}>
               No
+            </Button>
+            <Button className="btn_agree" onClick={handleAgreeRemoveItems}>
+              Yes
             </Button>
           </div>
         </Box>

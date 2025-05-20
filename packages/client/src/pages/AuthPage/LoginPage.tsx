@@ -45,7 +45,7 @@ const LoginPage = () => {
           variables: values,
         })
       } catch (serverError) {
-        console.error('Sign up error!', fromError(serverError))
+        // console.error('Sign up error!', fromError(serverError))
       }
     },
   })
@@ -92,7 +92,7 @@ const LoginPage = () => {
         <h1 className="auth_title">LOGIN</h1>
 
         <form className="auth_inputs" onSubmit={handleSubmit}>
-          <AuthTextField
+          {/* <AuthTextField
             variant="outlined"
             type={EAuthType.text}
             margin="none"
@@ -103,7 +103,7 @@ const LoginPage = () => {
             onChange={handleChange}
             error={invalidLoginOrPassword ? true : touched.email && Boolean(errors.email)}
             helperText={invalidLoginOrPassword ? '' : touched.email && errors.email}
-          />
+          /> */}
           <AuthTextField
             variant="outlined"
             type={showPassword ? EAuthType.password : EAuthType.text}

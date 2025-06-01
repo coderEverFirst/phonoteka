@@ -5,7 +5,7 @@ import { allowedImageTypes } from '../../../variables/variables'
 import { ChangingTextField } from '../../UI/MuiUI/TextFields.styled/ChangingTextField.styled'
 import { ActionButton } from '../../UI/MuiUI/Buttons.styled/ActionButton.styled'
 import { ModalTypography } from '../../UI/MuiUI/MainTableContainer.styled/MainTableContainer.styled'
-import { IFormValues } from './CreateBandModal'
+import { IFormValues } from '../CreateBandModal/CreateBandModal'
 
 interface IFormValueErrors {
   name: string
@@ -35,7 +35,7 @@ interface IFormValuesTouched {
   members: boolean
 }
 
-interface ICreateBandForm {
+interface IBandForm {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> & {
@@ -46,10 +46,23 @@ interface ICreateBandForm {
   values: IFormValues
   errors: FormikErrors<IFormValueErrors>
   touched: FormikTouched<IFormValuesTouched>
+  isBandEditing?: boolean
+  tracksTitleText: string
+  coverTitleText: string
 }
 
-const CreateBandForm = (props: ICreateBandForm) => {
-  const { handleSubmit, handleChange, setSelectedImg, values, errors, touched } = props
+const BandForm = (props: IBandForm) => {
+  const {
+    handleSubmit,
+    handleChange,
+    setSelectedImg,
+    values,
+    errors,
+    touched,
+    isBandEditing,
+    tracksTitleText,
+    coverTitleText,
+  } = props
   const [previewImg, setPreviewImg] = useState<string>('')
   const [dndError, setDndError] = useState<string>('')
 
@@ -58,6 +71,12 @@ const CreateBandForm = (props: ICreateBandForm) => {
   useEffect(() => {
     return () => resetForm()
   }, [])
+
+  useEffect(() => {
+    if (isBandEditing) {
+      setPreviewImg(values.image)
+    }
+  }, [isBandEditing, values.image])
 
   const handleDragStart = (event: { preventDefault: () => void }) => {
     event.preventDefault()
@@ -146,7 +165,7 @@ const CreateBandForm = (props: ICreateBandForm) => {
           />
         </div>
         <div className="band_field_column">
-          <ActionButton type="submit">Create</ActionButton>
+          <ActionButton type="submit">Submit</ActionButton>
         </div>
       </div>
       <div className="band_fields_row band_fields_row_wide">
@@ -190,7 +209,7 @@ const CreateBandForm = (props: ICreateBandForm) => {
         </div>
       </div>
       <ModalTypography textAlign="center" variant="h5">
-        Add tracks to band
+        {tracksTitleText}
       </ModalTypography>
       <div className="band_fields_row">
         <div className="band_fields_column">
@@ -309,7 +328,7 @@ const CreateBandForm = (props: ICreateBandForm) => {
         </div>
       </div>
       <ModalTypography textAlign="center" variant="h5">
-        Add cover image for band
+        {coverTitleText}
       </ModalTypography>
       <div className="band_image_selector">
         {previewImg && <img src={previewImg} alt="band_cover" className="band_cover_preview" />}
@@ -334,4 +353,4 @@ const CreateBandForm = (props: ICreateBandForm) => {
   )
 }
 
-export default CreateBandForm
+export default BandForm

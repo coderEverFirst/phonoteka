@@ -1,10 +1,7 @@
 import * as yup from 'yup'
 
-export const createBandSchema = yup.object().shape({
-  name: yup.string().required('Name is a required field'),
-  foundationDate: yup.string().required('Foundation date is a required field'),
-  image: yup.string(),
-  location: yup.string(),
+export const trackValidationSchema = yup.object().shape({
+  bandId: yup.number().required('Band name is a required field'),
   tracks: yup.array().of(
     yup.object().shape({
       name: yup.string().required('Track name is required'),
@@ -24,7 +21,4 @@ export const createBandSchema = yup.object().shape({
       url: yup.string(),
     }),
   ),
-  about: yup.string(),
-  description: yup.string(),
-  members: yup.string(),
 })

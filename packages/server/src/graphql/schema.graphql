@@ -15,6 +15,10 @@ type Track {
   bandId: Int
 }
 
+type DeletedTracks {
+  count: Int
+}
+
 # Track input
 input TrackInput {
   name: String!
@@ -34,6 +38,19 @@ input UpdateTrackInput {
   tracks: [TrackInput]
   bandId: Int
   trackId: Int
+}
+
+input UpdateTracksInBandInput {
+  id: Int
+  bandId: Int
+  userId: Int
+  name: String!
+  year: DateTime!
+  createdAt: DateTime
+  album: String!
+  genre: String
+  url: String
+  format: String!
 }
 
 # Band type
@@ -61,6 +78,18 @@ input BandInput {
   about: String
   location: String
   tracks: [TrackInput!]
+  image: String
+}
+
+input UpdateBandInput {
+  id: Int
+  name: String!
+  foundationDate: DateTime!
+  description: String
+  members: String!
+  about: String
+  location: String
+  tracks: [UpdateTracksInBandInput!]
   image: String
 }
 
@@ -107,7 +136,6 @@ type ChartDataResponse {
 
 type Query {
   getBandById(id: Int): Band
-  getTrackById(id: Int): Track
   getUserById: User
   getAllBands: [Band]
   getChartData: ChartDataResponse
@@ -118,13 +146,14 @@ type Query {
     pageSize: Int
     pageNumber: Int
   ): TracksQuery
-  getTrackByQuery(bandId: Int): [Track]
 }
 
 type Mutation {
   createBand(input: BandInput!): Band
+  updateBand(input: UpdateBandInput!): Band
   updateUser(input: UserInput!): User
   createTracks(input: CreateTracksInput!): [Track]
+  deleteTracks(ids: [Int]!): DeletedTracks
   updateTrack(input: UpdateTrackInput!): [Track]
   login(email: String!, password: String!): AuthResponse
   register(email: String!, username: String!, password: String!, rePassword: String!): AuthResponse

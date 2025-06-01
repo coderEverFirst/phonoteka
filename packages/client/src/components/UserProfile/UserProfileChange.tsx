@@ -73,7 +73,7 @@ const UserProfileChange = (props: IUserProfileChange) => {
     <>
       <div className="profile_user_content">
         <ul className="profile_user_content_left">
-          <li className="content_left_info">
+          <li>
             <div className="default_item_image" onClick={handleOpenModal}>
               {userNewImage ? (
                 <Avatar className="profile_user_content_image" src={userNewImage} />

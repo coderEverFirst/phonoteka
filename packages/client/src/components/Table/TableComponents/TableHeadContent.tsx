@@ -34,12 +34,14 @@ const TableHeadContent = (props: ITableHeadContent) => {
   }
 
   return (
-    <MainTableHead className={`${rowsData.length === selectedCheckbox.length && 'active'}`}>
+    <MainTableHead className={`${rowsData?.length === selectedCheckbox.length && 'active'}`}>
       <TableRow>
         <TableCell>
           <Checkbox
-            indeterminate={selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData.length}
-            checked={selectedCheckbox.length === rowsData.length}
+            indeterminate={
+              selectedCheckbox.length > 0 && selectedCheckbox.length < rowsData?.length
+            }
+            checked={selectedCheckbox.length === rowsData?.length}
             onChange={e => handleSelectedAllClick(e.target.checked)}
           />
         </TableCell>

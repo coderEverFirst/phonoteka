@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from '@mui/material'
-import { useQuery, useReactiveVar } from '@apollo/client'
+import { useQuery, useReactiveVar, useMutation } from '@apollo/client'
 import TableHeadContent from './TableComponents/TableHeadContent'
 import TableBodyContent from './TableComponents/TableBodyContent'
 import AdditionalTableHeader from './TableComponents/AdditionalTableHeader'
 import RemoveTableModalWindow from './TableComponents/RemoveTableModalWindow'
 import { ETableSort } from '../../variables/eNums'
 import { GET_ALL_TRACKS_QUERY } from '../../apollo/queries/band'
+import { DELETE_TRACKS_MUTATION } from '../../apollo/mutation/band'
 import LoaderOval from '../UI/Loader/LoaderOval'
-import { headerSearchValue, wasTracksCreated } from '../../reactiveVars'
+import { headerSearchValue, shouldRefetchTracks } from '../../reactiveVars'
 import {
   MainTableContainer,
   MainTablePagination,
@@ -49,7 +50,9 @@ const MainTable = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   const searchValue = useReactiveVar(headerSearchValue)
-  const wasTracksCreatedValue = useReactiveVar(wasTracksCreated)
+  const shouldRefetchTracksValue = useReactiveVar(shouldRefetchTracks)
+
+  const [deleteTrackMutation] = useMutation(DELETE_TRACKS_MUTATION)
 
   const {
     data: tracksData,
@@ -79,7 +82,19 @@ const MainTable = () => {
       pageNumber: page + 1,
       pageSize: rowsPerPage,
     })
-  }, [valueToOrderBy, orderDirection, searchValue, wasTracksCreatedValue])
+  }, [valueToOrderBy, orderDirection, searchValue, shouldRefetchTracksValue])
+
+  useEffect(() => {
+    if (!openModal) {
+      refetch({
+        order: orderDirection,
+        sortBy: valueToOrderBy,
+        search: searchValue,
+        pageNumber: page + 1,
+        pageSize: rowsPerPage,
+      })
+    }
+  }, [openModal])
 
   const handleRequestSort = (event: React.MouseEvent, property: string) => {
     const isAscending: boolean = valueToOrderBy === property && orderDirection === ETableSort.asc
@@ -127,11 +142,10 @@ const MainTable = () => {
   }
 
   const handleAgreeRemoveItems = () => {
+    deleteTrackMutation({ variables: { ids: selectedCheckbox } })
     handleCloseModalWindow()
-    alert('Need delete items on server')
+    setSelectedCheckbox([])
   }
-
-  // if you need to remove checkboxes for the entire list of data and put them on the current pagination page, throw tableRowData in TableHeadContent instead of rowsData
 
   return (
     <MainTableContainer>
@@ -142,6 +156,7 @@ const MainTable = () => {
 
       <RemoveTableModalWindow
         openModal={openModal}
+        selectedCheckbox={selectedCheckbox}
         handleCloseModalWindow={handleCloseModalWindow}
         handleAgreeRemoveItems={handleAgreeRemoveItems}
       />

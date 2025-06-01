@@ -142,7 +142,7 @@ export const MainTableBody = styled(TableBody)({
         textAlign: 'center',
       },
 
-      '& .table_cell_link': {
+      '& .table_cell_clickable': {
         textDecoration: 'none',
         color: BLACK,
 
